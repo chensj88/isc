@@ -1,4 +1,4 @@
-package com.winning.isc.utils;
+package com.winning.isc.base.utils;
 
 import com.winning.isc.ws.client.*;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.winning.isc.base.utils.Constants;
 
 /**
  * @author chenshijie
@@ -28,7 +30,7 @@ public class PmisWSUtil {
     public static LoginResult createLoginResult() {
 
         LoginResult result = createLBEBusinessService().login(Constants.PmisWSConstants.WS_USER,
-                            Constants.PmisWSConstants.WS_PASSWORD,
+                             Constants.PmisWSConstants.WS_PASSWORD,
                             "",
                             Constants.PmisWSConstants.WS_ALGORITHM,
                            "");
@@ -81,4 +83,60 @@ public class PmisWSUtil {
         params.add(param);
         return params;
     }
+
+    /**
+     * 创建查询需要的参数
+     * @param quertType 参考Constansts.PmisWSConstants.WS_SERVICE_TYPE_*
+     * @return params
+     */
+    public static List<LbParameter> createLbParameter(String quertType){
+        LbParameter param = new LbParameter();
+        param.setName(Constants.PmisWSConstants.QUERY_TYPE_NAME);
+        param.setValue(quertType);
+        List<LbParameter> params = new ArrayList<LbParameter>();
+        params.add(param);
+        return params;
+    }
+
+    /**
+     *  封装第一次查询的QueryOption
+     * @return option
+     */
+    public static QueryOption createFirstCountValueOption(){
+        QueryOption option = new QueryOption();
+        option.setBatchNo(1);
+        option.setBatchSize(Constants.PmisWSConstants.QUERY_FIRST_BATCH_SIZE);
+        option.setQueryCount(true);
+        return option;
+    }
+
+    /**
+     * 封装分页查询的QueryOption
+     * 用来查询不足一页的数据
+     * @param page  页码
+     * @param pageSize 每页显示值
+     * @return option
+     */
+    public static QueryOption createQueryValueOption(int page,int pageSize){
+        QueryOption option = new QueryOption();
+        option.setBatchNo(page);
+        option.setBatchSize(pageSize);
+        option.setQueryCount(false);
+        return option;
+    }
+
+    /**
+     * 封装分页查询的QueryOption
+     * 用来查询某一页的数据
+     * @param page 页码
+     * @return option
+     */
+    public static QueryOption createQueryValueOption(int page){
+        QueryOption option = new QueryOption();
+        option.setBatchNo(page);
+        option.setBatchSize(Constants.PmisWSConstants.QUERY_BATCH_SIZE);
+        option.setQueryCount(false);
+        return option;
+    }
+
 }

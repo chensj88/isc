@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.winning.isc.dao.PubOrgDao">
+
+    <resultMap id="pubOrgResultForList" type="com.winning.isc.model.PubOrg">
+         <result column="ID" property="id" jdbcType="BIGINT" />
+         <result column="FID" property="fid" jdbcType="BIGINT" />
+         <result column="GRADE" property="grade" jdbcType="BIGINT" />
+         <result column="JGLX" property="jglx" jdbcType="INTEGER" />
+         <result column="ORGCODE" property="orgcode" jdbcType="VARCHAR" />
+         <result column="NAME" property="name" jdbcType="VARCHAR" />
+         <result column="JGQC" property="jgqc" jdbcType="VARCHAR" />
+         <result column="PY" property="py" jdbcType="VARCHAR" />
+         <result column="FDNCODE" property="fdncode" jdbcType="VARCHAR" />
+         <result column="BBXH" property="bbxh" jdbcType="VARCHAR" />
+         <result column="YJBM" property="yjbm" jdbcType="BIGINT" />
+         <result column="SSGS" property="ssgs" jdbcType="BIGINT" />
+         <result column="ZT" property="zt" jdbcType="INTEGER" />
+         <result column="GXSJ" property="gxsj" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <resultMap id="pubOrgResult" type="com.winning.isc.model.PubOrg" extends="pubOrgResultForList">
+
+    </resultMap>
+
+    <sql id="sql-pubOrg">
+        <if test="(id != null )"> and t.ID = #{id} </if>
+        <if test="(fid != null )"> and t.FID = #{fid} </if>
+        <if test="(grade != null )"> and t.GRADE = #{grade} </if>
+        <if test="(jglx != null )"> and t.JGLX = #{jglx} </if>
+        <if test="(orgcode != null )"> and t.ORGCODE = #{orgcode} </if>
+        <if test="(name != null )"> and t.NAME = #{name} </if>
+        <if test="(jgqc != null )"> and t.JGQC = #{jgqc} </if>
+        <if test="(py != null )"> and t.PY = #{py} </if>
+        <if test="(fdncode != null )"> and t.FDNCODE = #{fdncode} </if>
+        <if test="(bbxh != null )"> and t.BBXH = #{bbxh} </if>
+        <if test="(yjbm != null )"> and t.YJBM = #{yjbm} </if>
+        <if test="(ssgs != null )"> and t.SSGS = #{ssgs} </if>
+        <if test="(zt != null )"> and t.ZT = #{zt} </if>
+        <if test="(gxsj != null )"> and t.GXSJ = #{gxsj} </if>
+    </sql>
+
+    <insert id="insertPubOrg" parameterType="com.winning.isc.model.PubOrg">
+        <selectKey resultType="String"  order="BEFORE"  keyProperty="id">SELECT CAST(NEWID() AS VARCHAR(36)) AS ID</selectKey>
+        INSERT INTO PUB_ORG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null )"> ID , </if>
+            <if test="(fid != null )"> FID , </if>
+            <if test="(grade != null )"> GRADE , </if>
+            <if test="(jglx != null )"> JGLX , </if>
+            <if test="(orgcode != null )"> ORGCODE , </if>
+            <if test="(name != null )"> NAME , </if>
+            <if test="(jgqc != null )"> JGQC , </if>
+            <if test="(py != null )"> PY , </if>
+            <if test="(fdncode != null )"> FDNCODE , </if>
+            <if test="(bbxh != null )"> BBXH , </if>
+            <if test="(yjbm != null )"> YJBM , </if>
+            <if test="(ssgs != null )"> SSGS , </if>
+            <if test="(zt != null )"> ZT , </if>
+            <if test="(gxsj != null )"> GXSJ , </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null )">#{id , jdbcType= BIGINT },  </if>
+            <if test="(fid != null )">#{fid , jdbcType= BIGINT },  </if>
+            <if test="(grade != null )">#{grade , jdbcType= BIGINT },  </if>
+            <if test="(jglx != null )">#{jglx , jdbcType= INTEGER },  </if>
+            <if test="(orgcode != null )">#{orgcode , jdbcType= VARCHAR },  </if>
+            <if test="(name != null )">#{name , jdbcType= VARCHAR },  </if>
+            <if test="(jgqc != null )">#{jgqc , jdbcType= VARCHAR },  </if>
+            <if test="(py != null )">#{py , jdbcType= VARCHAR },  </if>
+            <if test="(fdncode != null )">#{fdncode , jdbcType= VARCHAR },  </if>
+            <if test="(bbxh != null )">#{bbxh , jdbcType= VARCHAR },  </if>
+            <if test="(yjbm != null )">#{yjbm , jdbcType= BIGINT },  </if>
+            <if test="(ssgs != null )">#{ssgs , jdbcType= BIGINT },  </if>
+            <if test="(zt != null )">#{zt , jdbcType= INTEGER },  </if>
+            <if test="(gxsj != null )">#{gxsj , jdbcType= TIMESTAMP },  </if>
+        </trim>
+    </insert>
+
+    <update id="updatePubOrg" parameterType="com.winning.isc.model.PubOrg">
+        UPDATE PUB_ORG
+        <set>
+            <trim suffixOverrides=",">
+                <if test="(id != null )"> ID = #{id , jdbcType= BIGINT }, </if>
+                <if test="(fid != null )"> FID = #{fid , jdbcType= BIGINT }, </if>
+                <if test="(grade != null )"> GRADE = #{grade , jdbcType= BIGINT }, </if>
+                <if test="(jglx != null )"> JGLX = #{jglx , jdbcType= INTEGER }, </if>
+                <if test="(orgcode != null )"> ORGCODE = #{orgcode , jdbcType= VARCHAR }, </if>
+                <if test="(name != null )"> NAME = #{name , jdbcType= VARCHAR }, </if>
+                <if test="(jgqc != null )"> JGQC = #{jgqc , jdbcType= VARCHAR }, </if>
+                <if test="(py != null )"> PY = #{py , jdbcType= VARCHAR }, </if>
+                <if test="(fdncode != null )"> FDNCODE = #{fdncode , jdbcType= VARCHAR }, </if>
+                <if test="(bbxh != null )"> BBXH = #{bbxh , jdbcType= VARCHAR }, </if>
+                <if test="(yjbm != null )"> YJBM = #{yjbm , jdbcType= BIGINT }, </if>
+                <if test="(ssgs != null )"> SSGS = #{ssgs , jdbcType= BIGINT }, </if>
+                <if test="(zt != null )"> ZT = #{zt , jdbcType= INTEGER }, </if>
+                <if test="(gxsj != null )"> GXSJ = #{gxsj , jdbcType= TIMESTAMP }, </if>
+            </trim>
+        </set>
+        <where>
+            <if test="(id != null )"> and ID = #{ id, jdbcType= BIGINT }   </if>-->
+            <if test="(id !=null ) and (map.pks != null and map.size > 0)">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </update>
+
+    <delete id="deletePubOrg" parameterType="com.winning.isc.model.PubOrg">
+        delete from  PUB_ORG
+        <where>
+        <if test="(id != null )"> and ID = #{ id }   </if>
+            <if test="(id !=null ) and (map.pks != null and map.size > 0)">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </delete>
+
+
+    <select id="selectPubOrg" resultMap="pubOrgResult" parameterType="com.winning.isc.model.PubOrg">
+        SELECT * FROM PUB_ORG t
+        <where>
+            <include refid="sql-pubOrg" />
+        </where>
+    </select>
+
+    <select id="selectPubOrgList" resultMap="pubOrgResultForList" parameterType="com.winning.isc.model.PubOrg">
+        SELECT
+        <if test="row.count != null and row.count != ''"> top ${row.count} </if>
+        * FROM PUB_ORG t
+        <where>
+            <include refid="sql-pubOrg" />
+        </where>
+        ORDER BY t.ID ASC
+    </select>
+
+    <select id="selectPubOrgCount" resultType="int" parameterType="com.winning.isc.model.PubOrg">
+        select count(1) from  PUB_ORG t
+        <where>
+            <include refid="sql-pubOrg" />
+        </where>
+    </select>
+
+    <select id="selectPubOrgPageList" resultMap="pubOrgResult" parameterType="com.winning.isc.model.PubOrg">
+        SELECT * FROM (
+        SELECT t.* ,
+        ROW_NUMBER() OVER ( ORDER BY t.ID DESC ) AS _RN
+        FROM PUB_ORG t
+        <where>
+            <include refid="sql-pubOrg" />
+        </where>
+        <!-- order by t.ID asc -->
+        ) TEMP_TABLE WHERE _RN BETWEEN  #{row.first} + 1 AND #{row.first} + #{row.count}
+    </select>
+
+
+</mapper>
