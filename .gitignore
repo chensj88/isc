@@ -12,6 +12,7 @@
 
 #maven files
 .mvn/
+mvnw
 #idea files
 .idea/
 # Package Files #
