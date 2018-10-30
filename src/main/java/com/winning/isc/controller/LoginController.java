@@ -1,6 +1,6 @@
 package com.winning.isc.controller;
 
-import com.winning.isc.base.utils.Constants;
+import com.winning.isc.base.Constants;
 import com.winning.isc.base.utils.MD5;
 import com.winning.isc.base.utils.PasswordUtils;
 import com.winning.isc.base.utils.StringUtil;
