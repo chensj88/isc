@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.winning.isc.base.utils.Constants;
+import com.winning.isc.base.Constants;
 
 /**
  * @author chenshijie

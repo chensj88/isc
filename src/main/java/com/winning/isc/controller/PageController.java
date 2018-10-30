@@ -13,26 +13,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class PageController extends BaseController {
-
+    /**
+     * 登陆信息
+     * @return
+     */
     @GetMapping(value = "/")
     public String gotoLogin(){
         return  "login";
     }
 
-    @GetMapping(value = "/index")
-    public String gotoIndex(){
-        return  "index";
-    }
-
-    @GetMapping(value = "/welcome")
-    public String gotoWelcomePage(){
-        return  "welcome";
-    }
-
-
+    /**
+     * 管理员登陆信息
+     * @return
+     */
     @GetMapping(value = "/admin")
     public String gotoAdminLogin(){
-        return  "admin/login";
+        return  "adminLogin";
+    }
+
+    /**
+     * 登陆成功后页面
+     * @return
+     */
+    @GetMapping(value = "/pages/index")
+    public String gotoIndex(){
+        return  "pages/index";
+    }
+
+    /**
+     * 登陆成功后欢迎页面
+     * @return
+     */
+    @GetMapping(value = "/pages/welcome")
+    public String gotoWelcomePage(){
+        return  "pages/welcome";
     }
 
 }

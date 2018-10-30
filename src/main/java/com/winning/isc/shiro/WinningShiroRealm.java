@@ -1,6 +1,6 @@
 package com.winning.isc.shiro;
 
-import com.winning.isc.base.utils.Constants;
+import com.winning.isc.base.Constants;
 import com.winning.isc.dao.SysOrgExtDao;
 import com.winning.isc.dao.SysUserInfoDao;
 import com.winning.isc.model.SysUserInfo;

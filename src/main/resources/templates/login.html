@@ -10,52 +10,110 @@
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <title>用户登录页面</title>
     <link rel="shortcut icon" th:href="@{/img/logo.ico}" type="image/x-icon"/>
-    <link rel="stylesheet" th:href="@{/webadmin/css/font.css}">
-    <link rel="stylesheet" th:href="@{/webadmin/css/weadmin.css}">
-    <script th:src="@{/lib/layui/layui.js}" charset="utf-8"></script>
-
+    <!-- basic styles -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}"  />
+    <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/bootstrap/css/toastr.min.css}"/>
+    <link rel="shortcut icon" th:href="@{/resources/img/logo.ico}"/>
+    <link rel="stylesheet" th:href="@{/resources/bootstrap/css/animate.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/bootstrap/css/style.css}"/>
+    <style type="text/css">
+        .footer-info{
+            position:fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+        }
+    </style>
 </head>
-<body class="login-bg">
-
-<div class="login">
-    <div class="message">Winning Health ISC 实施服务中心-管理登录</div>
-    <div id="darkbannerwrap"></div>
-
-    <form method="post" class="layui-form" >
-        <input name="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
-        <hr class="hr15">
-        <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
-        <hr class="hr15">
-        <input class="loginin" value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
-        <hr class="hr20" >
+<body class="gray-bg">
+    <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
-            前端静态展示，请随意输入，即可登录。
+            <div>
+                <h1 class="logo-name">ISC</h1>
+            </div>
+            <h3>欢迎登陆卫宁实施服务中心(ISC)</h3>
+            <form class="m-t" role="form" th:action="@{/home}">
+                <div class="form-group">
+                    <input id="username" class="form-control" placeholder="工号" required="">
+                </div>
+                <div class="form-group">
+                    <input id="password" type="password" class="form-control" placeholder="密码" required="">
+                </div>
+                <button type="submit" id="loginBtn" class="btn btn-primary block full-width m-b">登录</button>
+            </form>
+            <p class="m-t"> <small>Copyright ©2018 Winning Health All Rights Reserved</small> </p>
         </div>
-    </form>
-</div>
+    </div>
+    <div class="footer-info">
+        <a th:href="@{/admin}"  class="btn btn-w-m btn-link">后台管理系统</a>
+    </div>
+</body>
+<script type="text/javascript" th:src="@{/assets/js/base64.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/bootstrap/js/jquery-1.12.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/bootstrap/js/toastr.min.js}"></script>
 <script th:inline="javascript"  type="text/javascript">
     var ctx = /*[[@{/}]]*/'';
 </script>
 <script type="text/javascript">
-    layui.extend({
-        admin:  ctx +'webadmin/js/admin'
+    toastr.options.positionClass = 'toast-top-center';
+    toastr.options.timeOut = 60;
+    toastr.options.extendedTimeOut = 60;
+
+    function show_box(id) {
+        jQuery('.widget-box.visible').removeClass('visible');
+        jQuery('#'+id).addClass('visible');
+    }
+
+    $(document).keyup(function (e) {
+        var event = arguments.callee.caller.arguments[0] || window.event;
+        if (event.keyCode == 13) {
+            var username = document.getElementById("username");
+            var password = document.getElementById("password");
+            var loginBtn = document.getElementById("loginBtn");
+            if (username == document.activeElement) {
+                password.focus();
+                return;
+            } else if (password == document.activeElement) {
+                loginBtn.focus();
+                return;
+            }
+        }
     });
-    layui.use(['form','admin'], function(){
-        var form = layui.form
-            ,admin = layui.admin;
-        // layer.msg('玩命卖萌中', function(){
-        //   //关闭后的操作
-        //   });
-        //监听提交
-        form.on('submit(login)', function(data){
-            // alert(888)
-            layer.msg(JSON.stringify(data.field),function(){
-                location.href= ctx +'index'
-            });
+
+    //登陆判断
+    $("#loginBtn").click(function() {
+        var username = $("#username").val();
+        if(username == null || username == ''){
+            toastr.error("用户名不能为空!");
             return false;
+        }
+        var password = $("#password").val();
+        if(password == null || password ==''){
+            toastr.error("密码不能为空!");
+            return false;
+        }
+        var decryptPassword = Base64.encode(password);
+
+        debugger
+        $.ajax({
+            type: "POST",
+            url: ctx + "login/check",
+            data:{"username":username,"password":decryptPassword},
+            dataType:"json",
+            cache : false,
+            error: function(request) {
+                toastr.error("服务端错误，或网络不稳定，本次操作被终止。");
+                console.log(request);
+            },
+            success: function(data) {
+                if(data.status) {
+                    $("#loginSub").submit();
+                } else {
+                    toastr.error(data.message);
+                }
+            }
         });
     });
 </script>
-<!-- 底部结束 -->
-</body>
 </html>

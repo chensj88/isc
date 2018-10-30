@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 
-import com.winning.isc.base.utils.Constants;
+import com.winning.isc.base.Constants;
 
 /**
  * @author chenshijie

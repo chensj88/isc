@@ -2,7 +2,7 @@ package com.winning.isc.ws.service;
 
 
 import com.winning.isc.base.utils.ConnectionUtil;
-import com.winning.isc.base.utils.Constants;
+import com.winning.isc.base.Constants;
 import com.winning.isc.base.utils.PmisWSUtil;
 import com.winning.isc.ws.client.*;
 import org.slf4j.Logger;

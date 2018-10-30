@@ -1,5 +1,10 @@
 package com.winning.isc.base.utils;
 
+import com.alibaba.druid.pool.DruidDataSource;
+import com.winning.isc.base.Constants;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.PostConstruct;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -12,40 +17,29 @@ import java.util.Properties;
 import java.util.Set;
 
 public class ConnectionUtil {
-    private static HashMap<String, String> properties = new HashMap<String, String>();
 
-    static {
-        InputStream inputStream = ConnectionUtil.class.getClassLoader().getResourceAsStream("jdbc.properties");
-        Properties p = new Properties();
-        try {
-            p.load(inputStream);
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        for (Object key : p.keySet()) {
-            properties.put((String) key, (String) p.get(key));
-        }
+    @Autowired
+    private DruidDataSource druidDataSource;
+
+    private static ConnectionUtil connectionUtil;
+
+    @PostConstruct
+    public void init() {
+        connectionUtil = this;
+        connectionUtil.druidDataSource = this.druidDataSource;
     }
+
 
     /**
      * @return Connection
      */
-    public static synchronized Connection getConnection() {
-        // 读出配置信息
-        String driverClassName = properties.get("driverClassName");
-        String url = properties.get("url");
-        String username = properties.get("username");
-        String password = properties.get("password");
-
-        Connection conn = null;
+    public static synchronized Connection getConnection(){
+        Connection conn = null ;
         try {
-            // 加载数据库驱动程序
-            Class.forName(driverClassName);
-            conn = DriverManager.getConnection(url, username, password);
-        } catch (Exception e) {
+            conn =  connectionUtil.druidDataSource.getConnection();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return conn;
     }
 
@@ -54,7 +48,7 @@ public class ConnectionUtil {
      */
     public static synchronized Connection getConnection(String ip, String username, String password, String databaseName) {
         // 读出配置信息
-        String driverClassName = properties.get("driverClassName");
+        String driverClassName = Constants.DRIVE_CLASS_NAME;
         String url = "jdbc:sqlserver://" + ip + ";DatabaseName=" + databaseName;
         Connection conn = null;
         try {

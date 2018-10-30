@@ -1,4 +1,6 @@
-package com.winning.isc.base.utils;
+package com.winning.isc.base;
+
+import com.winning.isc.base.utils.FtpPropertiesLoader;
 
 /**
  * @author chensj
@@ -8,6 +10,8 @@ package com.winning.isc.base.utils;
  * @date: 2018-10-29 15:05
  */
 public class Constants {
+
+    public static final String DRIVE_CLASS_NAME = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     public static int FTP_PORT = Integer.valueOf(FtpPropertiesLoader.getProperty("ftp.port")).intValue();
     public static String FTP_SERVER = FtpPropertiesLoader.getProperty("ftp.server");
     public static String FTP_SHARE_SERVER = FtpPropertiesLoader.getProperty("ftp.share");

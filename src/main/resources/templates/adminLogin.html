@@ -14,9 +14,17 @@
     <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}"  />
     <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
     <link rel="stylesheet" th:href="@{/bootstrap/css/toastr.min.css}"/>
-    <link rel="shortcut icon" th:href="@{/img/logo.ico}"/>
-    <link rel="stylesheet" th:href="@{/bootstrap/css/animate.css}"/>
-    <link rel="stylesheet" th:href="@{/bootstrap/css/style.css}"/>
+    <link rel="shortcut icon" th:href="@{/resources/img/logo.ico}"/>
+    <link rel="stylesheet" th:href="@{/resources/bootstrap/css/animate.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/bootstrap/css/style.css}"/>
+    <style type="text/css">
+        .footer-info{
+            position:fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body class="gray-bg">
     <div class="middle-box text-center loginscreen animated fadeInDown">
@@ -38,10 +46,13 @@
             <p class="m-t"> <small>Copyright ©2018 Winning Health All Rights Reserved</small> </p>
         </div>
     </div>
+    <div class="footer-info">
+        <a th:href="@{/}"  class="btn btn-w-m btn-link">实施服务中心</a>
+    </div>
 </body>
 <script type="text/javascript" th:src="@{/assets/js/base64.min.js}"></script>
-<script type="text/javascript" th:src="@{/bootstrap/js/jquery-1.12.4.min.js}"></script>
-<script type="text/javascript" th:src="@{/bootstrap/js/toastr.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/bootstrap/js/jquery-1.12.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/bootstrap/js/toastr.min.js}"></script>
 <script th:inline="javascript"  type="text/javascript">
     var ctx = /*[[@{/}]]*/'';
 </script>
@@ -86,24 +97,24 @@
         var decryptPassword = Base64.encode(password);
         console.log(ctx + "admin/login/check");
         debugger
-        // $.ajax({
-        //     type: "POST",
-        //     url: ctx + "admin/login/check",
-        //     data:{"username":username,"password":decryptPassword},
-        //     dataType:"json",
-        //     cache : false,
-        //     error: function(request) {
-        //         toastr.error("服务端错误，或网络不稳定，本次操作被终止。");
-        //         console.log(request);
-        //     },
-        //     success: function(data) {
-        //         if(data.status) {
-        //             $("#loginSub").submit();
-        //         } else {
-        //             toastr.error(data.message);
-        //         }
-        //     }
-        // });
+        $.ajax({
+            type: "POST",
+            url: ctx + "login/check",
+            data:{"username":username,"password":decryptPassword},
+            dataType:"json",
+            cache : false,
+            error: function(request) {
+                toastr.error("服务端错误，或网络不稳定，本次操作被终止。");
+                console.log(request);
+            },
+            success: function(data) {
+                if(data.status) {
+                    $("#loginSub").submit();
+                } else {
+                    toastr.error(data.message);
+                }
+            }
+        });
     });
 </script>
 </html>
