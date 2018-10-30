@@ -14,6 +14,10 @@ public class Constants {
     public static String FTP_SHARE_FLODER = "http://" + FTP_SHARE_SERVER + ":8081/shareFolder";
     public static String HTTP_SERVER = "http://" + FTP_SHARE_SERVER + ":8081/ssgjm";
 
+    public static final String SUCCESS = "success";
+    public static final String FAIL = "fail";
+    public static final String USER_FLAG = "username";
+    public static final Integer PMIS_STATUS_USE = 1;
     public class PmisWSConstants {
         /**
          * PMIS WS URL

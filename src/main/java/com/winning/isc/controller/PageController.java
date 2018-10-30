@@ -15,7 +15,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PageController extends BaseController {
 
     @GetMapping(value = "/")
-    public String gotoIndex(){
+    public String gotoLogin(){
         return  "login";
     }
+
+    @GetMapping(value = "/index")
+    public String gotoIndex(){
+        return  "index";
+    }
+
+    @GetMapping(value = "/welcome")
+    public String gotoWelcomePage(){
+        return  "welcome";
+    }
+
+
+    @GetMapping(value = "/admin")
+    public String gotoAdminLogin(){
+        return  "admin/login";
+    }
+
 }

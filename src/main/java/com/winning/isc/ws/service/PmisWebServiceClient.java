@@ -34,8 +34,8 @@ public class PmisWebServiceClient {
     private static final Map<String, String> pmisInfoData;
     static {
         pmisInfoData = new HashMap<String, String>();
-        pmisInfoData.put("1", "PUB_USER_INFO"); //用户信息
-        pmisInfoData.put("8", "PUB_ORG"); //组织机构
+        pmisInfoData.put("1", "SYS_USER_INFO"); //用户信息
+        pmisInfoData.put("8", "SYS_ORG"); //组织机构
     }
 
 
@@ -134,7 +134,7 @@ public class PmisWebServiceClient {
     }
 
     private static void resolveWSResult(QueryResult result, String tableName) {
-        if (tableName.toUpperCase().equals("PUB_USER_INFO")) {
+        if (tableName.toUpperCase().equals("SYS_USER_INFO")) {
             resolveUserInfoData(result);
         } else {
             generateSQLInfo(result, tableName);
@@ -207,7 +207,7 @@ public class PmisWebServiceClient {
      */
     private static void resolveUserInfoData(QueryResult result) {
         StringBuilder sb = new StringBuilder();
-        sb.append("insert into PUB_USER_INFO (");
+        sb.append("insert into SYS_USER_INFO (");
         List<LbRecord> recordList = result.getRecords();
         List<ColInfo> colInfos = result.getMetaData().getColInfo();
         for ( int colNum = 0 ; colNum < colInfos.size() ;colNum++) {

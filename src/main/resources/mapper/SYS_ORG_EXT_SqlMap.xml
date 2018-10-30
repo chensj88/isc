@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.winning.isc.dao.SysOrgExtDao">
+
+    <resultMap id="sysOrgExtResultForList" type="com.winning.isc.model.SysOrgExt">
+         <result column="ORG_ID" property="orgId" jdbcType="BIGINT" />
+         <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+         <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+         <result column="ORG_NAME_EXT" property="orgNameExt" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="sysOrgExtResult" type="com.winning.isc.model.SysOrgExt" extends="sysOrgExtResultForList">
+
+    </resultMap>
+
+    <sql id="sql-sysOrgExt">
+        <if test="(orgId != null )"> and t.ORG_ID = #{orgId} </if>
+        <if test="(orgName != null )"> and t.ORG_NAME = #{orgName} </if>
+        <if test="(orgCode != null )"> and t.ORG_CODE = #{orgCode} </if>
+        <if test="(orgNameExt != null )"> and t.ORG_NAME_EXT = #{orgNameExt} </if>
+    </sql>
+
+    <insert id="insertSysOrgExt" parameterType="com.winning.isc.model.SysOrgExt">
+        <selectKey resultType="String"  order="BEFORE"  keyProperty="id">SELECT CAST(NEWID() AS VARCHAR(36)) AS ID</selectKey>
+        INSERT INTO SYS_ORG_EXT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(orgId != null )"> ORG_ID , </if>
+            <if test="(orgName != null )"> ORG_NAME , </if>
+            <if test="(orgCode != null )"> ORG_CODE , </if>
+            <if test="(orgNameExt != null )"> ORG_NAME_EXT , </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(orgId != null )">#{orgId , jdbcType= BIGINT },  </if>
+            <if test="(orgName != null )">#{orgName , jdbcType= VARCHAR },  </if>
+            <if test="(orgCode != null )">#{orgCode , jdbcType= VARCHAR },  </if>
+            <if test="(orgNameExt != null )">#{orgNameExt , jdbcType= VARCHAR },  </if>
+        </trim>
+    </insert>
+
+    <update id="updateSysOrgExt" parameterType="com.winning.isc.model.SysOrgExt">
+        UPDATE SYS_ORG_EXT
+        <set>
+            <trim suffixOverrides=",">
+                <if test="(orgId != null )"> ORG_ID = #{orgId , jdbcType= BIGINT }, </if>
+                <if test="(orgName != null )"> ORG_NAME = #{orgName , jdbcType= VARCHAR }, </if>
+                <if test="(orgCode != null )"> ORG_CODE = #{orgCode , jdbcType= VARCHAR }, </if>
+                <if test="(orgNameExt != null )"> ORG_NAME_EXT = #{orgNameExt , jdbcType= VARCHAR }, </if>
+            </trim>
+        </set>
+        <where>
+            <if test="(orgId != null )"> and ORG_ID = #{ orgId, jdbcType= BIGINT }   </if>-->
+            <if test="(orgId !=null ) and (map.pks != null and map.size > 0)">
+                and (ORG_ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteSysOrgExt" parameterType="com.winning.isc.model.SysOrgExt">
+        delete from  SYS_ORG_EXT
+        <where>
+        <if test="(orgId != null )"> and ORG_ID = #{ orgId }   </if>
+            <if test="(orgId !=null ) and (map.pks != null and map.size > 0)">
+                and (ORG_ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </delete>
+
+
+    <select id="selectSysOrgExt" resultMap="sysOrgExtResult" parameterType="com.winning.isc.model.SysOrgExt">
+        SELECT * FROM SYS_ORG_EXT t
+        <where>
+            <include refid="sql-sysOrgExt" />
+        </where>
+    </select>
+
+    <select id="selectSysOrgExtList" resultMap="sysOrgExtResultForList" parameterType="com.winning.isc.model.SysOrgExt">
+        SELECT
+        <if test="row.count != null and row.count != ''"> top ${row.count} </if>
+        * FROM SYS_ORG_EXT t
+        <where>
+            <include refid="sql-sysOrgExt" />
+        </where>
+        ORDER BY t.ORG_ID ASC
+    </select>
+
+    <select id="selectSysOrgExtCount" resultType="int" parameterType="com.winning.isc.model.SysOrgExt">
+        select count(1) from  SYS_ORG_EXT t
+        <where>
+            <include refid="sql-sysOrgExt" />
+        </where>
+    </select>
+
+    <select id="selectSysOrgExtPageList" resultMap="sysOrgExtResult" parameterType="com.winning.isc.model.SysOrgExt">
+        SELECT * FROM (
+        SELECT t.* ,
+        ROW_NUMBER() OVER ( ORDER BY t.ORG_ID DESC ) AS _RN
+        FROM SYS_ORG_EXT t
+        <where>
+            <include refid="sql-sysOrgExt" />
+        </where>
+        <!-- order by t.ORG_ID asc -->
+        ) TEMP_TABLE WHERE _RN BETWEEN  #{row.first} + 1 AND #{row.first} + #{row.count}
+    </select>
+
+    <select id="insertSysOrgExtByProc"  statementType="CALLABLE">
+        exec USP_SYS_ORG_NAME_EXT_DATA
+    </select>
+</mapper>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.winning.isc.dao.SysUserInfoDao">
+
+    <resultMap id="sysUserInfoResultForList" type="com.winning.isc.model.SysUserInfo">
+         <result column="ID" property="id" jdbcType="BIGINT" />
+         <result column="STATUS" property="status" jdbcType="INTEGER" />
+         <result column="USERID" property="userid" jdbcType="VARCHAR" />
+         <result column="YHMC" property="yhmc" jdbcType="VARCHAR" />
+         <result column="NAME" property="name" jdbcType="VARCHAR" />
+         <result column="Email" property="email" jdbcType="VARCHAR" />
+         <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+         <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
+         <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+         <result column="ORGID" property="orgid" jdbcType="BIGINT" />
+         <result column="SSGS" property="ssgs" jdbcType="BIGINT" />
+         <result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+         <result column="LINK_ID" property="linkId" jdbcType="VARCHAR" />
+         <result column="OPEN_ID" property="openId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="sysUserInfoResult" type="com.winning.isc.model.SysUserInfo" extends="sysUserInfoResultForList">
+
+    </resultMap>
+
+    <sql id="sql-sysUserInfo">
+        <if test="(id != null )"> and t.ID = #{id} </if>
+        <if test="(status != null )"> and t.STATUS = #{status} </if>
+        <if test="(userid != null )"> and t.USERID = #{userid} </if>
+        <if test="(yhmc != null )"> and t.YHMC = #{yhmc} </if>
+        <if test="(name != null )"> and t.NAME = #{name} </if>
+        <if test="(email != null )"> and t.Email = #{email} </if>
+        <if test="(mobile != null )"> and t.MOBILE = #{mobile} </if>
+        <if test="(telephone != null )"> and t.TELEPHONE = #{telephone} </if>
+        <if test="(password != null )"> and t.PASSWORD = #{password} </if>
+        <if test="(orgid != null )"> and t.ORGID = #{orgid} </if>
+        <if test="(ssgs != null )"> and t.SSGS = #{ssgs} </if>
+        <if test="(userType != null )"> and t.USER_TYPE = #{userType} </if>
+        <if test="(linkId != null )"> and t.LINK_ID = #{linkId} </if>
+        <if test="(openId != null )"> and t.OPEN_ID = #{openId} </if>
+    </sql>
+
+    <insert id="insertSysUserInfo" parameterType="com.winning.isc.model.SysUserInfo">
+        <selectKey resultType="String"  order="BEFORE"  keyProperty="id">SELECT CAST(NEWID() AS VARCHAR(36)) AS ID</selectKey>
+        INSERT INTO SYS_USER_INFO
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null )"> ID , </if>
+            <if test="(status != null )"> STATUS , </if>
+            <if test="(userid != null )"> USERID , </if>
+            <if test="(yhmc != null )"> YHMC , </if>
+            <if test="(name != null )"> NAME , </if>
+            <if test="(email != null )"> Email , </if>
+            <if test="(mobile != null )"> MOBILE , </if>
+            <if test="(telephone != null )"> TELEPHONE , </if>
+            <if test="(password != null )"> PASSWORD , </if>
+            <if test="(orgid != null )"> ORGID , </if>
+            <if test="(ssgs != null )"> SSGS , </if>
+            <if test="(userType != null )"> USER_TYPE , </if>
+            <if test="(linkId != null )"> LINK_ID , </if>
+            <if test="(openId != null )"> OPEN_ID , </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null )">#{id , jdbcType= BIGINT },  </if>
+            <if test="(status != null )">#{status , jdbcType= INTEGER },  </if>
+            <if test="(userid != null )">#{userid , jdbcType= VARCHAR },  </if>
+            <if test="(yhmc != null )">#{yhmc , jdbcType= VARCHAR },  </if>
+            <if test="(name != null )">#{name , jdbcType= VARCHAR },  </if>
+            <if test="(email != null )">#{email , jdbcType= VARCHAR },  </if>
+            <if test="(mobile != null )">#{mobile , jdbcType= VARCHAR },  </if>
+            <if test="(telephone != null )">#{telephone , jdbcType= VARCHAR },  </if>
+            <if test="(password != null )">#{password , jdbcType= VARCHAR },  </if>
+            <if test="(orgid != null )">#{orgid , jdbcType= BIGINT },  </if>
+            <if test="(ssgs != null )">#{ssgs , jdbcType= BIGINT },  </if>
+            <if test="(userType != null )">#{userType , jdbcType= VARCHAR },  </if>
+            <if test="(linkId != null )">#{linkId , jdbcType= VARCHAR },  </if>
+            <if test="(openId != null )">#{openId , jdbcType= VARCHAR },  </if>
+        </trim>
+    </insert>
+
+    <update id="updateSysUserInfo" parameterType="com.winning.isc.model.SysUserInfo">
+        UPDATE SYS_USER_INFO
+        <set>
+            <trim suffixOverrides=",">
+                <if test="(id != null )"> ID = #{id , jdbcType= BIGINT }, </if>
+                <if test="(status != null )"> STATUS = #{status , jdbcType= INTEGER }, </if>
+                <if test="(userid != null )"> USERID = #{userid , jdbcType= VARCHAR }, </if>
+                <if test="(yhmc != null )"> YHMC = #{yhmc , jdbcType= VARCHAR }, </if>
+                <if test="(name != null )"> NAME = #{name , jdbcType= VARCHAR }, </if>
+                <if test="(email != null )"> Email = #{email , jdbcType= VARCHAR }, </if>
+                <if test="(mobile != null )"> MOBILE = #{mobile , jdbcType= VARCHAR }, </if>
+                <if test="(telephone != null )"> TELEPHONE = #{telephone , jdbcType= VARCHAR }, </if>
+                <if test="(password != null )"> PASSWORD = #{password , jdbcType= VARCHAR }, </if>
+                <if test="(orgid != null )"> ORGID = #{orgid , jdbcType= BIGINT }, </if>
+                <if test="(ssgs != null )"> SSGS = #{ssgs , jdbcType= BIGINT }, </if>
+                <if test="(userType != null )"> USER_TYPE = #{userType , jdbcType= VARCHAR }, </if>
+                <if test="(linkId != null )"> LINK_ID = #{linkId , jdbcType= VARCHAR }, </if>
+                <if test="(openId != null )"> OPEN_ID = #{openId , jdbcType= VARCHAR }, </if>
+            </trim>
+        </set>
+        <where>
+            <if test="(id != null )"> and ID = #{ id, jdbcType= BIGINT }   </if>-->
+            <if test="(id !=null ) and (map.pks != null and map.size > 0)">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteSysUserInfo" parameterType="com.winning.isc.model.SysUserInfo">
+        delete from  SYS_USER_INFO
+        <where>
+        <if test="(id != null )"> and ID = #{ id }   </if>
+            <if test="(id !=null ) and (map.pks != null and map.size > 0)">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </delete>
+
+
+    <select id="selectSysUserInfo" resultMap="sysUserInfoResult" parameterType="com.winning.isc.model.SysUserInfo">
+        SELECT * FROM SYS_USER_INFO t
+        <where>
+            <include refid="sql-sysUserInfo" />
+        </where>
+    </select>
+
+    <select id="selectSysUserInfoList" resultMap="sysUserInfoResultForList" parameterType="com.winning.isc.model.SysUserInfo">
+        SELECT
+        <if test="row.count != null and row.count != ''"> top ${row.count} </if>
+        * FROM SYS_USER_INFO t
+        <where>
+            <include refid="sql-sysUserInfo" />
+        </where>
+        ORDER BY t.ID ASC
+    </select>
+
+    <select id="selectSysUserInfoCount" resultType="int" parameterType="com.winning.isc.model.SysUserInfo">
+        select count(1) from  SYS_USER_INFO t
+        <where>
+            <include refid="sql-sysUserInfo" />
+        </where>
+    </select>
+
+    <select id="selectSysUserInfoPageList" resultMap="sysUserInfoResult" parameterType="com.winning.isc.model.SysUserInfo">
+        SELECT * FROM (
+        SELECT t.* ,
+        ROW_NUMBER() OVER ( ORDER BY t.ID DESC ) AS _RN
+        FROM SYS_USER_INFO t
+        <where>
+            <include refid="sql-sysUserInfo" />
+        </where>
+        <!-- order by t.ID asc -->
+        ) TEMP_TABLE WHERE _RN BETWEEN  #{row.first} + 1 AND #{row.first} + #{row.count}
+    </select>
+
+
+</mapper>

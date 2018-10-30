@@ -13,9 +13,9 @@ public interface Facade {
 
     PmisWebServiceClient getPmisWebServiceClient();
 
-    PubUserInfoService getPubUserInfoService();
+    SysUserInfoService getSysUserInfoService();
 
-    PubOrgService getPubOrgService();
+    SysOrgService getSysOrgService();
 
-    PubOrgExtService getPubOrgExtService();
+    SysOrgExtService getSysOrgExtService();
 }

@@ -35,7 +35,7 @@ public class PmisDataLoadJob {
         PmisWebServiceClient.insertData();
         logger.info("数据加载结束时间为：[{}]", DateUtil.format(new Date(),DateUtil.PATTERN_19));
         logger.info("开始生成机构全路径数据，开始时间为[{}]",DateUtil.format(new Date(),DateUtil.PATTERN_19));
-        facade.getPubOrgExtService().createPubOrgExtByProc(null);
+        facade.getSysOrgExtService().createSysOrgExtByProc(null);
         logger.info("机构全路径数据导入结束，结束时间为[{}]",DateUtil.format(new Date(),DateUtil.PATTERN_19));
     }
 
