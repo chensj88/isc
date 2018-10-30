@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@ComponentScan("com.winning.isc")
+@MapperScan("com.winning.isc.dao")
 @EnableTransactionManagement
 public class IscApplication {
 
