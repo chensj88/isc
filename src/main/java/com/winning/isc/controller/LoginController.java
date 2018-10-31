@@ -52,7 +52,7 @@ public class LoginController extends BaseController {
             result.put("userId",username);
             request.getSession().setAttribute(Constants.USER_FLAG,username);
         }else{
-            result.put("status", Constants.LOGIN_SUCCESS);
+            result.put("status", Constants.LOGIN_FAIL);
             result.put("message",message);
         }
         return result;

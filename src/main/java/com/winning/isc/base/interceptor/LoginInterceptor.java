@@ -29,8 +29,8 @@ public class LoginInterceptor implements HandlerInterceptor {
      * @throws Exception
      */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if(request.getServletPath().startsWith("/pages/")){
-            logger.info("拦截器: 拦截访问路径'" + request.getRequestURI() + "'，该URL处于/pages，需要进行session验证。");
+        if(request.getServletPath().startsWith("/views/")){
+            logger.info("拦截器: 拦截访问路径'" + request.getRequestURI() + "'，该URL处于/views，需要进行session验证。");
             HttpSession session = request.getSession();
             if (session.getAttribute(Constants.USER_FLAG) == null) {
                 logger.info("拦截器:session中没有用户信息，该页面无法继续访问，转跳到/页面");
@@ -41,7 +41,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                 return true;
             }
         }else{
-            logger.info("拦截器： 拦截访问路径'" + request.getRequestURI() + "'， 不在/view之下,非访问控制路径， 无需从session中获取用户信息...");
+            logger.info("拦截器： 拦截访问路径'" + request.getRequestURI() + "'， 不在/views之下,非访问控制路径， 无需从session中获取用户信息...");
             return true;
         }
     }

@@ -73,9 +73,9 @@
     <logger name="druid.sql.Statement" additivity="false" level="debug"></logger>
     <logger name="druid.sql.ResultSet" additivity="false" level="debug"></logger>
     <!-- 日志输出级别 -->
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="FILE"/>
-        <appender-ref ref="ERROR"/>
+       <!-- <appender-ref ref="FILE"/>
+        <appender-ref ref="ERROR"/>-->
     </root>
 </configuration>
