@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
  * @package com.winning.isc.base.config
  * @date: 2018-10-30 16:49
  */
-@Configurable
+//@Configurable
 public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

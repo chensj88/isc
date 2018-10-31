@@ -49,4 +49,24 @@ public class PageController extends BaseController {
         return  "pages/welcome";
     }
 
+    /**
+     * 管理员登录成功页面
+     * @return
+     */
+    @GetMapping(value = "/pages/admin/home")
+    public String gotoAdminHomePage(){
+        return  "pages/admin/home";
+    }
+
+    /**
+     * 没有权限页面
+     * @return
+     */
+    @GetMapping(value = "/403")
+    public String gotoNoAuthPage(){
+        return  "403";
+    }
+
+
+
 }
