@@ -6,6 +6,9 @@ import com.winning.isc.base.utils.PasswordUtils;
 import com.winning.isc.base.utils.StringUtil;
 import com.winning.isc.controller.BaseController;
 import com.winning.isc.model.SysUserInfo;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -33,17 +36,23 @@ import java.util.Map;
 public class LoginController extends BaseController {
 
 
-    @PostMapping(value = "/admin/login/check")
+    @PostMapping(value = "/login/check")
+    @ApiOperation(value = "/login/check",notes = "登录验证,登录成功会将用户工号放在Session中，反之不会")
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "request",name = "request",required = true,paramType = "HttpServletRequest"),
+            @ApiImplicitParam(value = "username",name = "username",required = true,paramType = "String"),
+            @ApiImplicitParam(value = "password",name = "password",required = true,paramType = "String")
+    })
     public Map<String, Object> checkUserAndPassword(HttpServletRequest request, String username, String password){
-
         String message = login(username,password);
         Map<String, Object> result = new HashMap<String, Object>();
         if(StringUtil.isEmptyOrNull(message)){
-            result.put("status", Constants.SUCCESS);
+            result.put("status", Constants.LOGIN_SUCCESS);
             result.put("message","登录成功");
+            result.put("userId",username);
             request.getSession().setAttribute(Constants.USER_FLAG,username);
         }else{
-            result.put("status", Constants.FAIL);
+            result.put("status", Constants.LOGIN_SUCCESS);
             result.put("message",message);
         }
         return result;

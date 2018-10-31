@@ -4,7 +4,10 @@ import com.winning.isc.shiro.WinningShiroRealm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 
 import java.util.LinkedHashMap;
@@ -20,6 +23,16 @@ import java.util.Map;
 @Configurable
 public class ShiroConfig {
 
+    private static final Logger log = LoggerFactory.getLogger(ShiroConfig.class);
+
+    @Bean(name = "securityManager")
+    public SecurityManager securityManager(@Qualifier("winningShiroRealm") WinningShiroRealm winningShiroRealm) {
+        log.info("securityManager()");
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        // 设置realm.
+        securityManager.setRealm(winningShiroRealm);
+        return securityManager;
+    }
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
         System.out.println("ShiroConfiguration.shirFilter()");
