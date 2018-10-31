@@ -14,6 +14,9 @@ import org.springframework.context.annotation.DependsOn;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * shiro配置类
+ */
 @Configuration
 public class ShiroConfiguration {
     @Bean(name = "lifecycleBeanPostProcessor")
@@ -43,6 +46,11 @@ public class ShiroConfiguration {
         return securityManager;
     }
 
+    /**
+     * 路由拦截
+     * @param securityManager
+     * @return
+     */
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
