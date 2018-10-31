@@ -22,14 +22,7 @@ public class AdminPageController extends BaseController {
     public String gotoAdminHomePage(){
         return  "views/admin/home";
     }
-    /**
-     * 没有权限页面
-     * @return
-     */
-    @GetMapping(value = "/admin/skin-config")
-    public String gotoSkinConfigPage(){
-        return  "views/admin/skin-config";
-    }
+
 
 
 

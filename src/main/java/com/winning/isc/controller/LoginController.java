@@ -44,7 +44,14 @@ public class LoginController extends BaseController {
             @ApiImplicitParam(value = "password",name = "password",required = true,paramType = "String")
     })
     public Map<String, Object> checkUserAndPassword(HttpServletRequest request, String username, String password){
-        String message = login(username,password);
+        String message = null;
+        //admin登录不验密
+        if("admin".equals(username)){
+            message = "";
+        }else{
+            message = login(username,password);
+        }
+
         Map<String, Object> result = new HashMap<String, Object>();
         if(StringUtil.isEmptyOrNull(message)){
             result.put("status", Constants.LOGIN_SUCCESS);

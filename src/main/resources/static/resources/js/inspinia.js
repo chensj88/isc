@@ -93,7 +93,7 @@ $(document).ready(function () {
     // Append config box / Only for demo purpose
     // Uncomment on server mode to enable XHR calls
     //加载设置信息
-    $.get( ctx +"pages/admin/skin-config", function (data) {
+    $.get( ctx +"views/skin-config", function (data) {
         if (!$('body').hasClass('no-skin-config'))
             $('body').append(data);
     });

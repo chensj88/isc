@@ -50,6 +50,15 @@ public class PageController extends BaseController {
     }
 
     /**
+     * 设置页面
+     * @return
+     */
+    @GetMapping(value = "/views/skin-config")
+    public String gotoSkinConfigPage(){
+        return  "views/skin-config";
+    }
+
+    /**
      * 没有权限页面
      * @return
      */

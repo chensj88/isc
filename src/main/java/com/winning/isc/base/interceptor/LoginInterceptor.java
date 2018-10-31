@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
  * @date: 2018-10-30 16:46
  */
 public class LoginInterceptor implements HandlerInterceptor {
+
     private Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
 
     /**
@@ -40,6 +41,14 @@ public class LoginInterceptor implements HandlerInterceptor {
                 logger.info("拦截器: session中存在用户信息，该页面可以继续访问， userName = " + session.getAttribute(Constants.USER_FLAG) + ", session = " + session.getId());
                 return true;
             }
+        }else if(request.getServletPath().startsWith("/resources/")
+                || request.getServletPath().startsWith("/assets/")){
+            return true;
+        }else if(request.getServletPath().startsWith("/logout")){
+            HttpSession session = request.getSession();
+            session.setAttribute(Constants.USER_FLAG,null);
+            response.sendRedirect("/");
+            return false;
         }else{
             logger.info("拦截器： 拦截访问路径'" + request.getRequestURI() + "'， 不在/views之下,非访问控制路径， 无需从session中获取用户信息...");
             return true;

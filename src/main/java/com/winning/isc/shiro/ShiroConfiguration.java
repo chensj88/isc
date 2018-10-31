@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * shiro配置类
  */
-@Configuration
+//@Configuration
 public class ShiroConfiguration {
     @Bean(name = "lifecycleBeanPostProcessor")
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
@@ -55,7 +55,6 @@ public class ShiroConfiguration {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager());
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         Map<String, String> filterChainDefinitionManager = new LinkedHashMap<>();
         filterChainDefinitionManager.put("/logout", "logout");
         filterChainDefinitionManager.put("/user/**", "authc,roles[user]");
