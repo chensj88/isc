@@ -68,5 +68,16 @@ public class PageController extends BaseController {
     }
 
 
+    /**
+     * 没有权限页面
+     * @return
+     */
+    @GetMapping(value = "/pages/admin/skin-config")
+    public String gotoSkinConfigPage(){
+        return  "pages/admin/skin-config";
+    }
+
+
+
 
 }

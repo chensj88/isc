@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="keywords" content="Winning Health ISC 实施服务中心"/>
@@ -42,7 +42,12 @@
                 </div>
                 <button type="button" id="loginBtn" class="btn btn-primary block full-width m-b">登录</button>
             </form>
-            <p class="m-t"> <small>Copyright ©2018 Winning Health All Rights Reserved</small> </p>
+            <p class="m-t"> <small>Copyright &copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>
+                Winning Health All Rights Reserved</small>
+            </p>
         </div>
     </div>
     <div class="footer-info">
