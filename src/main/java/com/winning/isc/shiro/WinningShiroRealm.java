@@ -65,7 +65,10 @@ public class WinningShiroRealm extends AuthorizingRealm {
             SysUserInfo userInfo = new SysUserInfo();
             userInfo.setUserid(userid);
             userInfo.setStatus(Constants.PMIS_STATUS_USE);
-            return new SimpleAuthenticationInfo(userInfo, "123", "memberRealm");
+            userInfo.setStatus(Constants.PMIS_STATUS_USE);
+            userInfo = sysUserInfoDao.selectSysUserInfo(userInfo);//获取用户基本信息
+            String password = new String((char[]) token.getCredentials());
+            return new SimpleAuthenticationInfo(userInfo, password, "memberRealm");
         }
         SysUserInfo userInfo = new SysUserInfo();
         userInfo.setUserid(userid);
