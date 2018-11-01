@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * shiro配置类
  */
-//@Configuration
+@Configuration
 public class ShiroConfiguration {
     @Bean(name = "lifecycleBeanPostProcessor")
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
@@ -56,15 +56,14 @@ public class ShiroConfiguration {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager());
         Map<String, String> filterChainDefinitionManager = new LinkedHashMap<>();
+        filterChainDefinitionManager.put("/login", "anon");
         filterChainDefinitionManager.put("/logout", "logout");
-        filterChainDefinitionManager.put("/user/**", "authc,roles[user]");
-        filterChainDefinitionManager.put("/shop/**", "authc,roles[shop]");
-        filterChainDefinitionManager.put("/admin/**", "authc,roles[admin]");
-        filterChainDefinitionManager.put("/login", "anon");//anon 可以理解为不拦截
-        filterChainDefinitionManager.put("/ajaxLogin", "anon");//anon 可以理解为不拦截
         filterChainDefinitionManager.put("/static/**", "anon");//静态资源不拦截
+        filterChainDefinitionManager.put("/resources/**", "anon");//静态资源不拦截
+        filterChainDefinitionManager.put("/assets/**", "anon");//静态资源不拦截
+        filterChainDefinitionManager.put("/**","authc");//对所有用户认证
         //filterChainDefinitionManager.put("/**", "authc,roles[user]");//其他资源全部拦截
-        filterChainDefinitionManager.put("/**", "anon");
+        //filterChainDefinitionManager.put("/**", "anon");
         // filterChainDefinitionManager.put("/controller/MangerController", "anon");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionManager);
 
