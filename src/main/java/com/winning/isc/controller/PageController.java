@@ -67,4 +67,13 @@ public class PageController extends BaseController {
         return  "403";
     }
 
+    /**
+     * 错误信息页面
+     * @return
+     */
+    @GetMapping(value = "/error")
+    public String gotoErrorPage(){
+        return  "error";
+    }
+
 }
