@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.winning.isc.dao.SysModPopedomDao">
+
+    <resultMap id="sysModPopedomResultForList" type="com.winning.isc.model.SysModPopedom">
+         <result column="ID" property="id" jdbcType="BIGINT" />
+         <result column="MOD_ID" property="modId" jdbcType="BIGINT" />
+         <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+         <result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+         <result column="POPEDOM_CODE" property="popedomCode" jdbcType="OTHER" />
+    </resultMap>
+
+    <resultMap id="sysModPopedomResult" type="com.winning.isc.model.SysModPopedom" extends="sysModPopedomResultForList">
+
+    </resultMap>
+
+    <sql id="sql-sysModPopedom">
+        <if test="(id != null and id != '')"> and t.ID = #{id} </if>
+        <if test="(modId != null and modId != '')"> and t.MOD_ID = #{modId} </if>
+        <if test="(userId != null and userId != '')"> and t.USER_ID = #{userId} </if>
+        <if test="(roleId != null and roleId != '')"> and t.ROLE_ID = #{roleId} </if>
+        <if test="(popedomCode != null and popedomCode != '')"> and t.POPEDOM_CODE = #{popedomCode} </if>
+    </sql>
+
+    <insert id="insertSysModPopedom" parameterType="com.winning.isc.model.SysModPopedom">
+        <selectKey resultType="String"  order="BEFORE"  keyProperty="id">SELECT CAST(NEWID() AS VARCHAR(36)) AS ID</selectKey>
+        INSERT INTO SYS_MOD_POPEDOM
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null and id != '')"> ID , </if>
+            <if test="(modId != null and modId != '')"> MOD_ID , </if>
+            <if test="(userId != null and userId != '')"> USER_ID , </if>
+            <if test="(roleId != null and roleId != '')"> ROLE_ID , </if>
+            <if test="(popedomCode != null and popedomCode != '')"> POPEDOM_CODE , </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null and id != '')"> #{id , jdbcType= BIGINT },  </if>
+            <if test="(modId != null and modId != '')"> #{modId , jdbcType= BIGINT },  </if>
+            <if test="(userId != null and userId != '')"> #{userId , jdbcType= BIGINT },  </if>
+            <if test="(roleId != null and roleId != '')"> #{roleId , jdbcType= BIGINT },  </if>
+            <if test="(popedomCode != null and popedomCode != '')"> #{popedomCode , jdbcType= OTHER },  </if>
+        </trim>
+    </insert>
+
+    <update id="updateSysModPopedom" parameterType="com.winning.isc.model.SysModPopedom">
+        UPDATE SYS_MOD_POPEDOM
+        <set>
+            <trim suffixOverrides=",">
+                <if test="(id != null and id != '')"> ID = #{id , jdbcType= BIGINT }, </if>
+                <if test="(modId != null and modId != '')"> MOD_ID = #{modId , jdbcType= BIGINT }, </if>
+                <if test="(userId != null and userId != '')"> USER_ID = #{userId , jdbcType= BIGINT }, </if>
+                <if test="(roleId != null and roleId != '')"> ROLE_ID = #{roleId , jdbcType= BIGINT }, </if>
+                <if test="(popedomCode != null and popedomCode != '')"> POPEDOM_CODE = #{popedomCode , jdbcType= OTHER }, </if>
+            </trim>
+        </set>
+        <where>
+            <if test="(id != null and id != '')"> and ID = #{ id, jdbcType= BIGINT }   </if>
+            <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteSysModPopedom" parameterType="com.winning.isc.model.SysModPopedom">
+        delete from  SYS_MOD_POPEDOM
+        <where>
+            <if test="(id != null and id != '')"> and ID = #{ id }   </if>
+            <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </delete>
+
+
+    <select id="selectSysModPopedom" resultMap="sysModPopedomResult" parameterType="com.winning.isc.model.SysModPopedom">
+        SELECT * FROM SYS_MOD_POPEDOM t
+        <where>
+            <include refid="sql-sysModPopedom" />
+        </where>
+    </select>
+
+    <select id="selectSysModPopedomList" resultMap="sysModPopedomResultForList" parameterType="com.winning.isc.model.SysModPopedom">
+        SELECT
+        <if test="row.count != null and row.count != ''"> top ${row.count} </if>
+        * FROM SYS_MOD_POPEDOM t
+        <where>
+            <include refid="sql-sysModPopedom" />
+        </where>
+        ORDER BY t.ID ASC
+    </select>
+
+    <select id="selectSysModPopedomCount" resultType="int" parameterType="com.winning.isc.model.SysModPopedom">
+        select count(1) from  SYS_MOD_POPEDOM t
+        <where>
+            <include refid="sql-sysModPopedom" />
+        </where>
+    </select>
+
+    <select id="selectSysModPopedomPageList" resultMap="sysModPopedomResult" parameterType="com.winning.isc.model.SysModPopedom">
+        SELECT * FROM (
+        SELECT t.* ,
+        ROW_NUMBER() OVER ( ORDER BY t.ID DESC ) AS _RN
+        FROM SYS_MOD_POPEDOM t
+        <where>
+            <include refid="sql-sysModPopedom" />
+        </where>
+        <!-- order by t.ID asc -->
+        ) TEMP_TABLE WHERE _RN BETWEEN  #{row.first} + 1 AND #{row.first} + #{row.count}
+    </select>
+
+
+</mapper>

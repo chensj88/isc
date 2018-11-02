@@ -32,7 +32,7 @@ public class Swagger2 {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.winning.hic"))
+                .apis(RequestHandlerSelectors.basePackage("com.winning.isc"))
                 .paths(PathSelectors.any())
                 .build();
     }

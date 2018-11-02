@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.winning.isc.dao.SysRoleUserDao">
+
+    <resultMap id="sysRoleUserResultForList" type="com.winning.isc.model.SysRoleUser">
+         <result column="ID" property="id" jdbcType="BIGINT" />
+         <result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+         <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+    </resultMap>
+
+    <resultMap id="sysRoleUserResult" type="com.winning.isc.model.SysRoleUser" extends="sysRoleUserResultForList">
+
+    </resultMap>
+
+    <sql id="sql-sysRoleUser">
+        <if test="(id != null and id != '')"> and t.ID = #{id} </if>
+        <if test="(roleId != null and roleId != '')"> and t.ROLE_ID = #{roleId} </if>
+        <if test="(userId != null and userId != '')"> and t.USER_ID = #{userId} </if>
+    </sql>
+
+    <insert id="insertSysRoleUser" parameterType="com.winning.isc.model.SysRoleUser">
+        <selectKey resultType="String"  order="BEFORE"  keyProperty="id">SELECT CAST(NEWID() AS VARCHAR(36)) AS ID</selectKey>
+        INSERT INTO SYS_ROLE_USER
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null and id != '')"> ID , </if>
+            <if test="(roleId != null and roleId != '')"> ROLE_ID , </if>
+            <if test="(userId != null and userId != '')"> USER_ID , </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null and id != '')"> #{id , jdbcType= BIGINT },  </if>
+            <if test="(roleId != null and roleId != '')"> #{roleId , jdbcType= BIGINT },  </if>
+            <if test="(userId != null and userId != '')"> #{userId , jdbcType= BIGINT },  </if>
+        </trim>
+    </insert>
+
+    <update id="updateSysRoleUser" parameterType="com.winning.isc.model.SysRoleUser">
+        UPDATE SYS_ROLE_USER
+        <set>
+            <trim suffixOverrides=",">
+                <if test="(id != null and id != '')"> ID = #{id , jdbcType= BIGINT }, </if>
+                <if test="(roleId != null and roleId != '')"> ROLE_ID = #{roleId , jdbcType= BIGINT }, </if>
+                <if test="(userId != null and userId != '')"> USER_ID = #{userId , jdbcType= BIGINT }, </if>
+            </trim>
+        </set>
+        <where>
+            <if test="(id != null and id != '')"> and ID = #{ id, jdbcType= BIGINT }   </if>
+            <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteSysRoleUser" parameterType="com.winning.isc.model.SysRoleUser">
+        delete from  SYS_ROLE_USER
+        <where>
+            <if test="(id != null and id != '')"> and ID = #{ id }   </if>
+            <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </delete>
+
+
+    <select id="selectSysRoleUser" resultMap="sysRoleUserResult" parameterType="com.winning.isc.model.SysRoleUser">
+        SELECT * FROM SYS_ROLE_USER t
+        <where>
+            <include refid="sql-sysRoleUser" />
+        </where>
+    </select>
+
+    <select id="selectSysRoleUserList" resultMap="sysRoleUserResultForList" parameterType="com.winning.isc.model.SysRoleUser">
+        SELECT
+        <if test="row.count != null and row.count != ''"> top ${row.count} </if>
+        * FROM SYS_ROLE_USER t
+        <where>
+            <include refid="sql-sysRoleUser" />
+        </where>
+        ORDER BY t.ID ASC
+    </select>
+
+    <select id="selectSysRoleUserCount" resultType="int" parameterType="com.winning.isc.model.SysRoleUser">
+        select count(1) from  SYS_ROLE_USER t
+        <where>
+            <include refid="sql-sysRoleUser" />
+        </where>
+    </select>
+
+    <select id="selectSysRoleUserPageList" resultMap="sysRoleUserResult" parameterType="com.winning.isc.model.SysRoleUser">
+        SELECT * FROM (
+        SELECT t.* ,
+        ROW_NUMBER() OVER ( ORDER BY t.ID DESC ) AS _RN
+        FROM SYS_ROLE_USER t
+        <where>
+            <include refid="sql-sysRoleUser" />
+        </where>
+        <!-- order by t.ID asc -->
+        ) TEMP_TABLE WHERE _RN BETWEEN  #{row.first} + 1 AND #{row.first} + #{row.count}
+    </select>
+
+
+</mapper>

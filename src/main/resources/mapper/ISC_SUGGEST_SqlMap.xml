@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.winning.isc.dao.IscSuggestDao">
+
+    <resultMap id="iscSuggestResultForList" type="com.winning.isc.model.IscSuggest">
+         <result column="ID" property="id" jdbcType="VARCHAR" />
+         <result column="TOOL_ID" property="toolId" jdbcType="VARCHAR" />
+         <result column="NAME" property="name" jdbcType="VARCHAR" />
+         <result column="CONTENT" property="content" jdbcType="OTHER" />
+         <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+         <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+         <result column="OPERATER" property="operater" jdbcType="VARCHAR" />
+         <result column="OPERATE_TIME" property="operateTime" jdbcType="TIMESTAMP" />
+         <result column="IS_STOP" property="isStop" jdbcType="INTEGER" />
+    </resultMap>
+
+    <resultMap id="iscSuggestResult" type="com.winning.isc.model.IscSuggest" extends="iscSuggestResultForList">
+
+    </resultMap>
+
+    <sql id="sql-iscSuggest">
+        <if test="(id != null and id != '')"> and t.ID = #{id} </if>
+        <if test="(toolId != null and toolId != '')"> and t.TOOL_ID = #{toolId} </if>
+        <if test="(name != null and name != '')"> and t.NAME = #{name} </if>
+        <if test="(content != null and content != '')"> and t.CONTENT = #{content} </if>
+        <if test="(creator != null and creator != '')"> and t.CREATOR = #{creator} </if>
+        <if test="(createTime != null and createTime != '')"> and t.CREATE_TIME = #{createTime} </if>
+        <if test="(operater != null and operater != '')"> and t.OPERATER = #{operater} </if>
+        <if test="(operateTime != null and operateTime != '')"> and t.OPERATE_TIME = #{operateTime} </if>
+        <if test="(isStop != null and isStop != '')"> and t.IS_STOP = #{isStop} </if>
+    </sql>
+
+    <insert id="insertIscSuggest" parameterType="com.winning.isc.model.IscSuggest">
+        <selectKey resultType="String"  order="BEFORE"  keyProperty="id">SELECT CAST(NEWID() AS VARCHAR(36)) AS ID</selectKey>
+        INSERT INTO ISC_SUGGEST
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null and id != '')"> ID , </if>
+            <if test="(toolId != null and toolId != '')"> TOOL_ID , </if>
+            <if test="(name != null and name != '')"> NAME , </if>
+            <if test="(content != null and content != '')"> CONTENT , </if>
+            <if test="(creator != null and creator != '')"> CREATOR , </if>
+            <if test="(createTime != null and createTime != '')"> CREATE_TIME , </if>
+            <if test="(operater != null and operater != '')"> OPERATER , </if>
+            <if test="(operateTime != null and operateTime != '')"> OPERATE_TIME , </if>
+            <if test="(isStop != null and isStop != '')"> IS_STOP , </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null and id != '')"> #{id , jdbcType= VARCHAR },  </if>
+            <if test="(toolId != null and toolId != '')"> #{toolId , jdbcType= VARCHAR },  </if>
+            <if test="(name != null and name != '')"> #{name , jdbcType= VARCHAR },  </if>
+            <if test="(content != null and content != '')"> #{content , jdbcType= OTHER },  </if>
+            <if test="(creator != null and creator != '')"> #{creator , jdbcType= VARCHAR },  </if>
+            <if test="(createTime != null and createTime != '')"> #{createTime , jdbcType= TIMESTAMP },  </if>
+            <if test="(operater != null and operater != '')"> #{operater , jdbcType= VARCHAR },  </if>
+            <if test="(operateTime != null and operateTime != '')"> #{operateTime , jdbcType= TIMESTAMP },  </if>
+            <if test="(isStop != null and isStop != '')"> #{isStop , jdbcType= INTEGER },  </if>
+        </trim>
+    </insert>
+
+    <update id="updateIscSuggest" parameterType="com.winning.isc.model.IscSuggest">
+        UPDATE ISC_SUGGEST
+        <set>
+            <trim suffixOverrides=",">
+                <if test="(id != null and id != '')"> ID = #{id , jdbcType= VARCHAR }, </if>
+                <if test="(toolId != null and toolId != '')"> TOOL_ID = #{toolId , jdbcType= VARCHAR }, </if>
+                <if test="(name != null and name != '')"> NAME = #{name , jdbcType= VARCHAR }, </if>
+                <if test="(content != null and content != '')"> CONTENT = #{content , jdbcType= OTHER }, </if>
+                <if test="(creator != null and creator != '')"> CREATOR = #{creator , jdbcType= VARCHAR }, </if>
+                <if test="(createTime != null and createTime != '')"> CREATE_TIME = #{createTime , jdbcType= TIMESTAMP }, </if>
+                <if test="(operater != null and operater != '')"> OPERATER = #{operater , jdbcType= VARCHAR }, </if>
+                <if test="(operateTime != null and operateTime != '')"> OPERATE_TIME = #{operateTime , jdbcType= TIMESTAMP }, </if>
+                <if test="(isStop != null and isStop != '')"> IS_STOP = #{isStop , jdbcType= INTEGER }, </if>
+            </trim>
+        </set>
+        <where>
+            <if test="(id != null and id != '')"> and ID = #{ id, jdbcType= VARCHAR }   </if>
+            <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteIscSuggest" parameterType="com.winning.isc.model.IscSuggest">
+        delete from  ISC_SUGGEST
+        <where>
+            <if test="(id != null and id != '')"> and ID = #{ id }   </if>
+            <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </delete>
+
+
+    <select id="selectIscSuggest" resultMap="iscSuggestResult" parameterType="com.winning.isc.model.IscSuggest">
+        SELECT * FROM ISC_SUGGEST t
+        <where>
+            <include refid="sql-iscSuggest" />
+        </where>
+    </select>
+
+    <select id="selectIscSuggestList" resultMap="iscSuggestResultForList" parameterType="com.winning.isc.model.IscSuggest">
+        SELECT
+        <if test="row.count != null and row.count != ''"> top ${row.count} </if>
+        * FROM ISC_SUGGEST t
+        <where>
+            <include refid="sql-iscSuggest" />
+        </where>
+        ORDER BY t.ID ASC
+    </select>
+
+    <select id="selectIscSuggestCount" resultType="int" parameterType="com.winning.isc.model.IscSuggest">
+        select count(1) from  ISC_SUGGEST t
+        <where>
+            <include refid="sql-iscSuggest" />
+        </where>
+    </select>
+
+    <select id="selectIscSuggestPageList" resultMap="iscSuggestResult" parameterType="com.winning.isc.model.IscSuggest">
+        SELECT * FROM (
+        SELECT t.* ,
+        ROW_NUMBER() OVER ( ORDER BY t.ID DESC ) AS _RN
+        FROM ISC_SUGGEST t
+        <where>
+            <include refid="sql-iscSuggest" />
+        </where>
+        <!-- order by t.ID asc -->
+        ) TEMP_TABLE WHERE _RN BETWEEN  #{row.first} + 1 AND #{row.first} + #{row.count}
+    </select>
+
+
+</mapper>

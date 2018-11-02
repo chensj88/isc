@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.winning.isc.dao.SysModFunDao">
+
+    <resultMap id="sysModFunResultForList" type="com.winning.isc.model.SysModFun">
+         <result column="MOD_ID" property="modId" jdbcType="BIGINT" />
+         <result column="FUN_ID" property="funId" jdbcType="BIGINT" />
+    </resultMap>
+
+    <resultMap id="sysModFunResult" type="com.winning.isc.model.SysModFun" extends="sysModFunResultForList">
+
+    </resultMap>
+
+    <sql id="sql-sysModFun">
+        <if test="(modId != null and modId != '')"> and t.MOD_ID = #{modId} </if>
+        <if test="(funId != null and funId != '')"> and t.FUN_ID = #{funId} </if>
+    </sql>
+
+    <insert id="insertSysModFun" parameterType="com.winning.isc.model.SysModFun">
+        <selectKey resultType="String"  order="BEFORE"  keyProperty="id">SELECT CAST(NEWID() AS VARCHAR(36)) AS ID</selectKey>
+        INSERT INTO SYS_MOD_FUN
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(modId != null and modId != '')"> MOD_ID , </if>
+            <if test="(funId != null and funId != '')"> FUN_ID , </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(modId != null and modId != '')"> #{modId , jdbcType= BIGINT },  </if>
+            <if test="(funId != null and funId != '')"> #{funId , jdbcType= BIGINT },  </if>
+        </trim>
+    </insert>
+
+    <update id="updateSysModFun" parameterType="com.winning.isc.model.SysModFun">
+        UPDATE SYS_MOD_FUN
+        <set>
+            <trim suffixOverrides=",">
+                <if test="(modId != null and modId != '')"> MOD_ID = #{modId , jdbcType= BIGINT }, </if>
+                <if test="(funId != null and funId != '')"> FUN_ID = #{funId , jdbcType= BIGINT }, </if>
+            </trim>
+        </set>
+        <where>
+            <if test=" and (map.pks != null and map.pks != '')">
+                and () in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteSysModFun" parameterType="com.winning.isc.model.SysModFun">
+        delete from  SYS_MOD_FUN
+        <where>
+            <if test=" and (map.pks != null and map.pks != '')">
+                and () in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </delete>
+
+
+    <select id="selectSysModFun" resultMap="sysModFunResult" parameterType="com.winning.isc.model.SysModFun">
+        SELECT * FROM SYS_MOD_FUN t
+        <where>
+            <include refid="sql-sysModFun" />
+        </where>
+    </select>
+
+    <select id="selectSysModFunList" resultMap="sysModFunResultForList" parameterType="com.winning.isc.model.SysModFun">
+        SELECT
+        <if test="row.count != null and row.count != ''"> top ${row.count} </if>
+        * FROM SYS_MOD_FUN t
+        <where>
+            <include refid="sql-sysModFun" />
+        </where>
+        ORDER BY  ASC
+    </select>
+
+    <select id="selectSysModFunCount" resultType="int" parameterType="com.winning.isc.model.SysModFun">
+        select count(1) from  SYS_MOD_FUN t
+        <where>
+            <include refid="sql-sysModFun" />
+        </where>
+    </select>
+
+    <select id="selectSysModFunPageList" resultMap="sysModFunResult" parameterType="com.winning.isc.model.SysModFun">
+        SELECT * FROM (
+        SELECT t.* ,
+        ROW_NUMBER() OVER ( ORDER BY  DESC ) AS _RN
+        FROM SYS_MOD_FUN t
+        <where>
+            <include refid="sql-sysModFun" />
+        </where>
+        <!-- order by  asc -->
+        ) TEMP_TABLE WHERE _RN BETWEEN  #{row.first} + 1 AND #{row.first} + #{row.count}
+    </select>
+
+
+</mapper>

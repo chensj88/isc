@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.winning.isc.dao.SysRoleInfoDao">
+
+    <resultMap id="sysRoleInfoResultForList" type="com.winning.isc.model.SysRoleInfo">
+         <result column="ID" property="id" jdbcType="BIGINT" />
+         <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+         <result column="ROLE_DESC" property="roleDesc" jdbcType="VARCHAR" />
+         <result column="ORDER_VALUE" property="orderValue" jdbcType="INTEGER" />
+         <result column="IS_LOCK" property="isLock" jdbcType="INTEGER" />
+         <result column="is_del" property="isDel" jdbcType="INTEGER" />
+    </resultMap>
+
+    <resultMap id="sysRoleInfoResult" type="com.winning.isc.model.SysRoleInfo" extends="sysRoleInfoResultForList">
+
+    </resultMap>
+
+    <sql id="sql-sysRoleInfo">
+        <if test="(id != null and id != '')"> and t.ID = #{id} </if>
+        <if test="(roleName != null and roleName != '')"> and t.ROLE_NAME = #{roleName} </if>
+        <if test="(roleDesc != null and roleDesc != '')"> and t.ROLE_DESC = #{roleDesc} </if>
+        <if test="(orderValue != null and orderValue != '')"> and t.ORDER_VALUE = #{orderValue} </if>
+        <if test="(isLock != null and isLock != '')"> and t.IS_LOCK = #{isLock} </if>
+        <if test="(isDel != null and isDel != '')"> and t.is_del = #{isDel} </if>
+    </sql>
+
+    <insert id="insertSysRoleInfo" parameterType="com.winning.isc.model.SysRoleInfo">
+        <selectKey resultType="String"  order="BEFORE"  keyProperty="id">SELECT CAST(NEWID() AS VARCHAR(36)) AS ID</selectKey>
+        INSERT INTO SYS_ROLE_INFO
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null and id != '')"> ID , </if>
+            <if test="(roleName != null and roleName != '')"> ROLE_NAME , </if>
+            <if test="(roleDesc != null and roleDesc != '')"> ROLE_DESC , </if>
+            <if test="(orderValue != null and orderValue != '')"> ORDER_VALUE , </if>
+            <if test="(isLock != null and isLock != '')"> IS_LOCK , </if>
+            <if test="(isDel != null and isDel != '')"> is_del , </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null and id != '')"> #{id , jdbcType= BIGINT },  </if>
+            <if test="(roleName != null and roleName != '')"> #{roleName , jdbcType= VARCHAR },  </if>
+            <if test="(roleDesc != null and roleDesc != '')"> #{roleDesc , jdbcType= VARCHAR },  </if>
+            <if test="(orderValue != null and orderValue != '')"> #{orderValue , jdbcType= INTEGER },  </if>
+            <if test="(isLock != null and isLock != '')"> #{isLock , jdbcType= INTEGER },  </if>
+            <if test="(isDel != null and isDel != '')"> #{isDel , jdbcType= INTEGER },  </if>
+        </trim>
+    </insert>
+
+    <update id="updateSysRoleInfo" parameterType="com.winning.isc.model.SysRoleInfo">
+        UPDATE SYS_ROLE_INFO
+        <set>
+            <trim suffixOverrides=",">
+                <if test="(id != null and id != '')"> ID = #{id , jdbcType= BIGINT }, </if>
+                <if test="(roleName != null and roleName != '')"> ROLE_NAME = #{roleName , jdbcType= VARCHAR }, </if>
+                <if test="(roleDesc != null and roleDesc != '')"> ROLE_DESC = #{roleDesc , jdbcType= VARCHAR }, </if>
+                <if test="(orderValue != null and orderValue != '')"> ORDER_VALUE = #{orderValue , jdbcType= INTEGER }, </if>
+                <if test="(isLock != null and isLock != '')"> IS_LOCK = #{isLock , jdbcType= INTEGER }, </if>
+                <if test="(isDel != null and isDel != '')"> is_del = #{isDel , jdbcType= INTEGER }, </if>
+            </trim>
+        </set>
+        <where>
+            <if test="(id != null and id != '')"> and ID = #{ id, jdbcType= BIGINT }   </if>
+            <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteSysRoleInfo" parameterType="com.winning.isc.model.SysRoleInfo">
+        delete from  SYS_ROLE_INFO
+        <where>
+            <if test="(id != null and id != '')"> and ID = #{ id }   </if>
+            <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </delete>
+
+
+    <select id="selectSysRoleInfo" resultMap="sysRoleInfoResult" parameterType="com.winning.isc.model.SysRoleInfo">
+        SELECT * FROM SYS_ROLE_INFO t
+        <where>
+            <include refid="sql-sysRoleInfo" />
+        </where>
+    </select>
+
+    <select id="selectSysRoleInfoList" resultMap="sysRoleInfoResultForList" parameterType="com.winning.isc.model.SysRoleInfo">
+        SELECT
+        <if test="row.count != null and row.count != ''"> top ${row.count} </if>
+        * FROM SYS_ROLE_INFO t
+        <where>
+            <include refid="sql-sysRoleInfo" />
+        </where>
+        ORDER BY t.ID ASC
+    </select>
+
+    <select id="selectSysRoleInfoCount" resultType="int" parameterType="com.winning.isc.model.SysRoleInfo">
+        select count(1) from  SYS_ROLE_INFO t
+        <where>
+            <include refid="sql-sysRoleInfo" />
+        </where>
+    </select>
+
+    <select id="selectSysRoleInfoPageList" resultMap="sysRoleInfoResult" parameterType="com.winning.isc.model.SysRoleInfo">
+        SELECT * FROM (
+        SELECT t.* ,
+        ROW_NUMBER() OVER ( ORDER BY t.ID DESC ) AS _RN
+        FROM SYS_ROLE_INFO t
+        <where>
+            <include refid="sql-sysRoleInfo" />
+        </where>
+        <!-- order by t.ID asc -->
+        ) TEMP_TABLE WHERE _RN BETWEEN  #{row.first} + 1 AND #{row.first} + #{row.count}
+    </select>
+
+
+</mapper>

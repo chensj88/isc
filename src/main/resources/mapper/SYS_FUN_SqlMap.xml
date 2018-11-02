@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.winning.isc.dao.SysFunDao">
+
+    <resultMap id="sysFunResultForList" type="com.winning.isc.model.SysFun">
+         <result column="ID" property="id" jdbcType="BIGINT" />
+         <result column="FUN_CODE" property="funCode" jdbcType="VARCHAR" />
+         <result column="FUN_NAME" property="funName" jdbcType="VARCHAR" />
+         <result column="ICON_PATH" property="iconPath" jdbcType="VARCHAR" />
+         <result column="ORDER_VALUE" property="orderValue" jdbcType="INTEGER" />
+         <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
+    </resultMap>
+
+    <resultMap id="sysFunResult" type="com.winning.isc.model.SysFun" extends="sysFunResultForList">
+
+    </resultMap>
+
+    <sql id="sql-sysFun">
+        <if test="(id != null and id != '')"> and t.ID = #{id} </if>
+        <if test="(funCode != null and funCode != '')"> and t.FUN_CODE = #{funCode} </if>
+        <if test="(funName != null and funName != '')"> and t.FUN_NAME = #{funName} </if>
+        <if test="(iconPath != null and iconPath != '')"> and t.ICON_PATH = #{iconPath} </if>
+        <if test="(orderValue != null and orderValue != '')"> and t.ORDER_VALUE = #{orderValue} </if>
+        <if test="(isDel != null and isDel != '')"> and t.IS_DEL = #{isDel} </if>
+    </sql>
+
+    <insert id="insertSysFun" parameterType="com.winning.isc.model.SysFun">
+        <selectKey resultType="String"  order="BEFORE"  keyProperty="id">SELECT CAST(NEWID() AS VARCHAR(36)) AS ID</selectKey>
+        INSERT INTO SYS_FUN
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null and id != '')"> ID , </if>
+            <if test="(funCode != null and funCode != '')"> FUN_CODE , </if>
+            <if test="(funName != null and funName != '')"> FUN_NAME , </if>
+            <if test="(iconPath != null and iconPath != '')"> ICON_PATH , </if>
+            <if test="(orderValue != null and orderValue != '')"> ORDER_VALUE , </if>
+            <if test="(isDel != null and isDel != '')"> IS_DEL , </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null and id != '')"> #{id , jdbcType= BIGINT },  </if>
+            <if test="(funCode != null and funCode != '')"> #{funCode , jdbcType= VARCHAR },  </if>
+            <if test="(funName != null and funName != '')"> #{funName , jdbcType= VARCHAR },  </if>
+            <if test="(iconPath != null and iconPath != '')"> #{iconPath , jdbcType= VARCHAR },  </if>
+            <if test="(orderValue != null and orderValue != '')"> #{orderValue , jdbcType= INTEGER },  </if>
+            <if test="(isDel != null and isDel != '')"> #{isDel , jdbcType= INTEGER },  </if>
+        </trim>
+    </insert>
+
+    <update id="updateSysFun" parameterType="com.winning.isc.model.SysFun">
+        UPDATE SYS_FUN
+        <set>
+            <trim suffixOverrides=",">
+                <if test="(id != null and id != '')"> ID = #{id , jdbcType= BIGINT }, </if>
+                <if test="(funCode != null and funCode != '')"> FUN_CODE = #{funCode , jdbcType= VARCHAR }, </if>
+                <if test="(funName != null and funName != '')"> FUN_NAME = #{funName , jdbcType= VARCHAR }, </if>
+                <if test="(iconPath != null and iconPath != '')"> ICON_PATH = #{iconPath , jdbcType= VARCHAR }, </if>
+                <if test="(orderValue != null and orderValue != '')"> ORDER_VALUE = #{orderValue , jdbcType= INTEGER }, </if>
+                <if test="(isDel != null and isDel != '')"> IS_DEL = #{isDel , jdbcType= INTEGER }, </if>
+            </trim>
+        </set>
+        <where>
+            <if test="(id != null and id != '')"> and ID = #{ id, jdbcType= BIGINT }   </if>
+            <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteSysFun" parameterType="com.winning.isc.model.SysFun">
+        delete from  SYS_FUN
+        <where>
+            <if test="(id != null and id != '')"> and ID = #{ id }   </if>
+            <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </delete>
+
+
+    <select id="selectSysFun" resultMap="sysFunResult" parameterType="com.winning.isc.model.SysFun">
+        SELECT * FROM SYS_FUN t
+        <where>
+            <include refid="sql-sysFun" />
+        </where>
+    </select>
+
+    <select id="selectSysFunList" resultMap="sysFunResultForList" parameterType="com.winning.isc.model.SysFun">
+        SELECT
+        <if test="row.count != null and row.count != ''"> top ${row.count} </if>
+        * FROM SYS_FUN t
+        <where>
+            <include refid="sql-sysFun" />
+        </where>
+        ORDER BY t.ID ASC
+    </select>
+
+    <select id="selectSysFunCount" resultType="int" parameterType="com.winning.isc.model.SysFun">
+        select count(1) from  SYS_FUN t
+        <where>
+            <include refid="sql-sysFun" />
+        </where>
+    </select>
+
+    <select id="selectSysFunPageList" resultMap="sysFunResult" parameterType="com.winning.isc.model.SysFun">
+        SELECT * FROM (
+        SELECT t.* ,
+        ROW_NUMBER() OVER ( ORDER BY t.ID DESC ) AS _RN
+        FROM SYS_FUN t
+        <where>
+            <include refid="sql-sysFun" />
+        </where>
+        <!-- order by t.ID asc -->
+        ) TEMP_TABLE WHERE _RN BETWEEN  #{row.first} + 1 AND #{row.first} + #{row.count}
+    </select>
+
+
+</mapper>

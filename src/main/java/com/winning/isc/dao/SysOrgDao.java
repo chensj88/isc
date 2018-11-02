@@ -6,17 +6,17 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;  
 
-import com.winning.isc.model.SysOrg;  
+import com.winning.isc.model.SysOrg;
 
 
 
 import org.springframework.stereotype.Repository;
 /**
-* @author ISC [Implementation service center]
+* @author HLHT
 * @title DAO接口
 * @email Winning Health
 * @package com.winning.isc.dao
-* @date 2018-51-30 15:51:27
+* @date 2018-47-02 09:47:18
 */
 @Repository
 public interface SysOrgDao {

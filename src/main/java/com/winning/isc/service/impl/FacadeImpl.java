@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @author chensj
  * @title FacadeImpl
  * @email chensj@winning.com.cn
- * @package com.winning.hic.service.impl;
+ * @package com.winning.isc.service.impl;
  * @date 2018-05-23 09:05:16
  */
 @Component
