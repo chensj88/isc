@@ -1,6 +1,7 @@
 package com.winning.isc.base.utils;
 
 import com.jcraft.jsch.*;
+import com.winning.isc.base.config.FtpConfig;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,15 +25,21 @@ public class SFtpUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(FtpUtils.class);
 
-    private static boolean isEnabledFtpUpload = Boolean.valueOf(FtpPropertiesLoader.getProperty("ftp.isenabledftpupload")).booleanValue();// required
+//    private static boolean isEnabledFtpUpload = Boolean.valueOf(FtpPropertiesLoader.getProperty("ftp.isenabledftpupload")).booleanValue();// required
+//
+//    private static String server = FtpPropertiesLoader.getProperty("ftp.server");// required
+//
+//    private static String username = FtpPropertiesLoader.getProperty("ftp.username"); // required
+//
+//    private static String password = FtpPropertiesLoader.getProperty("ftp.password"); // required
+//
+//    private static int port = Integer.valueOf(FtpPropertiesLoader.getProperty("ftp.port")).intValue();// optional
 
-    private static String server = FtpPropertiesLoader.getProperty("ftp.server");// required
-
-    private static String username = FtpPropertiesLoader.getProperty("ftp.username"); // required
-
-    private static String password = FtpPropertiesLoader.getProperty("ftp.password"); // required
-
-    private static int port = Integer.valueOf(FtpPropertiesLoader.getProperty("ftp.port")).intValue();// optional
+    private static boolean isEnabledFtpUpload = FtpConfig.isEnableFtpUpload;
+    private static String server = FtpConfig.server;// required
+    private static String username = FtpConfig.username; // required
+    private static String password = FtpConfig.password; // required
+    private static int port = Integer.valueOf(FtpConfig.port).intValue();// optional
 
     private static final String DEFAULT_ENCODER = "UTF-8";
 
