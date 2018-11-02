@@ -102,7 +102,7 @@
         var decryptPassword = Base64.encode(password);
         $.ajax({
             type: "POST",
-            url: ctx + "login/check",
+            url: ctx + "login",
             data:{"username":username,"password":decryptPassword},
             dataType:"json",
             cache : false,

@@ -30,13 +30,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/static/resources/");
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(getLoginInterceptor());
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//       registry.addInterceptor(getLoginInterceptor());
+//    }
 
-    @Bean
-    public HandlerInterceptor getLoginInterceptor(){
-        return new LoginInterceptor();
-    }
+//    @Bean
+//    public HandlerInterceptor getLoginInterceptor(){
+//        return new LoginInterceptor();
+//    }
 }

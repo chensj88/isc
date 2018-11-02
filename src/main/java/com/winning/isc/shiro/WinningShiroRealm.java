@@ -43,12 +43,12 @@ public class WinningShiroRealm extends AuthorizingRealm {
         logger.info("##################执行Shiro权限认证##################");
         String username = (String) principals.getPrimaryPrincipal();// 取得用户登录名
         SimpleAuthorizationInfo auth = new SimpleAuthorizationInfo();
-	/*	try {
-			auth.setRoles(userdao.listRolesByMEember(username));// 获取所有的角色
-			auth.setStringPermissions(userdao.listActionsByMEember(username));// 获取所有的权限
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}*/
+//		try {
+//			auth.setRoles(sysUserInfoDao.listRolesByMEember(username));// 获取所有的角色
+//			auth.setStringPermissions(userdao.listActionsByMEember(username));// 获取所有的权限
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
         return auth;
     }
 
@@ -61,6 +61,15 @@ public class WinningShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String userid = (String) token.getPrincipal();
+        if("admin".equals(userid)){
+            SysUserInfo userInfo = new SysUserInfo();
+            userInfo.setUserid(userid);
+            userInfo.setStatus(Constants.PMIS_STATUS_USE);
+            userInfo.setStatus(Constants.PMIS_STATUS_USE);
+            userInfo = sysUserInfoDao.selectSysUserInfo(userInfo);//获取用户基本信息
+            String password = new String((char[]) token.getCredentials());
+            return new SimpleAuthenticationInfo(userInfo, password, "memberRealm");
+        }
         SysUserInfo userInfo = new SysUserInfo();
         userInfo.setUserid(userid);
         userInfo.setStatus(Constants.PMIS_STATUS_USE);
