@@ -58,7 +58,7 @@ public class ShiroConfiguration {
         Map<String, String> filterChainDefinitionManager = new LinkedHashMap<>();
         filterChainDefinitionManager.put("/login", "anon");
         filterChainDefinitionManager.put("/logout", "logout");
-        filterChainDefinitionManager.put("/static/**", "anon");//静态资源不拦截
+        filterChainDefinitionManager.put("/static/**", "anon");//静态资源不拦login截
         filterChainDefinitionManager.put("/resources/**", "anon");//静态资源不拦截
         filterChainDefinitionManager.put("/assets/**", "anon");//静态资源不拦截
         filterChainDefinitionManager.put("/**","authc");//对所有用户认证
