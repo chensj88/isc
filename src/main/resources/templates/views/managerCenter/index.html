@@ -11,9 +11,14 @@
     <!-- bootstrap-table -->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" th:href="@{/assets/bootstrap-table/bootstrap-table.min.css}">
+    <!-- include summernote css/js -->
+    <link rel="stylesheet" th:href="@{/assets/summernote/summernote.css}">
+    <!-- include bootstrap-fileinput css/js -->
+    <link rel="stylesheet" th:href="@{/assets/bootstrap-fileinput/css/fileinput.min.css}">
 </head>
 
 <body style="background-color: #f3f3f4">
+
 <div class="container">
     <div id="toolbar">
         <form class="form-inline">
@@ -33,40 +38,76 @@
     </div>
     <table id="table">
     </table>
-    <!-- 产品模态框（Modal） -->
-    <div class="modal fade" id="toolModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="toolModalLabel">模态框（Modal）标题</h4>
-                </div>
-                <div class="modal-body">在这里添加一些文本</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">提交更改</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
-    <!-- 文案模态框（Modal） -->
-    <div class="modal fade" id="docModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="docModalLabel">模态框（Modal）标题</h4>
-                </div>
-                <div class="modal-body">在这里添加一些文本</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">提交更改</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
 </div>
-
+<!-- 产品模态框（Modal） -->
+<div class="modal fade" id="toolModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="width: 80%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="toolModalLabel">模态框（Modal）标题</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form method="get" class="form-horizontal">
+                            <div class="form-group"><label class="col-sm-3 control-label">产品LOGO</label>
+                                <div class="col-sm-9">
+                                    <input type="file" name="logoFile" id="logoInput" class="form-control" multiple>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group"><label class="col-sm-3 control-label">产品名称</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group"><label class="col-sm-3 control-label">工具/文案包</label>
+                                <div class="col-sm-9">
+                                    <input type="file" id="docInput" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group"><label class="col-sm-3 control-label">产品负责人</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group"><label class="col-sm-3 control-label">产品知识</label>
+                                <div class="col-sm-9">
+                                    <div id="summernote"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="submit_btn">提交更改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- 文案模态框（Modal） -->
+<div class="modal fade" id="docModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="docModalLabel">模态框（Modal）标题</h4>
+            </div>
+            <div class="modal-body">在这里添加一些文本</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">提交更改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
 <!-- Mainly scripts -->
 <!--[if !IE]> -->
@@ -87,9 +128,14 @@
 <!-- bootstrap-table -->
 <script th:src="@{/assets/bootstrap-table/bootstrap-table.min.js}"></script>
 <script th:src="@{/assets/bootstrap-table/bootstrap-table-zh-CN.js}"></script>
-
+<!-- include summernote -->
+<script type="text/javascript" th:src="@{/assets/summernote/summernote.js}"></script>
+<!--bootstrap-fielinput-->
+<script type="text/javascript" th:src="@{/assets/bootstrap-fileinput/js/fileinput.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/bootstrap-fileinput/js/locales/zh.js}"></script>
 <script>
     $(function () {
+        //初始化表格
         $("#table").bootstrapTable({
             url: ctx + 'modelCheck/list',
             method: "GET",
@@ -168,18 +214,69 @@
             //     InitSubTable(index, row, $detail);
             // },
         });
+        //logo上传
+        var logoInput = $('#logoInput')
+        logoInput.fileinput({//初始化上传文件框
+            uploadUrl: ctx + "manager/upload",
+            language: "zh",//配置语言
+            showUpload: false,//是否显示上传按钮
+            showRemove: true,
+            initialCaption: "请选择LOGO",
+            showCaption: true,//是否显示标题
+            showPreview: false,
+            showBrowse: true,
+            uploadLabel: "上传",//设置上传按钮的汉字
+            uploadClass: "btn btn-primary",//设置上传按钮样式
+            maxFileSize: 9999999,
+            maxFileCount: 1, /*允许最大上传数，可以多个，当前设置单个*/
+            enctype: 'multipart/form-data',
+            //allowedPreviewTypes : [ 'image' ], //allowedFileTypes: ['image', 'video', 'flash'],
+            allowedFileExtensions: ["jpg", "png", "gif"], /*上传文件格式*/
+            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            // browseOnZoneClick: true,
+            // dropZoneTitle: "请通过拖拽图片文件放到这里",
+            // dropZoneClickTitle: "或者点击此区域添加图片",
+            //uploadExtraData: {"id": id},//这个是外带数据
+            slugCallback: function (filename) {
+                return filename.replace('(', '_').replace(']', '_');
+            }
+        });
 
-        //查询条件
-        function queryParams(params) {
-            var sourceType = $("#data_set").children("option:selected").val();
-            var param = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-                sourceType: sourceType,
-            };
-            return param;
-        }
+        //文本编辑器
+        var summernote = $('#summernote');
+        summernote.summernote({
+            height: 300,
+            minHeight: 300,
+            maxHeight: 300,
+            lang: "zh-CN",
+            focus: true,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']]
+            ],
+        });
+
+        //确认提交
+        $("#submit_btn").click(function () {
+            logoInput.fileinput("upload");
+        });
 
 
     });
+
+    //查询条件
+    function queryParams(params) {
+        var sourceType = $("#data_set").children("option:selected").val();
+        var param = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+            sourceType: sourceType,
+        };
+        return param;
+    }
 
 
 </script>
