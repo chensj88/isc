@@ -10,6 +10,9 @@ import java.util.Properties;
 /**
  * @add Ren,zhong
  * @version 2014-07-15
+ * @modify 注销，不在使用
+ * @version 2018-11-02
+ * @deprecated
  */
 public class FtpPropertiesLoader {
 

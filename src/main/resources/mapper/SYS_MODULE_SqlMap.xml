@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.winning.isc.dao.SysModuleDao">
+
+    <resultMap id="sysModuleResultForList" type="com.winning.isc.model.SysModule">
+         <result column="MOD_ID" property="modId" jdbcType="BIGINT" />
+         <result column="PAR_ID" property="parId" jdbcType="BIGINT" />
+         <result column="MOD_NAME" property="modName" jdbcType="VARCHAR" />
+         <result column="MOD_DESC" property="modDesc" jdbcType="OTHER" />
+         <result column="MOD_LEVEL" property="modLevel" jdbcType="INTEGER" />
+         <result column="MOD_URL" property="modUrl" jdbcType="VARCHAR" />
+         <result column="ICON_PATH" property="iconPath" jdbcType="VARCHAR" />
+         <result column="IS_LEAF" property="isLeaf" jdbcType="INTEGER" />
+         <result column="IS_MANAGER" property="isManager" jdbcType="INTEGER" />
+         <result column="ORDER_VALUE" property="orderValue" jdbcType="INTEGER" />
+         <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
+    </resultMap>
+
+    <resultMap id="sysModuleResult" type="com.winning.isc.model.SysModule" extends="sysModuleResultForList">
+
+    </resultMap>
+
+    <sql id="sql-sysModule">
+        <if test="(modId != null and modId != '')"> and t.MOD_ID = #{modId} </if>
+        <if test="(parId != null and parId != '')"> and t.PAR_ID = #{parId} </if>
+        <if test="(modName != null and modName != '')"> and t.MOD_NAME = #{modName} </if>
+        <if test="(modDesc != null and modDesc != '')"> and t.MOD_DESC = #{modDesc} </if>
+        <if test="(modLevel != null and modLevel != '')"> and t.MOD_LEVEL = #{modLevel} </if>
+        <if test="(modUrl != null and modUrl != '')"> and t.MOD_URL = #{modUrl} </if>
+        <if test="(iconPath != null and iconPath != '')"> and t.ICON_PATH = #{iconPath} </if>
+        <if test="(isLeaf != null and isLeaf != '')"> and t.IS_LEAF = #{isLeaf} </if>
+        <if test="(isManager != null and isManager != '')"> and t.IS_MANAGER = #{isManager} </if>
+        <if test="(orderValue != null and orderValue != '')"> and t.ORDER_VALUE = #{orderValue} </if>
+        <if test="(isDel != null and isDel != '')"> and t.IS_DEL = #{isDel} </if>
+    </sql>
+
+    <insert id="insertSysModule" parameterType="com.winning.isc.model.SysModule">
+        <selectKey resultType="String"  order="BEFORE"  keyProperty="id">SELECT CAST(NEWID() AS VARCHAR(36)) AS ID</selectKey>
+        INSERT INTO SYS_MODULE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(modId != null and modId != '')"> MOD_ID , </if>
+            <if test="(parId != null and parId != '')"> PAR_ID , </if>
+            <if test="(modName != null and modName != '')"> MOD_NAME , </if>
+            <if test="(modDesc != null and modDesc != '')"> MOD_DESC , </if>
+            <if test="(modLevel != null and modLevel != '')"> MOD_LEVEL , </if>
+            <if test="(modUrl != null and modUrl != '')"> MOD_URL , </if>
+            <if test="(iconPath != null and iconPath != '')"> ICON_PATH , </if>
+            <if test="(isLeaf != null and isLeaf != '')"> IS_LEAF , </if>
+            <if test="(isManager != null and isManager != '')"> IS_MANAGER , </if>
+            <if test="(orderValue != null and orderValue != '')"> ORDER_VALUE , </if>
+            <if test="(isDel != null and isDel != '')"> IS_DEL , </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(modId != null and modId != '')"> #{modId , jdbcType= BIGINT },  </if>
+            <if test="(parId != null and parId != '')"> #{parId , jdbcType= BIGINT },  </if>
+            <if test="(modName != null and modName != '')"> #{modName , jdbcType= VARCHAR },  </if>
+            <if test="(modDesc != null and modDesc != '')"> #{modDesc , jdbcType= OTHER },  </if>
+            <if test="(modLevel != null and modLevel != '')"> #{modLevel , jdbcType= INTEGER },  </if>
+            <if test="(modUrl != null and modUrl != '')"> #{modUrl , jdbcType= VARCHAR },  </if>
+            <if test="(iconPath != null and iconPath != '')"> #{iconPath , jdbcType= VARCHAR },  </if>
+            <if test="(isLeaf != null and isLeaf != '')"> #{isLeaf , jdbcType= INTEGER },  </if>
+            <if test="(isManager != null and isManager != '')"> #{isManager , jdbcType= INTEGER },  </if>
+            <if test="(orderValue != null and orderValue != '')"> #{orderValue , jdbcType= INTEGER },  </if>
+            <if test="(isDel != null and isDel != '')"> #{isDel , jdbcType= INTEGER },  </if>
+        </trim>
+    </insert>
+
+    <update id="updateSysModule" parameterType="com.winning.isc.model.SysModule">
+        UPDATE SYS_MODULE
+        <set>
+            <trim suffixOverrides=",">
+                <if test="(modId != null and modId != '')"> MOD_ID = #{modId , jdbcType= BIGINT }, </if>
+                <if test="(parId != null and parId != '')"> PAR_ID = #{parId , jdbcType= BIGINT }, </if>
+                <if test="(modName != null and modName != '')"> MOD_NAME = #{modName , jdbcType= VARCHAR }, </if>
+                <if test="(modDesc != null and modDesc != '')"> MOD_DESC = #{modDesc , jdbcType= OTHER }, </if>
+                <if test="(modLevel != null and modLevel != '')"> MOD_LEVEL = #{modLevel , jdbcType= INTEGER }, </if>
+                <if test="(modUrl != null and modUrl != '')"> MOD_URL = #{modUrl , jdbcType= VARCHAR }, </if>
+                <if test="(iconPath != null and iconPath != '')"> ICON_PATH = #{iconPath , jdbcType= VARCHAR }, </if>
+                <if test="(isLeaf != null and isLeaf != '')"> IS_LEAF = #{isLeaf , jdbcType= INTEGER }, </if>
+                <if test="(isManager != null and isManager != '')"> IS_MANAGER = #{isManager , jdbcType= INTEGER }, </if>
+                <if test="(orderValue != null and orderValue != '')"> ORDER_VALUE = #{orderValue , jdbcType= INTEGER }, </if>
+                <if test="(isDel != null and isDel != '')"> IS_DEL = #{isDel , jdbcType= INTEGER }, </if>
+            </trim>
+        </set>
+        <where>
+            <if test="(modId != null and modId != '')"> and MOD_ID = #{ modId, jdbcType= BIGINT }   </if>
+            <if test="(modId !=null or modId!='') and (map.pks != null and map.pks != '')">
+                and (MOD_ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteSysModule" parameterType="com.winning.isc.model.SysModule">
+        delete from  SYS_MODULE
+        <where>
+            <if test="(modId != null and modId != '')"> and MOD_ID = #{ modId }   </if>
+            <if test="(modId !=null or modId!='') and (map.pks != null and map.pks != '')">
+                and (MOD_ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </delete>
+
+
+    <select id="selectSysModule" resultMap="sysModuleResult" parameterType="com.winning.isc.model.SysModule">
+        SELECT * FROM SYS_MODULE t
+        <where>
+            <include refid="sql-sysModule" />
+        </where>
+    </select>
+
+    <select id="selectSysModuleList" resultMap="sysModuleResultForList" parameterType="com.winning.isc.model.SysModule">
+        SELECT
+        <if test="row.count != null and row.count != ''"> top ${row.count} </if>
+        * FROM SYS_MODULE t
+        <where>
+            <include refid="sql-sysModule" />
+        </where>
+        ORDER BY t.MOD_ID ASC
+    </select>
+
+    <select id="selectSysModuleCount" resultType="int" parameterType="com.winning.isc.model.SysModule">
+        select count(1) from  SYS_MODULE t
+        <where>
+            <include refid="sql-sysModule" />
+        </where>
+    </select>
+
+    <select id="selectSysModulePageList" resultMap="sysModuleResult" parameterType="com.winning.isc.model.SysModule">
+        SELECT * FROM (
+        SELECT t.* ,
+        ROW_NUMBER() OVER ( ORDER BY t.MOD_ID DESC ) AS _RN
+        FROM SYS_MODULE t
+        <where>
+            <include refid="sql-sysModule" />
+        </where>
+        <!-- order by t.MOD_ID asc -->
+        ) TEMP_TABLE WHERE _RN BETWEEN  #{row.first} + 1 AND #{row.first} + #{row.count}
+    </select>
+
+
+</mapper>

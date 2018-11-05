@@ -6,7 +6,7 @@ import com.winning.isc.ws.service.PmisWebServiceClient;
 * @author chensj
 * @title Facade
 * @email chensj@winning.com.cn
-* @package com.winning.hic.service;
+* @package com.winning.isc.service;
 * @date 2018-05-23 09:05:16
 */
 public interface Facade {

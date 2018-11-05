@@ -17,7 +17,7 @@ import java.util.Date;
  * @author chensj
  * @title Quatrz定时任务配置
  * @email chensj@winning.com.cn
- * @package com.winning.hic.job
+ * @package com.winning.isc.job
  * @date: 2018-09-13 11:13
  */
 @Configuration

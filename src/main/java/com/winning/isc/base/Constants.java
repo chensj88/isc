@@ -1,5 +1,6 @@
 package com.winning.isc.base;
 
+import com.winning.isc.base.config.FtpConfig;
 import com.winning.isc.base.utils.FtpPropertiesLoader;
 
 /**
@@ -12,9 +13,10 @@ import com.winning.isc.base.utils.FtpPropertiesLoader;
 public class Constants {
 
     public static final String DRIVE_CLASS_NAME = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    public static int FTP_PORT = Integer.valueOf(FtpPropertiesLoader.getProperty("ftp.port")).intValue();
-    public static String FTP_SERVER = FtpPropertiesLoader.getProperty("ftp.server");
-    public static String FTP_SHARE_SERVER = FtpPropertiesLoader.getProperty("ftp.share");
+
+    public static int FTP_PORT = Integer.valueOf(FtpConfig.port).intValue();
+    public static String FTP_SERVER = FtpConfig.server;
+    public static String FTP_SHARE_SERVER = FtpConfig.share;
     public static String FTP_SHARE_FLODER = "http://" + FTP_SHARE_SERVER + ":8081/shareFolder";
     public static String HTTP_SERVER = "http://" + FTP_SHARE_SERVER + ":8081/ssgjm";
 
