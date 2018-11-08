@@ -42,7 +42,7 @@ public class ManagerCenterController extends BaseController {
         return "views/managerCenter/index";
     }
 
-    @RequestMapping(value = "/add")
+    @RequestMapping(value = "/modify")
     @ResponseBody
     public Map add(IscTools iscTools) {
         SysUserInfo userInfo = (SysUserInfo) SecurityUtils.getSubject().getPrincipal();
@@ -50,22 +50,51 @@ public class ManagerCenterController extends BaseController {
         iscTools.setOperater(userInfo.getUserid());
         iscTools.setCreateTime(new Timestamp(new Date().getTime()));
         iscTools.setOperateTime(new Timestamp(new Date().getTime()));
+        Long id = iscTools.getId();
         String toolRar = iscTools.getToolRar();
         String logo = iscTools.getLogo();
         String downLoad = iscTools.getDownLoad();
         if (!StringUtil.isEmptyOrNull(toolRar)) {
-            toolRar = FtpConfig.jarRemote + toolRar.substring(toolRar.lastIndexOf("\\")+1);
+            toolRar = FtpConfig.jarRemote + toolRar.substring(toolRar.lastIndexOf("\\") + 1);
             iscTools.setToolRar(toolRar);
         }
         if (!StringUtil.isEmptyOrNull(logo)) {
-            logo = FtpConfig.logoRemote + logo.substring(logo.lastIndexOf("\\")+1);
+            logo = FtpConfig.logoRemote + logo.substring(logo.lastIndexOf("\\") + 1);
             iscTools.setLogo(logo);
         }
         if (!StringUtil.isEmptyOrNull(downLoad)) {
-            downLoad = FtpConfig.docRemote + downLoad.substring(downLoad.lastIndexOf("\\")+1);
+            downLoad = FtpConfig.docRemote + downLoad.substring(downLoad.lastIndexOf("\\") + 1);
             iscTools.setDownLoad(downLoad);
         }
-        iscToolsService.createIscTools(iscTools);
+        if (id != null) {
+            //当id存在时，为更新操作
+            IscTools temp = new IscTools();
+            temp.setId(id);
+            temp = iscToolsService.getIscTools(temp);
+            //获取之前的上传路径
+            String oldToolRar = iscTools.getToolRar();
+            String oldLogo = iscTools.getLogo();
+            String oldDownLoad = iscTools.getDownLoad();
+            try {
+                if (!StringUtil.isEmptyOrNull(oldToolRar) && !StringUtil.isEmptyOrNull(toolRar) && !oldToolRar.equals(toolRar)) {
+                    //删除原来的工具包
+                    FtpUtils.deleteFtpFile(oldToolRar);
+                }
+                if (!StringUtil.isEmptyOrNull(oldLogo) && !StringUtil.isEmptyOrNull(logo) && !oldLogo.equals(logo)) {
+                    //删除原来的logo
+                    FtpUtils.deleteFtpFile(oldLogo);
+                }
+                if (!StringUtil.isEmptyOrNull(oldDownLoad) && !StringUtil.isEmptyOrNull(downLoad) && !oldDownLoad.equals(downLoad)) {
+                    //删除原来的文案
+                    FtpUtils.deleteFtpFile(oldDownLoad);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            iscToolsService.modifyIscTools(iscTools);
+        } else {
+            iscToolsService.createIscTools(iscTools);
+        }
         resultMap.put("msg", "success");
         return resultMap;
     }

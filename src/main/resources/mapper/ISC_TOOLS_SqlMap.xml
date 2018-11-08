@@ -4,7 +4,7 @@
 <mapper namespace="com.winning.isc.dao.IscToolsDao">
 
     <resultMap id="iscToolsResultForList" type="com.winning.isc.model.IscTools">
-        <result column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="ID" property="id" jdbcType="BIGINT"/>
         <result column="NAME" property="name" jdbcType="VARCHAR"/>
         <result column="LOGO" property="logo" jdbcType="VARCHAR"/>
         <result column="LEADER" property="leader" jdbcType="VARCHAR"/>
@@ -21,6 +21,7 @@
         <result column="OPERATER" property="operater" jdbcType="VARCHAR"/>
         <result column="OPERATE_TIME" property="operateTime" jdbcType="TIMESTAMP"/>
         <result column="IS_STOP" property="isStop" jdbcType="INTEGER"/>
+        <result column="TYPE" property="type" jdbcType="INTEGER"/>
     </resultMap>
 
     <resultMap id="iscToolsResult" type="com.winning.isc.model.IscTools" extends="iscToolsResultForList">
@@ -45,6 +46,7 @@
         <if test="(operater != null and operater != '')">and t.OPERATER = #{operater}</if>
         <if test="(operateTime != null)">and t.OPERATE_TIME = #{operateTime}</if>
         <if test="(isStop != null)">and t.IS_STOP = #{isStop}</if>
+        <if test="(type != null)">and t.TYPE = #{type}</if>
     </sql>
 
     <insert id="insertIscTools" parameterType="com.winning.isc.model.IscTools">
@@ -66,6 +68,7 @@
             <if test="(operater != null and operater != '')">OPERATER ,</if>
             <if test="(operateTime != null)">OPERATE_TIME ,</if>
             <if test="(isStop != null)">IS_STOP ,</if>
+            <if test="(type != null)">TYPE ,</if>
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -85,6 +88,7 @@
             <if test="(operater != null and operater != '')">#{operater , jdbcType= VARCHAR },</if>
             <if test="(operateTime != null)">#{operateTime , jdbcType= TIMESTAMP },</if>
             <if test="(isStop != null)">#{isStop , jdbcType= INTEGER },</if>
+            <if test="(type != null)">#{type , jdbcType= INTEGER },</if>
         </trim>
     </insert>
 
@@ -110,10 +114,11 @@
                 <if test="(operater != null and operater != '')">OPERATER = #{operater , jdbcType= VARCHAR },</if>
                 <if test="(operateTime != null)">OPERATE_TIME = #{operateTime , jdbcType= TIMESTAMP },</if>
                 <if test="(isStop != null)">IS_STOP = #{isStop , jdbcType= INTEGER },</if>
+                <if test="(type != null)">TYPE = #{type , jdbcType= INTEGER },</if>
             </trim>
         </set>
         <where>
-            <if test="(id != null)">and ID = #{ id, jdbcType= VARCHAR }</if>
+            <if test="(id != null)">and ID = #{ id, jdbcType= BIGINT }</if>
             <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
                 and (ID) in
                 <foreach item="item" collection="map.pks" open="(" separator="," close=")">#{item}</foreach>

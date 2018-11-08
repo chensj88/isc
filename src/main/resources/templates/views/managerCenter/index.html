@@ -46,11 +46,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="toolModalLabel">产品新增</h4>
+                <h4 class="modal-title" id="toolModalLabel">产品</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-12">
+                        <input type="hidden" id="tool_id"/>
                         <form method="get" class="form-horizontal">
                             <div class="form-group"><label class="col-sm-3 control-label">产品LOGO</label>
                                 <div class="col-sm-9">
@@ -98,9 +99,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="docModalLabel">文案新增</h4>
+                <h4 class="modal-title" id="docModalLabel">文案</h4>
             </div>
             <div class="modal-body">
+                <!--ID-->
+                <input type="hidden" id="doc_id"/>
                 <div class="row">
                     <div class="col-lg-12">
                         <form method="get" class="form-horizontal">
@@ -203,20 +206,36 @@
                 // },
                 {
                     field: 'name',
-                    width: '10%',
+                    width: '20%',
                     title: '名称'
                 }, {
                     field: 'leader',
-                    width: '20%',
+                    width: '15%',
                     title: '负责人/部门'
                 },
                 {
                     field: 'operateTime',
-                    width: '30%',
+                    width: '15%',
                     title: '更新时间',
                     formatter: function (value, row, index) {
                         //	2018-11-07T03:03:13.000+0000
                         var str = value.substr(0, 10) + " " + value.substr(11, 8);
+                        return str;
+                    }
+                },
+                {
+                    field: 'type',
+                    width: '10%',
+                    title: '类型',
+                    formatter: function (value, row, index) {
+                        var str = "";
+                        if (value == 0) {
+                            str = "产品";
+                        } else if (value == 1) {
+                            str = "文案";
+                        } else {
+                            str = "其他";
+                        }
                         return str;
                     }
                 },
@@ -254,7 +273,7 @@
                     formatter:
 
                         function (value, row, index) {
-                            var str = "<div class='btn-group'><button type='button' class='btn btn-success btn-xs' onclick='changeStatus(" + row.id + "," + 0 + ")'>编&nbsp;&nbsp;&nbsp;&nbsp;辑</button>"
+                            var str = "<div class='btn-group'><button type='button' class='btn btn-success btn-xs' onclick='uptdateModalOpen(" + row.type + "," + JSON.stringify(row) + ")'>编&nbsp;&nbsp;&nbsp;&nbsp;辑</button>"
                             if (row.isStop == 0) {
                                 str += "<button type='button' class='btn btn-danger btn-xs' onclick='changeStatus(" + row.id + "," + 1 + ",this)'>停&nbsp;&nbsp;&nbsp;&nbsp;用</button></div>"
                             } else if (row.isStop == 1) {
@@ -395,6 +414,8 @@
         });
         //产品确认提交
         $("#submit_btn").click(function () {
+            //id
+            var id = $("#tool_id").val();
             //logo
             var logo = $("#logoInput").val();
             //名称
@@ -410,9 +431,11 @@
                 layer.msg('产品名称不能为空！', {icon: 5, time: 2500});
                 return;
             }
-            if (toolRar == null || toolRar == "") {
-                layer.msg('请选择工具包!', {icon: 5, time: 2500});
-                return;
+            if (id == null || id == "") {
+                if (toolRar == null || toolRar == "") {
+                    layer.msg('请选择工具包!', {icon: 5, time: 2500});
+                    return;
+                }
             }
             if (leader == null || leader == "") {
                 layer.msg('产品负责人不能为空!', {icon: 5, time: 2500});
@@ -444,10 +467,10 @@
             }
             //ajax后台新增数据
             $.ajax({
-                url: ctx + "manager/add",
+                url: ctx + "manager/modify",
                 async: false,
                 type: "post",
-                data: {name: name, logo: logo, toolRar: toolRar, leader: leader, content: content},
+                data: {id: id, name: name, logo: logo, toolRar: toolRar, leader: leader, content: content, type: 0},
                 success: function (data) {
                     if (data.msg == "success") {
                         $("#toolModal").modal("hide");
@@ -460,6 +483,8 @@
         });
         //文案确认提交
         $("#doc_sub_btn").click(function () {
+            //id
+            var id = $("#doc_id").val();
             //名称
             var name = $("#doc_name").val();
             //文案文件
@@ -473,9 +498,11 @@
                 layer.msg("文案名称不能为空！", {icon: 5, time: 2500});
                 return;
             }
-            if (downLoad == null || downLoad == "") {
-                layer.msg('请选择文案文件!', {icon: 5, time: 2500});
-                return;
+            if (id == null || id == "") {
+                if (downLoad == null || downLoad == "") {
+                    layer.msg('请选择文案文件!', {icon: 5, time: 2500});
+                    return;
+                }
             }
             if (leader == null || leader == "") {
                 layer.msg('编纂人不能为空!', {icon: 5, time: 2500});
@@ -495,10 +522,10 @@
             }
             //ajax后台新增数据
             $.ajax({
-                url: ctx + "manager/add",
+                url: ctx + "manager/modify",
                 async: false,
                 type: "post",
-                data: {name: name, downLoad: downLoad, leader: leader, content: content},
+                data: {id: id, name: name, downLoad: downLoad, leader: leader, content: content, type: 1},
                 success: function (data) {
                     if (data.msg == "success") {
                         $("#docModal").modal("hide");
@@ -518,10 +545,11 @@
 
     });
 
-    //查询条件
+    //新增模态框
     function modalOpen(elementId, type) {
         if (type == 0) {
             //产品模态框初始化数据
+            $("#tool_id").val("");
             $("#logoInput").fileinput("clear");
             //名称
             $("#tool_name").val("");
@@ -533,6 +561,7 @@
             $('#summernote').summernote('code', '');
         } else if (type == 1) {
             //产品模态框初始化数据
+            $("#doc_id").val("");
             //名称
             $("#doc_name").val("");
             //文案文件
@@ -543,6 +572,36 @@
             $('#doc_summernote').summernote('code', '');
         }
         $(elementId).modal("show");
+    }
+
+    //更新模态框
+    function uptdateModalOpen(type, row) {
+        if (type == 0) {
+            $("#tool_id").val(row.id);
+            //产品模态框初始化数据
+            $("#logoInput").fileinput("clear");
+            //名称
+            $("#tool_name").val(row.name);
+            //工具包
+            $("#jarInput").fileinput("clear");
+            //产品负责人
+            $("#tool_leader").val(row.leader);
+            //描述内容
+            $('#summernote').summernote('code', row.content);
+            $("#toolModal").modal("show");
+        } else if (type == 1) {
+            //产品模态框初始化数据
+            $("#doc_id").val(row.id);
+            //名称
+            $("#doc_name").val(row.name);
+            //文案文件
+            $("#docInput").fileinput("clear");
+            //产品负责人
+            $("#doc_leader").val(row.leader);
+            //描述内容
+            $('#doc_summernote').summernote('code', row.content);
+            $("#docModal").modal("show");
+        }
 
     }
 
