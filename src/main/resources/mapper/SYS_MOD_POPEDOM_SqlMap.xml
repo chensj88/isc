@@ -4,11 +4,13 @@
 <mapper namespace="com.winning.isc.dao.SysModPopedomDao">
 
     <resultMap id="sysModPopedomResultForList" type="com.winning.isc.model.SysModPopedom">
-         <result column="ID" property="id" jdbcType="BIGINT" />
-         <result column="MOD_ID" property="modId" jdbcType="BIGINT" />
-         <result column="USER_ID" property="userId" jdbcType="BIGINT" />
-         <result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
-         <result column="POPEDOM_CODE" property="popedomCode" jdbcType="OTHER" />
+        <result column="ID" property="id" jdbcType="BIGINT"/>
+        <result column="MOD_ID" property="modId" jdbcType="BIGINT"/>
+        <result column="MOD_LEVEL" property="modLevel" jdbcType="BIGINT"/>
+        <result column="ROLE_ID" property="roleId" jdbcType="BIGINT"/>
+        <result column="POPEDOM_CODE" property="popedomCode" jdbcType="VARCHAR"/>
+        <result column="MOD_URL" property="modUrl" jdbcType="VARCHAR"/>
+        <result column="MOD_PID" property="modPid" jdbcType="BIGINT"/>
     </resultMap>
 
     <resultMap id="sysModPopedomResult" type="com.winning.isc.model.SysModPopedom" extends="sysModPopedomResultForList">
@@ -16,30 +18,36 @@
     </resultMap>
 
     <sql id="sql-sysModPopedom">
-        <if test="(id != null and id != '')"> and t.ID = #{id} </if>
-        <if test="(modId != null and modId != '')"> and t.MOD_ID = #{modId} </if>
-        <if test="(userId != null and userId != '')"> and t.USER_ID = #{userId} </if>
-        <if test="(roleId != null and roleId != '')"> and t.ROLE_ID = #{roleId} </if>
-        <if test="(popedomCode != null and popedomCode != '')"> and t.POPEDOM_CODE = #{popedomCode} </if>
+        <if test="(id != null and id != '') or id == 0">and t.ID = #{id}</if>
+        <if test="(modId != null and modId != '') or modId == 0">and t.MOD_ID = #{modId}</if>
+        <if test="(modLevel != null and modLevel != '') or modLevel == 0">and t.MOD_LEVEL = #{modLevel}</if>
+        <if test="(roleId != null and roleId != '') or roleId == 0">and t.ROLE_ID = #{roleId}</if>
+        <if test="popedomCode != null and popedomCode != ''">and t.POPEDOM_CODE = #{popedomCode}</if>
+        <if test="modUrl != null and modUrl != ''">and t.MOD_URL = #{modUrl}</if>
+        <if test="modPid != null ">and t.MOD_PID = #{modPid}</if>
     </sql>
 
     <insert id="insertSysModPopedom" parameterType="com.winning.isc.model.SysModPopedom">
         <selectKey resultType="String"  order="BEFORE"  keyProperty="id">SELECT CAST(NEWID() AS VARCHAR(36)) AS ID</selectKey>
         INSERT INTO SYS_MOD_POPEDOM
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="(id != null and id != '')"> ID , </if>
-            <if test="(modId != null and modId != '')"> MOD_ID , </if>
-            <if test="(userId != null and userId != '')"> USER_ID , </if>
-            <if test="(roleId != null and roleId != '')"> ROLE_ID , </if>
-            <if test="(popedomCode != null and popedomCode != '')"> POPEDOM_CODE , </if>
+            <if test="(id != null and id != '') or id == 0">ID,</if>
+            <if test="(modId != null and modId != '') or modId == 0">MOD_ID,</if>
+            <if test="(modLevel != null and modLevel != '') or modLevel == 0">MOD_LEVEL,</if>
+            <if test="(roleId != null and roleId != '') or roleId == 0">ROLE_ID,</if>
+            <if test="popedomCode != null and popedomCode != ''">POPEDOM_CODE,</if>
+            <if test="modUrl != null and modUrl != ''">MOD_URL,</if>
+            <if test="modPid != null ">MOD_PID,</if>
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="(id != null and id != '')"> #{id , jdbcType= BIGINT },  </if>
-            <if test="(modId != null and modId != '')"> #{modId , jdbcType= BIGINT },  </if>
-            <if test="(userId != null and userId != '')"> #{userId , jdbcType= BIGINT },  </if>
-            <if test="(roleId != null and roleId != '')"> #{roleId , jdbcType= BIGINT },  </if>
-            <if test="(popedomCode != null and popedomCode != '')"> #{popedomCode , jdbcType= OTHER },  </if>
+            <if test="(id != null and id != '') or id == 0">#{id, jdbcType=BIGINT},</if>
+            <if test="(modId != null and modId != '') or modId == 0">#{modId, jdbcType=BIGINT},</if>
+            <if test="(modLevel != null and modLevel != '') or modLevel == 0">#{modLevel, jdbcType=BIGINT},</if>
+            <if test="(roleId != null and roleId != '') or roleId == 0">#{roleId, jdbcType=BIGINT},</if>
+            <if test="popedomCode != null and popedomCode != ''">#{popedomCode, jdbcType=VARCHAR},</if>
+            <if test="modUrl != null and modUrl != ''">#{modUrl, jdbcType=VARCHAR},</if>
+            <if test="modPid != null ">#{modPid, jdbcType=BIGINT},</if>
         </trim>
     </insert>
 
@@ -47,11 +55,15 @@
         UPDATE SYS_MOD_POPEDOM
         <set>
             <trim suffixOverrides=",">
-                <if test="(id != null and id != '')"> ID = #{id , jdbcType= BIGINT }, </if>
-                <if test="(modId != null and modId != '')"> MOD_ID = #{modId , jdbcType= BIGINT }, </if>
-                <if test="(userId != null and userId != '')"> USER_ID = #{userId , jdbcType= BIGINT }, </if>
-                <if test="(roleId != null and roleId != '')"> ROLE_ID = #{roleId , jdbcType= BIGINT }, </if>
-                <if test="(popedomCode != null and popedomCode != '')"> POPEDOM_CODE = #{popedomCode , jdbcType= OTHER }, </if>
+                <if test="(id != null and id != '') or id == 0">ID = #{id, jdbcType=BIGINT},</if>
+                <if test="(modId != null and modId != '') or modId == 0">MOD_ID = #{modId, jdbcType=BIGINT},</if>
+                <if test="(modLevel != null and modLevel != '') or modLevel == 0">MOD_LEVEL = #{modLevel, jdbcType=BIGINT},</if>
+                <if test="(roleId != null and roleId != '') or roleId == 0">ROLE_ID = #{roleId, jdbcType=BIGINT},</if>
+                <if test="popedomCode != null and popedomCode != ''">POPEDOM_CODE =
+                    #{popedomCode, jdbcType=VARCHAR},
+                </if>
+                <if test="modUrl != null and modUrl != ''">MOD_URL =#{modUrl, jdbcType=VARCHAR},</if>
+                <if test="modPid != null ">MOD_PID = #{modPid, jdbcType=BIGINT},</if>
             </trim>
         </set>
         <where>
@@ -111,5 +123,71 @@
         ) TEMP_TABLE WHERE _RN BETWEEN  #{row.first} + 1 AND #{row.first} + #{row.count}
     </select>
 
+    <select id="selectModuleIdList" resultType="java.lang.Long" parameterType="com.winning.isc.model.SysModPopedom">
+        select DISTINCT t.MOD_ID from SYS_MOD_POPEDOM t where 1 = 1
+        <include refid="sql-sysModPopedom"/>
+        <!-- order by ID asc -->
+    </select>
+
+    <delete id="deleteSysModPopedomForIds" parameterType="java.util.Map">
+        delete from SYS_MOD_POPEDOM
+        <where>
+            <if test=" ids != null and ids != ''">
+                ${ids}
+            </if>
+        </where>
+    </delete>
+
+    <select id="selectModulePopedomInfoList" parameterType="com.winning.isc.model.SysModPopedom"  resultMap="sysModPopedomResult">
+        SELECT
+        A.*,
+        B.PAR_ID,
+        B.MOD_NAME,
+        B.MOD_LEVEL
+        FROM SYS_MOD_POPEDOM A
+        LEFT JOIN SYS_MODULE B ON A.MOD_ID = B.MOD_ID
+        <where>
+            <if test="(roleId != null and roleId != '') or roleId == 0">
+                A.ROLE_ID = #{roleId, jdbcType=BIGINT}
+            </if>
+            <if test="(modLevel != null and modLevel != '') or modLevel == 0">
+                B.MOD_LEVEL = #{modLevel, jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectSysModPopedomHasPopedomList" parameterType="com.winning.isc.model.SysModPopedom" resultMap="sysModPopedomResult">
+        SELECT
+        A.*
+        FROM SYS_MOD_POPEDOM A
+        <where>
+            <if test="(roleId != null and roleId != '') or roleId == 0">
+                AND  A.ROLE_ID = #{roleId, jdbcType=BIGINT}
+            </if>
+            <if test="(roleId != null and roleId != '') or roleId == 0">
+                AND A.POPEDOM_CODE IS NOT NULL
+            </if>
+        </where>
+    </select>
+
+    <update id="updateSysModPopedomAllPopedomCode" parameterType="com.winning.isc.model.SysModPopedom" >
+        update SYS_MOD_POPEDOM set POPEDOM_CODE = #{popedomCode, jdbcType=VARCHAR}
+        where ROLE_ID = #{roleId, jdbcType=BIGINT}
+    </update>
+
+    <select id="selectButtonFlagForPageByModUrlAndRoles" parameterType="com.winning.isc.model.SysModPopedom" resultType="string">
+        select
+        c.MOD_NAME
+        from  SYS_MOD_POPEDOM a
+        left join SYS_MODULE b on a.MOD_PID = b.MOD_ID
+        left join SYS_MODULE c on c.MOD_ID = a.MOD_ID
+        <where>
+            <if test="modUrl != null and modUrl != ''">and b.MOD_URL = #{modUrl}</if>
+            <if test="map.pks != null and map.pks.size >0">
+                and a.ROLE_ID in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")">#{item}</foreach>
+            </if>
+        </where>
+    </select>
 
 </mapper>

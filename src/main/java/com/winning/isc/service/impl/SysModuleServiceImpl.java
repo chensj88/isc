@@ -1,9 +1,12 @@
 package com.winning.isc.service.impl;
 
+import com.winning.isc.base.Constants;
+import com.winning.isc.model.SysRoleInfo;
+import com.winning.isc.model.support.NodeTree;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;  
+import java.util.*;
 
 import com.winning.isc.model.SysModule;
 
@@ -52,4 +55,44 @@ public class SysModuleServiceImpl implements  SysModuleService {
     public List<SysModule> getSysModulePageList(SysModule sysModule){
         return this.sysModuleDao.selectSysModulePageList(sysModule);
     }
+
+    @Override
+    public Set<String> getBtnModuleListByModuleURL(SysModule module) {
+        List<String> allBtnList = sysModuleDao.selectBtnModuleListByModuleURL(module);
+        Set<String> allBtnSet = new HashSet<>();
+        allBtnSet.addAll(allBtnList);
+        return allBtnSet;
+    }
+
+    @Override
+    public List<NodeTree> getSysModuleNodeTree(SysModule module) {
+        module.setIsDel(Constants.STATUS_UNUSE);
+        module.setModLevel(1);
+        List<SysModule> moduleList = this.sysModuleDao.selectSysModuleDaoListForName(module);
+        List<NodeTree> moduleTree = new ArrayList<NodeTree>();
+        for (SysModule sysModule : moduleList) {
+            NodeTree node = new NodeTree();
+            node.setId(sysModule.getModId());
+            node.setNodeId(sysModule.getModId());
+            node.setText(sysModule.getModName());
+            node.setNodes(getChildNode(sysModule.getModId()));
+            moduleTree.add(node);
+        }
+        return moduleTree;
+    }
+
+
+
+    private List<NodeTree> getChildNode(Long modId) {
+        SysModule module = new SysModule();
+        module.setParId(modId);
+        module.setIsDel(0);
+        List<NodeTree> moduleTree = new ArrayList<NodeTree>();
+        List<SysModule> moduleList = this.sysModuleDao.selectSysModuleList(module);
+        for (SysModule sysModule : moduleList) {
+            moduleTree.add(sysModule.getNodeTree());
+        }
+        return moduleTree;
+    }
+
 }

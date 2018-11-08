@@ -1,29 +1,29 @@
 
 package com.winning.isc.ws.client;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
- * <p>Java class for bizProcessResult complex type.
+ * <p>bizProcessResult complex type的 Java 类。
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>以下模式片段指定包含在此类中的预期内容。
  * 
  * <pre>
- * &lt;complexType name="bizProcessResult">
- *   &lt;complexContent>
- *     &lt;extension base="{http://ws.livebos.apex.com/}lbeResult">
- *       &lt;sequence>
- *         &lt;element name="outputVariables" type="{http://ws.livebos.apex.com/}lbParameter" maxOccurs="unbounded" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="bizProcessResult"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;extension base="{http://ws.livebos.apex.com/}lbeResult"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="outputVariables" type="{http://ws.livebos.apex.com/}lbParameter" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 

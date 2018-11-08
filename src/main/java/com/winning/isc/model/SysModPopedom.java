@@ -1,149 +1,92 @@
 package com.winning.isc.model;
 
-import java.io.Serializable; 
+import org.apache.ibatis.type.Alias;
 
-import org.apache.ibatis.type.Alias; 
-
-import com.winning.isc.model.BaseDomain;
-
-
+import java.io.Serializable;
 
 /**
- * @author HLHT
- * @title 
- * @email Winning Health
- * @package com.winning.isc.model
- * @date 2018-47-02 09:47:09
+ *
+ *
+ * @author SSGJ
+ * @date 2018-01-18 10:11:46
  */
+
 @Alias("sysModPopedom")
 public class SysModPopedom extends BaseDomain implements Serializable {
 
     private static final long serialVersionUID = -1L;
 
-    /**
-     * 字段名：ID
-     * 备注: 
-     * 默认值：无
-     */
     private Long id;
-    /**
-     * 字段名：MOD_ID
-     * 备注: 
-     * 默认值：无
-     */
+
     private Long modId;
-    /**
-     * 字段名：USER_ID
-     * 备注: 
-     * 默认值：无
-     */
-    private Long userId;
-    /**
-     * 字段名：ROLE_ID
-     * 备注: 
-     * 默认值：无
-     */
+
+    private Long modLevel;
+
     private Long roleId;
-    /**
-     * 字段名：POPEDOM_CODE
-     * 备注: 
-     * 默认值：无
-     */
+
     private String popedomCode;
 
-    public SysModPopedom (){
+    private String modUrl;
+
+    private Long modPid;
+
+    public SysModPopedom() {
 
     }
 
-   /**
-   * 字段名：ID
-   * get方法
-   * 备注: 
-   */
-   public Long getId(){
-
+    public Long getId() {
         return id;
-   }
+    }
 
-   /**
-   * 字段名：ID
-   * set方法
-   * 备注: 
-   */
-   public void setId(Long id){
+    public void setId(Long id) {
         this.id = id;
-   }
-   /**
-   * 字段名：MOD_ID
-   * get方法
-   * 备注: 
-   */
-   public Long getModId(){
+    }
 
+    public Long getModId() {
         return modId;
-   }
+    }
 
-   /**
-   * 字段名：MOD_ID
-   * set方法
-   * 备注: 
-   */
-   public void setModId(Long modId){
+    public void setModId(Long modId) {
         this.modId = modId;
-   }
-   /**
-   * 字段名：USER_ID
-   * get方法
-   * 备注: 
-   */
-   public Long getUserId(){
+    }
 
-        return userId;
-   }
+    public Long getModLevel() {
+        return modLevel;
+    }
 
-   /**
-   * 字段名：USER_ID
-   * set方法
-   * 备注: 
-   */
-   public void setUserId(Long userId){
-        this.userId = userId;
-   }
-   /**
-   * 字段名：ROLE_ID
-   * get方法
-   * 备注: 
-   */
-   public Long getRoleId(){
+    public void setModLevel(Long modLevel) {
+        this.modLevel = modLevel;
+    }
 
+    public Long getRoleId() {
         return roleId;
-   }
+    }
 
-   /**
-   * 字段名：ROLE_ID
-   * set方法
-   * 备注: 
-   */
-   public void setRoleId(Long roleId){
+    public void setRoleId(Long roleId) {
         this.roleId = roleId;
-   }
-   /**
-   * 字段名：POPEDOM_CODE
-   * get方法
-   * 备注: 
-   */
-   public String getPopedomCode(){
+    }
 
+    public String getPopedomCode() {
         return popedomCode;
-   }
+    }
 
-   /**
-   * 字段名：POPEDOM_CODE
-   * set方法
-   * 备注: 
-   */
-   public void setPopedomCode(String popedomCode){
+    public void setPopedomCode(String popedomCode) {
         this.popedomCode = popedomCode;
-   }
+    }
 
+    public String getModUrl() {
+        return modUrl;
+    }
+
+    public void setModUrl(String modUrl) {
+        this.modUrl = modUrl;
+    }
+
+    public Long getModPid() {
+        return modPid;
+    }
+
+    public void setModPid(Long modPid) {
+        this.modPid = modPid;
+    }
 }

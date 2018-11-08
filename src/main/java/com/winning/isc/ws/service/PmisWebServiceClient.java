@@ -49,7 +49,10 @@ public class PmisWebServiceClient {
         }
     }
 
-
+    public static void insertPMISInterfaceData(String dataType) {
+        String tableName = pmisInfoData.get(dataType);
+        generateDymaicSql(tableName, dataType);
+    }
 
 
     /**

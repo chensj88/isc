@@ -1,9 +1,6 @@
 package com.winning.isc.service.impl;
 
-import com.winning.isc.service.Facade;
-import com.winning.isc.service.SysOrgExtService;
-import com.winning.isc.service.SysOrgService;
-import com.winning.isc.service.SysUserInfoService;
+import com.winning.isc.service.*;
 import com.winning.isc.ws.service.PmisWebServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,6 +23,16 @@ public class FacadeImpl implements Facade {
     private SysOrgService sysOrgService;
     @Autowired
     private SysOrgExtService sysOrgExtService;
+    @Autowired
+    private SysRoleUserService sysRoleUserService;
+    @Autowired
+    private SysModuleService sysModuleService;
+    @Autowired
+    private SysModPopedomService sysModPopedomService;
+    @Autowired
+    private ZTreeNodeService zTreeNodeService;
+    @Autowired
+    private SysRoleInfoService sysRoleInfoService;
 
     @Override
     public PmisWebServiceClient getPmisWebServiceClient() {
@@ -45,6 +52,31 @@ public class FacadeImpl implements Facade {
     @Override
     public SysOrgExtService getSysOrgExtService() {
         return sysOrgExtService;
+    }
+
+    @Override
+    public SysRoleUserService getSysRoleUserService() {
+        return sysRoleUserService;
+    }
+
+    @Override
+    public SysModuleService getSysModuleService() {
+        return sysModuleService;
+    }
+
+    @Override
+    public SysModPopedomService getSysModPopedomService() {
+        return sysModPopedomService;
+    }
+
+    @Override
+    public ZTreeNodeService getZTreeNodeService() {
+        return zTreeNodeService;
+    }
+
+    @Override
+    public SysRoleInfoService getSysRoleInfoService() {
+        return sysRoleInfoService;
     }
 
 

@@ -1,6 +1,7 @@
 package com.winning.isc.service;
 
-import java.util.List;  
+import java.util.List;
+import java.util.Set;
 
 import com.winning.isc.model.SysModPopedom;
 
@@ -27,4 +28,14 @@ public interface SysModPopedomService {
     public List<SysModPopedom> getSysModPopedomList(SysModPopedom sysModPopedom);
 
     public List<SysModPopedom> getSysModPopedomPageList(SysModPopedom sysModPopedom);
+
+    Set<String> getButtonFlagForPageByModUrlAndRoles(SysModPopedom modPopedom);
+
+    List<Long> getModuleIdList(SysModPopedom modPopedom);
+
+    void createSysModPopedomByList(List<SysModPopedom> modPopedomList);
+
+    void modifyModPopedomMapping(String idList);
+
+    List<SysModPopedom> getSysModPopedomHasPopedomList(SysModPopedom modPopedom);
 }

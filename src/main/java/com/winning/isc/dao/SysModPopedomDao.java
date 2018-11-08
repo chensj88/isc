@@ -2,7 +2,9 @@ package com.winning.isc.dao;
 
 
 
-import java.util.List;  
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.dao.DataAccessException;  
 
@@ -34,4 +36,16 @@ public interface SysModPopedomDao {
     public List<SysModPopedom> selectSysModPopedomList(SysModPopedom sysModPopedom) throws DataAccessException;
 
     public List<SysModPopedom> selectSysModPopedomPageList(SysModPopedom sysModPopedom) throws DataAccessException;
+
+    List<Long> selectModuleIdList(SysModPopedom modPopedom);
+
+    void deleteSysModPopedomForIds(Map<String, Object> param);
+
+    List<SysModPopedom> selectModulePopedomInfoList(SysModPopedom modPopedom);
+
+    List<SysModPopedom> selectSysModPopedomHasPopedomList(SysModPopedom modPopedom);
+
+    void updateSysModPopedomAllPopedomCode(SysModPopedom modPopedom);
+
+    Set<String> selectButtonFlagForPageByModUrlAndRoles(SysModPopedom modPopedom);
 }

@@ -3,6 +3,7 @@ package com.winning.isc.service;
 import java.util.List;  
 
 import com.winning.isc.model.SysRoleInfo;
+import com.winning.isc.model.support.NodeTree;
 
 
 /**
@@ -27,4 +28,6 @@ public interface SysRoleInfoService {
     public List<SysRoleInfo> getSysRoleInfoList(SysRoleInfo sysRoleInfo);
 
     public List<SysRoleInfo> getSysRoleInfoPageList(SysRoleInfo sysRoleInfo);
+
+    List<NodeTree> getRoleInfoTree(String roleName);
 }

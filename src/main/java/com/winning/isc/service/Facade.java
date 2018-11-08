@@ -18,4 +18,14 @@ public interface Facade {
     SysOrgService getSysOrgService();
 
     SysOrgExtService getSysOrgExtService();
+
+    SysRoleUserService getSysRoleUserService();
+
+    SysModuleService getSysModuleService();
+
+    SysModPopedomService getSysModPopedomService();
+
+    ZTreeNodeService getZTreeNodeService();
+
+    SysRoleInfoService getSysRoleInfoService();
 }
