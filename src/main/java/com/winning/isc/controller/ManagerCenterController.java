@@ -3,6 +3,7 @@ package com.winning.isc.controller;
 import com.winning.isc.base.Constants;
 import com.winning.isc.base.config.FtpConfig;
 import com.winning.isc.base.utils.FtpUtils;
+import com.winning.isc.base.utils.StringUtil;
 import com.winning.isc.model.IscTools;
 import com.winning.isc.model.SysUserInfo;
 import com.winning.isc.model.support.Row;
@@ -44,11 +45,26 @@ public class ManagerCenterController extends BaseController {
     @RequestMapping(value = "/add")
     @ResponseBody
     public Map add(IscTools iscTools) {
-        SysUserInfo  userInfo = (SysUserInfo)SecurityUtils.getSubject().getPrincipal();
+        SysUserInfo userInfo = (SysUserInfo) SecurityUtils.getSubject().getPrincipal();
         iscTools.setCreator(userInfo.getUserid());
         iscTools.setOperater(userInfo.getUserid());
         iscTools.setCreateTime(new Timestamp(new Date().getTime()));
         iscTools.setOperateTime(new Timestamp(new Date().getTime()));
+        String toolRar = iscTools.getToolRar();
+        String logo = iscTools.getLogo();
+        String downLoad = iscTools.getDownLoad();
+        if (!StringUtil.isEmptyOrNull(toolRar)) {
+            toolRar = FtpConfig.jarRemote + toolRar.substring(toolRar.lastIndexOf("\\")+1);
+            iscTools.setToolRar(toolRar);
+        }
+        if (!StringUtil.isEmptyOrNull(logo)) {
+            logo = FtpConfig.logoRemote + logo.substring(logo.lastIndexOf("\\")+1);
+            iscTools.setLogo(logo);
+        }
+        if (!StringUtil.isEmptyOrNull(downLoad)) {
+            downLoad = FtpConfig.docRemote + downLoad.substring(downLoad.lastIndexOf("\\")+1);
+            iscTools.setDownLoad(downLoad);
+        }
         iscToolsService.createIscTools(iscTools);
         resultMap.put("msg", "success");
         return resultMap;
