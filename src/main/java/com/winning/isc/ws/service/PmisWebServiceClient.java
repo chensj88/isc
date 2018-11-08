@@ -23,6 +23,7 @@ import java.util.Map;
  * @email chensj@winning.com.cm
  * @package cn.com.winning.ssgj.ws.service
  * @date 2018-02-05 13:09
+ * wsdl2java -encoding utf-8 -p com.winning.isc.ws.client -d D:\\ws\\  http://203.110.176.178:9089/service/LBEBusiness?wsdl
  */
 @Component
 public class PmisWebServiceClient {
