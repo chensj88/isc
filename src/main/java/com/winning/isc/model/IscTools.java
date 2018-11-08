@@ -23,7 +23,7 @@ public class IscTools extends BaseDomain implements Serializable {
      * 备注:
      * 默认值：无
      */
-    private String id;
+    private Long id;
     /**
      * 字段名：NAME
      * 备注:
@@ -121,6 +121,16 @@ public class IscTools extends BaseDomain implements Serializable {
      */
     private Integer isStop;
 
+    private Integer type;
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public IscTools() {
 
     }
@@ -130,7 +140,7 @@ public class IscTools extends BaseDomain implements Serializable {
      * get方法
      * 备注:
      */
-    public String getId() {
+    public Long getId() {
 
         return id;
     }
@@ -140,7 +150,7 @@ public class IscTools extends BaseDomain implements Serializable {
      * set方法
      * 备注:
      */
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
