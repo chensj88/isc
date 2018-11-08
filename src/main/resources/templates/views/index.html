@@ -92,17 +92,21 @@
     <div id="page-wrapper" class="gray-bg dashbard-1">
         <!--顶部导航栏-->
         <div class="row border-bottom">
-            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0;background: #1c84c6;height: 90px;">
                 <div class="navbar-header">
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
                     </a>
                 </div>
-                <ul class="nav navbar-top-links navbar-right">
+
+                <div style="font-size:28px;float:left!important;margin-left: 36%;margin-top:26px;font-weight: bold;color: #fff;">
+                    实 施 辅 助 中 心 系 统
+                </div>
+                <ul class="nav navbar-top-links navbar-right" >
                     <li>
-                        <span class="m-r-sm text-muted welcome-message">欢迎登录实施服务中心</span>
+                        <span class="m-r-sm text-muted welcome-message" style="color:#fff;font-size:15px;">欢迎 【陈蒯】 </span>
                     </li>
                     <li>
-                        <a th:href="@{/logout}">
+                        <a th:href="@{/logout}" style="color:#fff;">
                             <i class="fa fa-sign-out"></i> 退出
                         </a>
                     </li>
