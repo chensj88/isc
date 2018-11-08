@@ -4,7 +4,7 @@
 <mapper namespace="com.winning.isc.dao.IscToolsDao">
 
     <resultMap id="iscToolsResultForList" type="com.winning.isc.model.IscTools">
-         <result column="ID" property="id" jdbcType="VARCHAR" />
+         <result column="ID" property="id" jdbcType="INTEGER" />
          <result column="NAME" property="name" jdbcType="VARCHAR" />
          <result column="LOGO" property="logo" jdbcType="VARCHAR" />
          <result column="LEADER" property="leader" jdbcType="VARCHAR" />
@@ -28,11 +28,11 @@
     </resultMap>
 
     <sql id="sql-iscTools">
-        <if test="(id != null and id != '')"> and t.ID = #{id} </if>
+        <if test="(id != null)"> and t.ID = #{id} </if>
         <if test="(name != null and name != '')"> and t.NAME = #{name} </if>
         <if test="(logo != null and logo != '')"> and t.LOGO = #{logo} </if>
         <if test="(leader != null and leader != '')"> and t.LEADER = #{leader} </if>
-        <if test="(phone != null and phone != '')"> and t.PHONE = #{phone} </if>
+        <if test="(phone != null)"> and t.PHONE = #{phone} </if>
         <if test="(toolRar != null and toolRar != '')"> and t.TOOL_RAR = #{toolRar} </if>
         <if test="(content != null and content != '')"> and t.CONTENT = #{content} </if>
         <if test="(downLoad != null and downLoad != '')"> and t.DOWN_LOAD = #{downLoad} </if>
@@ -41,21 +41,19 @@
         <if test="(viewNum != null and viewNum != '')"> and t.VIEW_NUM = #{viewNum} </if>
         <if test="(dowmNum != null and dowmNum != '')"> and t.DOWM_NUM = #{dowmNum} </if>
         <if test="(creator != null and creator != '')"> and t.CREATOR = #{creator} </if>
-        <if test="(createTime != null and createTime != '')"> and t.CREATE_TIME = #{createTime} </if>
+        <if test="(createTime != null)"> and t.CREATE_TIME = #{createTime} </if>
         <if test="(operater != null and operater != '')"> and t.OPERATER = #{operater} </if>
-        <if test="(operateTime != null and operateTime != '')"> and t.OPERATE_TIME = #{operateTime} </if>
-        <if test="(isStop != null and isStop != '')"> and t.IS_STOP = #{isStop} </if>
+        <if test="(operateTime != null)"> and t.OPERATE_TIME = #{operateTime} </if>
+        <if test="(isStop != null)"> and t.IS_STOP = #{isStop} </if>
     </sql>
 
     <insert id="insertIscTools" parameterType="com.winning.isc.model.IscTools">
-        <selectKey resultType="String"  order="BEFORE"  keyProperty="id">SELECT CAST(NEWID() AS VARCHAR(36)) AS ID</selectKey>
         INSERT INTO ISC_TOOLS
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="(id != null and id != '')"> ID , </if>
             <if test="(name != null and name != '')"> NAME , </if>
             <if test="(logo != null and logo != '')"> LOGO , </if>
             <if test="(leader != null and leader != '')"> LEADER , </if>
-            <if test="(phone != null and phone != '')"> PHONE , </if>
+            <if test="(phone != null)"> PHONE , </if>
             <if test="(toolRar != null and toolRar != '')"> TOOL_RAR , </if>
             <if test="(content != null and content != '')"> CONTENT , </if>
             <if test="(downLoad != null and downLoad != '')"> DOWN_LOAD , </if>
@@ -64,18 +62,17 @@
             <if test="(viewNum != null and viewNum != '')"> VIEW_NUM , </if>
             <if test="(dowmNum != null and dowmNum != '')"> DOWM_NUM , </if>
             <if test="(creator != null and creator != '')"> CREATOR , </if>
-            <if test="(createTime != null and createTime != '')"> CREATE_TIME , </if>
+            <if test="(createTime != null)"> CREATE_TIME , </if>
             <if test="(operater != null and operater != '')"> OPERATER , </if>
-            <if test="(operateTime != null and operateTime != '')"> OPERATE_TIME , </if>
-            <if test="(isStop != null and isStop != '')"> IS_STOP , </if>
+            <if test="(operateTime != null)"> OPERATE_TIME , </if>
+            <if test="(isStop != null)"> IS_STOP , </if>
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="(id != null and id != '')"> #{id , jdbcType= VARCHAR },  </if>
             <if test="(name != null and name != '')"> #{name , jdbcType= VARCHAR },  </if>
             <if test="(logo != null and logo != '')"> #{logo , jdbcType= VARCHAR },  </if>
             <if test="(leader != null and leader != '')"> #{leader , jdbcType= VARCHAR },  </if>
-            <if test="(phone != null and phone != '')"> #{phone , jdbcType= INTEGER },  </if>
+            <if test="(phone != null)"> #{phone , jdbcType= INTEGER },  </if>
             <if test="(toolRar != null and toolRar != '')"> #{toolRar , jdbcType= VARCHAR },  </if>
             <if test="(content != null and content != '')"> #{content , jdbcType= OTHER },  </if>
             <if test="(downLoad != null and downLoad != '')"> #{downLoad , jdbcType= VARCHAR },  </if>
@@ -84,10 +81,10 @@
             <if test="(viewNum != null and viewNum != '')"> #{viewNum , jdbcType= INTEGER },  </if>
             <if test="(dowmNum != null and dowmNum != '')"> #{dowmNum , jdbcType= INTEGER },  </if>
             <if test="(creator != null and creator != '')"> #{creator , jdbcType= VARCHAR },  </if>
-            <if test="(createTime != null and createTime != '')"> #{createTime , jdbcType= TIMESTAMP },  </if>
+            <if test="(createTime != null)"> #{createTime , jdbcType= TIMESTAMP },  </if>
             <if test="(operater != null and operater != '')"> #{operater , jdbcType= VARCHAR },  </if>
-            <if test="(operateTime != null and operateTime != '')"> #{operateTime , jdbcType= TIMESTAMP },  </if>
-            <if test="(isStop != null and isStop != '')"> #{isStop , jdbcType= INTEGER },  </if>
+            <if test="(operateTime != null)"> #{operateTime , jdbcType= TIMESTAMP },  </if>
+            <if test="(isStop != null)"> #{isStop , jdbcType= INTEGER },  </if>
         </trim>
     </insert>
 
@@ -95,11 +92,10 @@
         UPDATE ISC_TOOLS
         <set>
             <trim suffixOverrides=",">
-                <if test="(id != null and id != '')"> ID = #{id , jdbcType= VARCHAR }, </if>
                 <if test="(name != null and name != '')"> NAME = #{name , jdbcType= VARCHAR }, </if>
                 <if test="(logo != null and logo != '')"> LOGO = #{logo , jdbcType= VARCHAR }, </if>
                 <if test="(leader != null and leader != '')"> LEADER = #{leader , jdbcType= VARCHAR }, </if>
-                <if test="(phone != null and phone != '')"> PHONE = #{phone , jdbcType= INTEGER }, </if>
+                <if test="(phone != null)"> PHONE = #{phone , jdbcType= INTEGER }, </if>
                 <if test="(toolRar != null and toolRar != '')"> TOOL_RAR = #{toolRar , jdbcType= VARCHAR }, </if>
                 <if test="(content != null and content != '')"> CONTENT = #{content , jdbcType= OTHER }, </if>
                 <if test="(downLoad != null and downLoad != '')"> DOWN_LOAD = #{downLoad , jdbcType= VARCHAR }, </if>
@@ -108,14 +104,14 @@
                 <if test="(viewNum != null and viewNum != '')"> VIEW_NUM = #{viewNum , jdbcType= INTEGER }, </if>
                 <if test="(dowmNum != null and dowmNum != '')"> DOWM_NUM = #{dowmNum , jdbcType= INTEGER }, </if>
                 <if test="(creator != null and creator != '')"> CREATOR = #{creator , jdbcType= VARCHAR }, </if>
-                <if test="(createTime != null and createTime != '')"> CREATE_TIME = #{createTime , jdbcType= TIMESTAMP }, </if>
+                <if test="(createTime != null)"> CREATE_TIME = #{createTime , jdbcType= TIMESTAMP }, </if>
                 <if test="(operater != null and operater != '')"> OPERATER = #{operater , jdbcType= VARCHAR }, </if>
-                <if test="(operateTime != null and operateTime != '')"> OPERATE_TIME = #{operateTime , jdbcType= TIMESTAMP }, </if>
-                <if test="(isStop != null and isStop != '')"> IS_STOP = #{isStop , jdbcType= INTEGER }, </if>
+                <if test="(operateTime != null)"> OPERATE_TIME = #{operateTime , jdbcType= TIMESTAMP }, </if>
+                <if test="(isStop != null)"> IS_STOP = #{isStop , jdbcType= INTEGER }, </if>
             </trim>
         </set>
         <where>
-            <if test="(id != null and id != '')"> and ID = #{ id, jdbcType= VARCHAR }   </if>
+            <if test="(id != null)"> and ID = #{ id, jdbcType= VARCHAR }   </if>
             <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
                 and (ID) in
                 <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
@@ -126,7 +122,7 @@
     <delete id="deleteIscTools" parameterType="com.winning.isc.model.IscTools">
         delete from  ISC_TOOLS
         <where>
-            <if test="(id != null and id != '')"> and ID = #{ id }   </if>
+            <if test="(id != null)"> and ID = #{ id }   </if>
             <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
                 and (ID) in
                 <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>

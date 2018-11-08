@@ -23,10 +23,10 @@
     <div id="toolbar">
         <form class="form-inline">
             <div class="input-group m-b">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#toolModal">产品新增</button>
+                <button type="button" class="btn btn-primary" onclick="modalOpen('#toolModal')">产品新增</button>
             </div>
             <div class="input-group m-b">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#docModal">文案新增</button>
+                <button type="button" class="btn btn-primary" onclick="modalOpen('#docModal')">文案新增</button>
             </div>
             <div class="input-group m-b">
                 <input type="text" class="form-control">
@@ -46,7 +46,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="toolModalLabel">模态框（Modal）标题</h4>
+                <h4 class="modal-title" id="toolModalLabel">产品新增</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -54,25 +54,25 @@
                         <form method="get" class="form-horizontal">
                             <div class="form-group"><label class="col-sm-3 control-label">产品LOGO</label>
                                 <div class="col-sm-9">
-                                    <input type="file" name="logoFile" id="logoInput" class="form-control" multiple>
+                                    <input type="file" name="file" id="logoInput" class="form-control" multiple>
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group"><label class="col-sm-3 control-label">产品名称</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control">
+                                    <input id="tool_name" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group"><label class="col-sm-3 control-label">工具/文案包</label>
                                 <div class="col-sm-9">
-                                    <input type="file" id="docInput" class="form-control" readonly>
+                                    <input type="file" name="file" id="jarInput" class="form-control" multiple>
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group"><label class="col-sm-3 control-label">产品负责人</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control">
+                                    <input id="tool_leader" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -94,13 +94,43 @@
 </div>
 <!-- 文案模态框（Modal） -->
 <div class="modal fade" id="docModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 80%">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="docModalLabel">模态框（Modal）标题</h4>
+                <h4 class="modal-title" id="docModalLabel">文案新增</h4>
             </div>
-            <div class="modal-body">在这里添加一些文本</div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form method="get" class="form-horizontal">
+                            <div class="form-group"><label class="col-sm-3 control-label">文案名称</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group"><label class="col-sm-3 control-label">文案文件</label>
+                                <div class="col-sm-9">
+                                    <input type="file" name="file" id="docInput" class="form-control" multiple>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group"><label class="col-sm-3 control-label">文件编纂</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group"><label class="col-sm-3 control-label">文件简介</label>
+                                <div class="col-sm-9">
+                                    <div id="doc_summernote"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary">提交更改</button>
@@ -137,7 +167,7 @@
     $(function () {
         //初始化表格
         $("#table").bootstrapTable({
-            url: ctx + 'modelCheck/list',
+            url: ctx + 'manager/list',
             method: "GET",
             height: $(window).height(),
             // striped: true,//树形表
@@ -145,9 +175,9 @@
             toolbar: '#toolbar',
             cache: false,  // 是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true,                   // 是否显示分页（*）
-            sortable: true,                     // 是否启用排序
-            sortOrder: "asc",                   // 排序方式
-            sidePagination: "client",           // 分页方式：client客户端分页，server服务端分页（*）
+            // sortable: true,                     // 是否启用排序
+            // sortOrder: "asc",                   // 排序方式
+            sidePagination: "server",           // 分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1,                      // 初始化加载第一页，默认第一页,并记录
             pageSize: 10,                     // 每页的记录行数（*）
             pageList: [10, 25, 50, 100],        // 可供选择的每页的行数（*）
@@ -156,11 +186,11 @@
             strictSearch: true,
             minimumCountColumns: 2,             // 最少允许的列数
             clickToSelect: true,                // 是否启用点击选中行
-            idField: 'id',
+            // idField: 'id',
             sortName: 'id',
-            uniqueId: "id",                 // 每一行的唯一标识，一般为主键列
-            cardView: false,                    // 是否显示详细视图
-            detailView: true,                  // 是否显示父子表
+            // uniqueId: "id",                 // 每一行的唯一标识，一般为主键列
+            // cardView: false,                    // 是否显示详细视图
+            // detailView: true,                  // 是否显示父子表
             toolbarAlign: 'left',
             paginationPreText: '上一页',
             paginationNextText: '下一页',
@@ -172,41 +202,69 @@
                 //     checkbox: true
                 // },
                 {
-                    field: 'colummName',
+                    field: 'name',
                     width: '10%',
                     title: '名称'
                 }, {
-                    field: 'errorDesc',
+                    field: 'leader',
                     width: '20%',
                     title: '负责人/部门'
                 },
                 {
-                    field: 'errorDesc',
+                    field: 'operateTime',
                     width: '30%',
-                    title: '更新时间'
-                },
-                {
-                    field: 'errorDesc',
-                    width: '10%',
-                    title: '更新次数'
-                },
-                {
-                    field: 'errorDesc',
-                    width: '10%',
-                    title: '状态'
-                },
-                {
-                    field: 'errorDesc',
-                    width: '20%',
-                    title: '操作',
+                    title: '更新时间',
                     formatter: function (value, row, index) {
-                        if (row.userInfo) {
-                            return row.userInfo.userName;
-                        } else {
-                            return value;
-                        }
+                        //	2018-11-07T03:03:13.000+0000
+                        var str = value.substr(0, 10) + " " + value.substr(11, 8);
+                        return str;
                     }
                 },
+                {
+                    field: 'isStop',
+                    width:
+                        '10%',
+                    title:
+                        '状态',
+                    align:
+                        'center',
+                    formatter:
+
+                        function (value, row, index) {
+                            var str = "";
+                            if (value == 0) {
+                                //启用
+                                str = "<a class='btn btn-primary btn-rounded btn-xs' href='javascript:void(0)'>启&nbsp;&nbsp;&nbsp;&nbsp;用</a>";
+                            }
+                            if (value == 1) {
+                                //停用
+                                str = "<a class='btn btn-danger btn-rounded btn-xs' href='javascript:void(0)'>停&nbsp;&nbsp;&nbsp;&nbsp;用</a>";
+                            }
+                            return str;
+                        }
+                }
+                ,
+                {
+                    width:
+                        '20%',
+                    title:
+                        '操作',
+                    align:
+                        'center',
+                    formatter:
+
+                        function (value, row, index) {
+                            var str = "<div class='btn-group'><button type='button' class='btn btn-success btn-xs' onclick='changeStatus(" + row.id + "," + 0 + ")'>编&nbsp;&nbsp;&nbsp;&nbsp;辑</button>"
+                            if (row.isStop == 0) {
+                                str += "<button type='button' class='btn btn-danger btn-xs' onclick='changeStatus(" + row.id + "," + 1 + ",this)'>停&nbsp;&nbsp;&nbsp;&nbsp;用</button></div>"
+                            } else if (row.isStop == 1) {
+                                str += "<button type='button' class='btn btn-primary btn-xs' onclick='changeStatus(" + row.id + "," + 0 + ",this)'>启&nbsp;&nbsp;&nbsp;&nbsp;用</button></div>"
+
+                            }
+                            return str;
+                        }
+                }
+                ,
             ],
             // treeShowField: 'colummName',
             // parentIdField: 'pid',
@@ -217,7 +275,7 @@
         //logo上传
         var logoInput = $('#logoInput')
         logoInput.fileinput({//初始化上传文件框
-            uploadUrl: ctx + "manager/upload",
+            uploadUrl: ctx + "manager/logoUpload",
             language: "zh",//配置语言
             showUpload: false,//是否显示上传按钮
             showRemove: true,
@@ -232,6 +290,60 @@
             enctype: 'multipart/form-data',
             //allowedPreviewTypes : [ 'image' ], //allowedFileTypes: ['image', 'video', 'flash'],
             allowedFileExtensions: ["jpg", "png", "gif"], /*上传文件格式*/
+            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            // browseOnZoneClick: true,
+            // dropZoneTitle: "请通过拖拽图片文件放到这里",
+            // dropZoneClickTitle: "或者点击此区域添加图片",
+            //uploadExtraData: {"id": id},//这个是外带数据
+            slugCallback: function (filename) {
+                return filename.replace('(', '_').replace(']', '_');
+            }
+        });
+        //产品包上传
+        var jarInput = $('#jarInput')
+        jarInput.fileinput({//初始化上传文件框
+            uploadUrl: ctx + "manager/jarUpload",
+            language: "zh",//配置语言
+            showUpload: false,//是否显示上传按钮
+            showRemove: true,
+            initialCaption: "请选择文件",
+            showCaption: true,//是否显示标题
+            showPreview: false,
+            showBrowse: true,
+            uploadLabel: "上传",//设置上传按钮的汉字
+            uploadClass: "btn btn-primary",//设置上传按钮样式
+            maxFileSize: 9999999,
+            maxFileCount: 1, /*允许最大上传数，可以多个，当前设置单个*/
+            enctype: 'multipart/form-data',
+            //allowedPreviewTypes : [ 'image' ], //allowedFileTypes: ['image', 'video', 'flash'],
+            //allowedFileExtensions: ["jpg", "png", "gif"], /*上传文件格式*/
+            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            // browseOnZoneClick: true,
+            // dropZoneTitle: "请通过拖拽图片文件放到这里",
+            // dropZoneClickTitle: "或者点击此区域添加图片",
+            //uploadExtraData: {"id": id},//这个是外带数据
+            slugCallback: function (filename) {
+                return filename.replace('(', '_').replace(']', '_');
+            }
+        });
+        //文案上传
+        var docInput = $('#docInput')
+        docInput.fileinput({//初始化上传文件框
+            uploadUrl: ctx + "manager/logoUpload",
+            language: "zh",//配置语言
+            showUpload: false,//是否显示上传按钮
+            showRemove: true,
+            initialCaption: "请选择文件",
+            showCaption: true,//是否显示标题
+            showPreview: false,
+            showBrowse: true,
+            uploadLabel: "上传",//设置上传按钮的汉字
+            uploadClass: "btn btn-primary",//设置上传按钮样式
+            maxFileSize: 9999999,
+            maxFileCount: 1, /*允许最大上传数，可以多个，当前设置单个*/
+            enctype: 'multipart/form-data',
+            //allowedPreviewTypes : [ 'image' ], //allowedFileTypes: ['image', 'video', 'flash'],
+            //allowedFileExtensions: ["jpg", "png", "gif"], /*上传文件格式*/
             msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
             // browseOnZoneClick: true,
             // dropZoneTitle: "请通过拖拽图片文件放到这里",
@@ -260,24 +372,155 @@
                 ['height', ['height']]
             ],
         });
+        //文本编辑器
+        var doc_summernote = $('#doc_summernote');
+        doc_summernote.summernote({
+            height: 300,
+            minHeight: 300,
+            maxHeight: 300,
+            lang: "zh-CN",
+            focus: true,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']]
+            ],
+        });
 
         //确认提交
         $("#submit_btn").click(function () {
-            logoInput.fileinput("upload");
+            //logo
+            var logo = $("#logoInput").val();
+            //名称
+            var name = $("#tool_name").val();
+            //工具包
+            var toolRar = $("#jarInput").val();
+            //产品负责人
+            var leader = $("#tool_leader").val();
+            //描述内容
+            var content = summernote.summernote('code');
+            //空判断
+            if (name == null || name == "") {
+                layer.msg('产品名称不能为空！', {icon: 5, time: 2500});
+                return;
+            }
+            if (toolRar == null || toolRar == "") {
+                layer.msg('请选择工具包!', {icon: 5, time: 2500});
+                return;
+            }
+            if (leader == null || leader == "") {
+                layer.msg('产品负责人不能为空!', {icon: 5, time: 2500});
+                return;
+            }
+            //已选择logo才进行上传
+            if (logo != null && logo != "") {
+                logoInput.fileinput("upload");
+                logoInput.on("fileuploaded", function (event, data, previewId, index) {
+                    if (data.response.msg == "success") {
+                        console.log("LOGO上传成功！");
+                        logo = data.response.logo;
+                    } else {
+                        console.log("LOGO上传失败！");
+                        layer.msg('LOGO上传失败！', {icon: 5, time: 2500});
+                        return;
+                    }
+                });
+            }
+            if (toolRar != null && toolRar != "") {
+                //已选择工具包才进行上传
+                jarInput.fileinput("upload");
+                jarInput.on("fileuploaded", function (event, data, previewId, index) {
+                    if (data.response.msg == "success") {
+                        console.log("工具包上传成功！");
+                        toolRar = data.response.toolRar;
+                    } else {
+                        console.log("工具包上传失败！");
+                        layer.msg('工具包上传失败！', {icon: 5, time: 2500});
+                        return;
+                    }
+                });
+            }
+            //ajax后台新增数据
+                $.ajax({
+                    url: ctx + "manager/add",
+                    type: "post",
+                    data: {name: name, logo: logo, toolRar: toolRar, leader: leader, content: content},
+                    success: function (data) {
+                        if (data.msg == "success") {
+                            $("#toolModal").modal("hide");
+                            layer.msg('产品新增成功！', {icon: 6, time: 2500});
+                        }
+                    }
+
+                });
         });
 
 
     });
 
     //查询条件
+    function modalOpen(elementId) {
+        //初始化数据
+        $("#logoInput").fileinput("clear");
+        //名称
+        $("#tool_name").val("");
+        //工具包
+        $("#jarInput").fileinput("clear");
+        //产品负责人
+        $("#tool_leader").val("");
+        //描述内容
+        $('#summernote').summernote('code', '');
+        $(elementId).modal("show");
+    }
+
+    //查询条件
     function queryParams(params) {
-        var sourceType = $("#data_set").children("option:selected").val();
         var param = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-            sourceType: sourceType,
-        };
+                count: params.limit,    // 每页显示条数
+                first: params.offset,   // 显示条数
+                sort: params.sort,      // 排序列名
+                order: params.order,     // 排位命令（desc，asc）
+            }
+        ;
         return param;
     }
 
+    //修改状态
+    function changeStatus(id, type, e) {
+        $.ajax({
+            url: ctx + "manager/changeStatus",
+            data: {id: id, isStop: type},
+            type: "post",
+            success: function (data) {
+                if (data.msg == 'success') {
+                    if (type == 1) {
+                        //启用
+                        var element = $(e).parent().parent().prev();
+                        element.empty();
+                        var str = "<a class='btn btn-danger btn-rounded btn-xs' href='javascript:void(0)'>停&nbsp;&nbsp;&nbsp;&nbsp;用</a>";
+                        element.append(str);
+                        var btn_str = "<button type='button' class='btn btn-primary btn-xs' onclick='changeStatus(" + id + "," + 0 + ",this)'>启&nbsp;&nbsp;&nbsp;&nbsp;用</button></div>";
+                        $(e).prev().after(btn_str);
+                        $(e).remove();
+                    } else if (type == 0) {
+                        //停用
+                        var element = $(e).parent().parent().prev();
+                        element.empty();
+                        var str = "<a class='btn btn-primary btn-rounded btn-xs' href='javascript:void(0)'>启&nbsp;&nbsp;&nbsp;&nbsp;用</a>";
+                        element.append(str);
+                        var btn_str = "<button type='button' class='btn btn-danger btn-xs' onclick='changeStatus(" + id + "," + 1 + ",this)'>停&nbsp;&nbsp;&nbsp;&nbsp;用</button></div>";
+                        $(e).prev().after(btn_str);
+                        $(e).remove();
+                    }
+                }
+            }
+        });
+
+    }
 
 </script>
 </body>

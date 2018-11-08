@@ -33,6 +33,37 @@ public class FtpConfig {
     //@Value("${port}")
     public static String port;
 
+    public static String logoRemote;
+
+    public static String jarRemote;
+
+    public static String docRemote;
+
+    public static String getJarRemote() {
+        return jarRemote;
+    }
+
+    public void setJarRemote(String jarRemote) {
+        FtpConfig.jarRemote = jarRemote;
+    }
+
+    public static String getDocRemote() {
+        return docRemote;
+    }
+
+    public void setDocRemote(String docRemote) {
+        FtpConfig.docRemote = docRemote;
+    }
+
+
+    public static String getLogoRemote() {
+        return logoRemote;
+    }
+
+    public void setLogoRemote(String logoRemote) {
+        FtpConfig.logoRemote = logoRemote;
+    }
+
     public static boolean isIsEnableFtpUpload() {
         return isEnableFtpUpload;
     }
