@@ -1,9 +1,12 @@
 package com.winning.isc.service.impl;
 
+import com.winning.isc.base.Constants;
+import com.winning.isc.model.support.NodeTree;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;  
+import java.util.ArrayList;
+import java.util.List;
 
 import com.winning.isc.model.SysRoleInfo;
 
@@ -51,5 +54,22 @@ public class SysRoleInfoServiceImpl implements  SysRoleInfoService {
 
     public List<SysRoleInfo> getSysRoleInfoPageList(SysRoleInfo sysRoleInfo){
         return this.sysRoleInfoDao.selectSysRoleInfoPageList(sysRoleInfo);
+    }
+
+    @Override
+    public List<NodeTree> getRoleInfoTree(String roleName) {
+        SysRoleInfo roleInfo = new SysRoleInfo();
+        roleInfo.setRoleName(roleName);
+        roleInfo.setIsDel(Constants.STATUS_UNUSE);
+        List<SysRoleInfo> roleInfos = this.sysRoleInfoDao.selectSysRoleInfoListForName(roleInfo);
+        List<NodeTree> roleTree = new ArrayList<NodeTree>();
+        for (SysRoleInfo info : roleInfos) {
+            NodeTree tree = new NodeTree();
+            tree.setNodeId(info.getId());
+            tree.setId(info.getId());
+            tree.setText(info.getRoleName());
+            roleTree.add(tree);
+        }
+        return roleTree;
     }
 }

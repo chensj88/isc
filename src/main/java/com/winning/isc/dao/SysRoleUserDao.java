@@ -2,7 +2,8 @@ package com.winning.isc.dao;
 
 
 
-import java.util.List;  
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.dao.DataAccessException;  
 
@@ -34,4 +35,6 @@ public interface SysRoleUserDao {
     public List<SysRoleUser> selectSysRoleUserList(SysRoleUser sysRoleUser) throws DataAccessException;
 
     public List<SysRoleUser> selectSysRoleUserPageList(SysRoleUser sysRoleUser) throws DataAccessException;
+
+    void deleteSysRoleUserForIds(Map<String, Object> param);
 }

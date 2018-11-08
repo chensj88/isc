@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.winning.isc.dao.TrainNoteDao">
+
+    <resultMap id="trainNoteResultForList" type="com.winning.isc.model.TrainNote">
+         <result column="ID" property="id" jdbcType="BIGINT" />
+         <result column="TRAIN_ID" property="trainId" jdbcType="BIGINT" />
+         <result column="NOTE_UPLOAD" property="noteUpload" jdbcType="VARCHAR" />
+         <result column="IN_DATE" property="inDate" jdbcType="DATE" />
+         <result column="SCORE" property="score" jdbcType="INTEGER" />
+         <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+         <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <resultMap id="trainNoteResult" type="com.winning.isc.model.TrainNote" extends="trainNoteResultForList">
+
+    </resultMap>
+
+    <sql id="sql-trainNote">
+        <if test="(id != null and id != '')"> and t.ID = #{id} </if>
+        <if test="(trainId != null and trainId != '')"> and t.TRAIN_ID = #{trainId} </if>
+        <if test="(noteUpload != null and noteUpload != '')"> and t.NOTE_UPLOAD = #{noteUpload} </if>
+        <if test="(inDate != null and inDate != '')"> and t.IN_DATE = #{inDate} </if>
+        <if test="(score != null and score != '')"> and t.SCORE = #{score} </if>
+        <if test="(creator != null and creator != '')"> and t.CREATOR = #{creator} </if>
+        <if test="(createTime != null and createTime != '')"> and t.CREATE_TIME = #{createTime} </if>
+    </sql>
+
+    <insert id="insertTrainNote" parameterType="com.winning.isc.model.TrainNote">
+        <selectKey resultType="String"  order="BEFORE"  keyProperty="id">SELECT CAST(NEWID() AS VARCHAR(36)) AS ID</selectKey>
+        INSERT INTO TRAIN_NOTE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null and id != '')"> ID , </if>
+            <if test="(trainId != null and trainId != '')"> TRAIN_ID , </if>
+            <if test="(noteUpload != null and noteUpload != '')"> NOTE_UPLOAD , </if>
+            <if test="(inDate != null and inDate != '')"> IN_DATE , </if>
+            <if test="(score != null and score != '')"> SCORE , </if>
+            <if test="(creator != null and creator != '')"> CREATOR , </if>
+            <if test="(createTime != null and createTime != '')"> CREATE_TIME , </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null and id != '')"> #{id , jdbcType= BIGINT },  </if>
+            <if test="(trainId != null and trainId != '')"> #{trainId , jdbcType= BIGINT },  </if>
+            <if test="(noteUpload != null and noteUpload != '')"> #{noteUpload , jdbcType= VARCHAR },  </if>
+            <if test="(inDate != null and inDate != '')"> #{inDate , jdbcType= DATE },  </if>
+            <if test="(score != null and score != '')"> #{score , jdbcType= INTEGER },  </if>
+            <if test="(creator != null and creator != '')"> #{creator , jdbcType= VARCHAR },  </if>
+            <if test="(createTime != null and createTime != '')"> #{createTime , jdbcType= TIMESTAMP },  </if>
+        </trim>
+    </insert>
+
+    <update id="updateTrainNote" parameterType="com.winning.isc.model.TrainNote">
+        UPDATE TRAIN_NOTE
+        <set>
+            <trim suffixOverrides=",">
+                <if test="(id != null and id != '')"> ID = #{id , jdbcType= BIGINT }, </if>
+                <if test="(trainId != null and trainId != '')"> TRAIN_ID = #{trainId , jdbcType= BIGINT }, </if>
+                <if test="(noteUpload != null and noteUpload != '')"> NOTE_UPLOAD = #{noteUpload , jdbcType= VARCHAR }, </if>
+                <if test="(inDate != null and inDate != '')"> IN_DATE = #{inDate , jdbcType= DATE }, </if>
+                <if test="(score != null and score != '')"> SCORE = #{score , jdbcType= INTEGER }, </if>
+                <if test="(creator != null and creator != '')"> CREATOR = #{creator , jdbcType= VARCHAR }, </if>
+                <if test="(createTime != null and createTime != '')"> CREATE_TIME = #{createTime , jdbcType= TIMESTAMP }, </if>
+            </trim>
+        </set>
+        <where>
+            <if test="(id != null and id != '')"> and ID = #{ id, jdbcType= BIGINT }   </if>
+            <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteTrainNote" parameterType="com.winning.isc.model.TrainNote">
+        delete from  TRAIN_NOTE
+        <where>
+            <if test="(id != null and id != '')"> and ID = #{ id }   </if>
+            <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </delete>
+
+
+    <select id="selectTrainNote" resultMap="trainNoteResult" parameterType="com.winning.isc.model.TrainNote">
+        SELECT * FROM TRAIN_NOTE t
+        <where>
+            <include refid="sql-trainNote" />
+        </where>
+    </select>
+
+    <select id="selectTrainNoteList" resultMap="trainNoteResultForList" parameterType="com.winning.isc.model.TrainNote">
+        SELECT
+        <if test="row.count != null and row.count != ''"> top ${row.count} </if>
+        * FROM TRAIN_NOTE t
+        <where>
+            <include refid="sql-trainNote" />
+        </where>
+        ORDER BY t.ID ASC
+    </select>
+
+    <select id="selectTrainNoteCount" resultType="int" parameterType="com.winning.isc.model.TrainNote">
+        select count(1) from  TRAIN_NOTE t
+        <where>
+            <include refid="sql-trainNote" />
+        </where>
+    </select>
+
+    <select id="selectTrainNotePageList" resultMap="trainNoteResult" parameterType="com.winning.isc.model.TrainNote">
+        SELECT * FROM (
+        SELECT t.* ,
+        ROW_NUMBER() OVER ( ORDER BY t.ID DESC ) AS _RN
+        FROM TRAIN_NOTE t
+        <where>
+            <include refid="sql-trainNote" />
+        </where>
+        <!-- order by t.ID asc -->
+        ) TEMP_TABLE WHERE _RN BETWEEN  #{row.first} + 1 AND #{row.first} + #{row.count}
+    </select>
+
+
+</mapper>

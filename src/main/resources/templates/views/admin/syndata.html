@@ -1,0 +1,194 @@
+<!--
+   Created with IntelliJ IDEA.
+   Description: 
+   User: LENOVO
+   Date: 2018-11-08
+   Time: 11:18
+ -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据同步</title>
+    <meta name="author" content="实施服务中心">
+    <link rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/css/bootstrap-table.min.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/css/bootstrapValidator.min.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/css/toastr.min.css}"/>
+    <link rel="shortcut icon" th:href="@{/resources/img/logo.ico}"/>
+</head>
+<body>
+    <div class="container-fluid">
+    <div class="widget-box">
+        <div class="widget-header">
+            <h4 class="smaller">
+                手动同步
+                <small></small>
+            </h4>
+        </div>
+
+        <div class="widget-body">
+            <div class="widget-main">
+                <p class="muted">
+                    手动同步PMIS系统数据耗时较长，请耐心等待！
+                </p>
+
+                <hr/>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right">
+                                    同步所有数据
+                                </label>
+
+                                <div class="col-sm-1">
+                                    <button class="btn btn-primary btn-sm tooltip-error" data-rel="tooltip"
+                                            id="btn_0"
+                                            onclick="synchronization(this,0)"
+                                            data-placement="同步"
+                                            title="同步">同步
+                                    </button>
+                                </div>
+
+                                <label class="col-sm-3 control-label no-padding-right">
+                                    同步用户信息
+                                </label>
+
+                                <div class="col-sm-1">
+                                    <button class="btn btn-primary btn-sm tooltip-error" data-rel="tooltip"
+                                            id="btn_1"
+                                            onclick="synchronization(this,1)"
+                                            data-placement="同步"
+                                            title="同步">同步
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right">
+                                    同步组织机构
+                                </label>
+
+                                <div class="col-sm-1">
+                                    <button class="btn btn-primary btn-sm tooltip-error" data-rel="tooltip"
+                                            id="btn_8"
+                                            onclick="synchronization(this,8)"
+                                            data-placement="同步"
+                                            title="同步">同步
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.col -->
+
+
+</div>
+</body>
+<script type="text/javascript" th:src="@{/resources/js/jquery-1.12.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/bootstrap-table.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/bootstrap-table-zh-CN.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/bootstrapValidator.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/zh_CN.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/toastr.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/customer/common.js}"></script>
+<script th:inline="javascript"  type="text/javascript">
+    var ctx = /*[[@{/}]]*/'';
+</script>
+<script type="text/javascript">
+    toastr.options.progressBar = false;
+    toastr.options.positionClass = 'toast-top-center';
+    toastr.options.timeOut = 6000000;
+    toastr.options.extendedTimeOut = 6000000;
+
+    /**
+     * 删除某字符串
+     * @param baseStr 原字符串
+     * @param reg
+     */
+    function removeStr(baseStr, reg) {
+        reg = reg + "";
+        baseStr = baseStr.replace(reg, "");
+        var arr = baseStr.split(",");
+        baseStr = "";
+        if (arr.length == 1) {
+            baseStr = arr[0];
+        }
+        if (arr.length > 1) {
+            baseStr = arr[0];
+            for (var i = 1; i < arr.length; i++) {
+                if (arr[i] != "") {
+                    baseStr += "," + arr[i];
+                }
+            }
+        }
+        console.info("removeStr:" + baseStr);
+        return baseStr;
+    }
+
+
+    /**
+     * 增加字符串
+     * @param baseStr 原字符串
+     * @param reg
+     */
+    function addStr(baseStr, reg) {
+        reg = reg + "";
+        if (baseStr == null || baseStr == "") {
+            baseStr = reg;
+        } else {
+            baseStr += "," + reg;
+        }
+        console.info("addStr:" + baseStr);
+        return baseStr;
+    }
+
+    function doAjax(type) {
+        var defer = $.Deferred();
+        $.ajax({
+            type: "post",
+            url: Common.getRootPath()+"/admin/synchronization/synchronization",
+            data: {type: type},
+            success: function (data) {
+                defer.resolve(data);
+            },
+        });
+        return defer.promise();
+
+    }
+
+    /**
+     * 数据同步方法
+     * @param tag 当前元素
+     * @param type 数据类型
+     */
+    function synchronization(tag, type) {
+        //缓存当前执行的同步
+        toastr.options.closeButton = true;
+        toastr.clear();
+        toastr.info("正在同步...");
+        tag.disabled = true;
+        // btnStr = addStr(btnStr, type);
+        // window.sessionStorage.setItem("activeButton", btnStr);
+        $.when(doAjax(type)).done(function (data) {
+            toastr.clear();
+            tag.disabled = false;
+            if (data.msg = "success") {
+                toastr.success("同步完成！");
+                // btnStr = removeStr(btnStr, type);
+                // window.sessionStorage.setItem("activeButton", btnStr);
+            }
+        });
+
+    }
+</script>
+</html>

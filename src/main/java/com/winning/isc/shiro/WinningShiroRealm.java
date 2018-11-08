@@ -2,6 +2,7 @@ package com.winning.isc.shiro;
 
 import com.winning.isc.base.Constants;
 import com.winning.isc.dao.SysOrgExtDao;
+import com.winning.isc.dao.SysRoleInfoDao;
 import com.winning.isc.dao.SysUserInfoDao;
 import com.winning.isc.model.SysUserInfo;
 import com.winning.isc.ws.client.QueryResult;
@@ -32,6 +33,8 @@ public class WinningShiroRealm extends AuthorizingRealm {
     private SysOrgExtDao sysOrgExtDao;
     @Autowired
     private PmisWebServiceClient pmisWebServiceClient;
+    @Autowired
+    private SysRoleInfoDao sysRoleInfoDao;
 
     /**
      * 权限认证
@@ -43,6 +46,7 @@ public class WinningShiroRealm extends AuthorizingRealm {
         logger.info("##################执行Shiro权限认证##################");
         String username = (String) principals.getPrimaryPrincipal();// 取得用户登录名
         SimpleAuthorizationInfo auth = new SimpleAuthorizationInfo();
+        auth.setRoles(sysRoleInfoDao.listUserRolesByUserId(username));// 获取所有的角色
 //		try {
 //			auth.setRoles(sysUserInfoDao.listRolesByMEember(username));// 获取所有的角色
 //			auth.setStringPermissions(userdao.listActionsByMEember(username));// 获取所有的权限

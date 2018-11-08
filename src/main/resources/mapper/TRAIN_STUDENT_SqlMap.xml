@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.winning.isc.dao.TrainStudentDao">
+
+    <resultMap id="trainStudentResultForList" type="com.winning.isc.model.TrainStudent">
+         <result column="ID" property="id" jdbcType="BIGINT" />
+         <result column="STUDENT_NO" property="studentNo" jdbcType="INTEGER" />
+         <result column="YEAR" property="year" jdbcType="INTEGER" />
+         <result column="MOUTH" property="mouth" jdbcType="VARCHAR" />
+         <result column="YEAR_MOUTH" property="yearMouth" jdbcType="VARCHAR" />
+         <result column="MOUTH_DATE" property="mouthDate" jdbcType="VARCHAR" />
+         <result column="TRAIN_TYPE" property="trainType" jdbcType="VARCHAR" />
+         <result column="TRAIN_DETAIL" property="trainDetail" jdbcType="VARCHAR" />
+         <result column="NUM" property="num" jdbcType="INTEGER" />
+         <result column="COURSE_TITLE" property="courseTitle" jdbcType="VARCHAR" />
+         <result column="COURSE_TIME" property="courseTime" jdbcType="DECIMAL" />
+         <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+         <result column="USERID" property="userid" jdbcType="VARCHAR" />
+         <result column="NAME" property="name" jdbcType="VARCHAR" />
+         <result column="SEX" property="sex" jdbcType="VARCHAR" />
+         <result column="PHONE" property="phone" jdbcType="INTEGER" />
+         <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+         <result column="ENTRY_DATE" property="entryDate" jdbcType="DATE" />
+         <result column="WORK_NAME" property="workName" jdbcType="VARCHAR" />
+         <result column="WORK_LEVEL" property="workLevel" jdbcType="VARCHAR" />
+         <result column="PLAN_WORKER" property="planWorker" jdbcType="DATE" />
+         <result column="JOIN_STATUS" property="joinStatus" jdbcType="VARCHAR" />
+         <result column="TOTAL_SCORE" property="totalScore" jdbcType="DECIMAL" />
+         <result column="RESULT" property="result" jdbcType="VARCHAR" />
+         <result column="IS_GRADE" property="isGrade" jdbcType="VARCHAR" />
+         <result column="JOIN_WAY" property="joinWay" jdbcType="VARCHAR" />
+         <result column="UNIT" property="unit" jdbcType="VARCHAR" />
+         <result column="TOTAL_JION" property="totalJion" jdbcType="INTEGER" />
+         <result column="CITY_MONEY" property="cityMoney" jdbcType="DECIMAL" />
+         <result column="TRAFFIC_MONEY" property="trafficMoney" jdbcType="DECIMAL" />
+         <result column="HOTEL_MONEY" property="hotelMoney" jdbcType="DECIMAL" />
+         <result column="EAT_MONEY" property="eatMoney" jdbcType="DECIMAL" />
+         <result column="OTHER_MONEY" property="otherMoney" jdbcType="DECIMAL" />
+         <result column="TOTAL_MONEY" property="totalMoney" jdbcType="DECIMAL" />
+         <result column="REMARK" property="remark" jdbcType="OTHER" />
+         <result column="HOTEL" property="hotel" jdbcType="VARCHAR" />
+         <result column="IS_WORKER" property="isWorker" jdbcType="VARCHAR" />
+         <result column="WORK_YEAR" property="workYear" jdbcType="VARCHAR" />
+         <result column="WORK_INFO" property="workInfo" jdbcType="VARCHAR" />
+         <result column="TEACHER" property="teacher" jdbcType="VARCHAR" />
+         <result column="TRAIN_WAY" property="trainWay" jdbcType="VARCHAR" />
+         <result column="PEN_SCORE" property="penScore" jdbcType="DECIMAL" />
+         <result column="PC_SCORE" property="pcScore" jdbcType="DECIMAL" />
+         <result column="EXPRESSION_SCORE" property="expressionScore" jdbcType="DECIMAL" />
+         <result column="NOTE_SCORE" property="noteScore" jdbcType="DECIMAL" />
+         <result column="TEAM_SCORE" property="teamScore" jdbcType="DECIMAL" />
+         <result column="TOTAL_RANK" property="totalRank" jdbcType="INTEGER" />
+         <result column="SUGGEST" property="suggest" jdbcType="VARCHAR" />
+         <result column="REASON" property="reason" jdbcType="VARCHAR" />
+         <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+         <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+         <result column="OPERATER" property="operater" jdbcType="VARCHAR" />
+         <result column="OPERATE_TIME" property="operateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <resultMap id="trainStudentResult" type="com.winning.isc.model.TrainStudent" extends="trainStudentResultForList">
+
+    </resultMap>
+
+    <sql id="sql-trainStudent">
+        <if test="(id != null and id != '')"> and t.ID = #{id} </if>
+        <if test="(studentNo != null and studentNo != '')"> and t.STUDENT_NO = #{studentNo} </if>
+        <if test="(year != null and year != '')"> and t.YEAR = #{year} </if>
+        <if test="(mouth != null and mouth != '')"> and t.MOUTH = #{mouth} </if>
+        <if test="(yearMouth != null and yearMouth != '')"> and t.YEAR_MOUTH = #{yearMouth} </if>
+        <if test="(mouthDate != null and mouthDate != '')"> and t.MOUTH_DATE = #{mouthDate} </if>
+        <if test="(trainType != null and trainType != '')"> and t.TRAIN_TYPE = #{trainType} </if>
+        <if test="(trainDetail != null and trainDetail != '')"> and t.TRAIN_DETAIL = #{trainDetail} </if>
+        <if test="(num != null and num != '')"> and t.NUM = #{num} </if>
+        <if test="(courseTitle != null and courseTitle != '')"> and t.COURSE_TITLE = #{courseTitle} </if>
+        <if test="(courseTime != null and courseTime != '')"> and t.COURSE_TIME = #{courseTime} </if>
+        <if test="(orgName != null and orgName != '')"> and t.ORG_NAME = #{orgName} </if>
+        <if test="(userid != null and userid != '')"> and t.USERID = #{userid} </if>
+        <if test="(name != null and name != '')"> and t.NAME = #{name} </if>
+        <if test="(sex != null and sex != '')"> and t.SEX = #{sex} </if>
+        <if test="(phone != null and phone != '')"> and t.PHONE = #{phone} </if>
+        <if test="(email != null and email != '')"> and t.EMAIL = #{email} </if>
+        <if test="(entryDate != null and entryDate != '')"> and t.ENTRY_DATE = #{entryDate} </if>
+        <if test="(workName != null and workName != '')"> and t.WORK_NAME = #{workName} </if>
+        <if test="(workLevel != null and workLevel != '')"> and t.WORK_LEVEL = #{workLevel} </if>
+        <if test="(planWorker != null and planWorker != '')"> and t.PLAN_WORKER = #{planWorker} </if>
+        <if test="(joinStatus != null and joinStatus != '')"> and t.JOIN_STATUS = #{joinStatus} </if>
+        <if test="(totalScore != null and totalScore != '')"> and t.TOTAL_SCORE = #{totalScore} </if>
+        <if test="(result != null and result != '')"> and t.RESULT = #{result} </if>
+        <if test="(isGrade != null and isGrade != '')"> and t.IS_GRADE = #{isGrade} </if>
+        <if test="(joinWay != null and joinWay != '')"> and t.JOIN_WAY = #{joinWay} </if>
+        <if test="(unit != null and unit != '')"> and t.UNIT = #{unit} </if>
+        <if test="(totalJion != null and totalJion != '')"> and t.TOTAL_JION = #{totalJion} </if>
+        <if test="(cityMoney != null and cityMoney != '')"> and t.CITY_MONEY = #{cityMoney} </if>
+        <if test="(trafficMoney != null and trafficMoney != '')"> and t.TRAFFIC_MONEY = #{trafficMoney} </if>
+        <if test="(hotelMoney != null and hotelMoney != '')"> and t.HOTEL_MONEY = #{hotelMoney} </if>
+        <if test="(eatMoney != null and eatMoney != '')"> and t.EAT_MONEY = #{eatMoney} </if>
+        <if test="(otherMoney != null and otherMoney != '')"> and t.OTHER_MONEY = #{otherMoney} </if>
+        <if test="(totalMoney != null and totalMoney != '')"> and t.TOTAL_MONEY = #{totalMoney} </if>
+        <if test="(remark != null and remark != '')"> and t.REMARK = #{remark} </if>
+        <if test="(hotel != null and hotel != '')"> and t.HOTEL = #{hotel} </if>
+        <if test="(isWorker != null and isWorker != '')"> and t.IS_WORKER = #{isWorker} </if>
+        <if test="(workYear != null and workYear != '')"> and t.WORK_YEAR = #{workYear} </if>
+        <if test="(workInfo != null and workInfo != '')"> and t.WORK_INFO = #{workInfo} </if>
+        <if test="(teacher != null and teacher != '')"> and t.TEACHER = #{teacher} </if>
+        <if test="(trainWay != null and trainWay != '')"> and t.TRAIN_WAY = #{trainWay} </if>
+        <if test="(penScore != null and penScore != '')"> and t.PEN_SCORE = #{penScore} </if>
+        <if test="(pcScore != null and pcScore != '')"> and t.PC_SCORE = #{pcScore} </if>
+        <if test="(expressionScore != null and expressionScore != '')"> and t.EXPRESSION_SCORE = #{expressionScore} </if>
+        <if test="(noteScore != null and noteScore != '')"> and t.NOTE_SCORE = #{noteScore} </if>
+        <if test="(teamScore != null and teamScore != '')"> and t.TEAM_SCORE = #{teamScore} </if>
+        <if test="(totalRank != null and totalRank != '')"> and t.TOTAL_RANK = #{totalRank} </if>
+        <if test="(suggest != null and suggest != '')"> and t.SUGGEST = #{suggest} </if>
+        <if test="(reason != null and reason != '')"> and t.REASON = #{reason} </if>
+        <if test="(creator != null and creator != '')"> and t.CREATOR = #{creator} </if>
+        <if test="(createTime != null and createTime != '')"> and t.CREATE_TIME = #{createTime} </if>
+        <if test="(operater != null and operater != '')"> and t.OPERATER = #{operater} </if>
+        <if test="(operateTime != null and operateTime != '')"> and t.OPERATE_TIME = #{operateTime} </if>
+    </sql>
+
+    <insert id="insertTrainStudent" parameterType="com.winning.isc.model.TrainStudent">
+        <selectKey resultType="String"  order="BEFORE"  keyProperty="id">SELECT CAST(NEWID() AS VARCHAR(36)) AS ID</selectKey>
+        INSERT INTO TRAIN_STUDENT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null and id != '')"> ID , </if>
+            <if test="(studentNo != null and studentNo != '')"> STUDENT_NO , </if>
+            <if test="(year != null and year != '')"> YEAR , </if>
+            <if test="(mouth != null and mouth != '')"> MOUTH , </if>
+            <if test="(yearMouth != null and yearMouth != '')"> YEAR_MOUTH , </if>
+            <if test="(mouthDate != null and mouthDate != '')"> MOUTH_DATE , </if>
+            <if test="(trainType != null and trainType != '')"> TRAIN_TYPE , </if>
+            <if test="(trainDetail != null and trainDetail != '')"> TRAIN_DETAIL , </if>
+            <if test="(num != null and num != '')"> NUM , </if>
+            <if test="(courseTitle != null and courseTitle != '')"> COURSE_TITLE , </if>
+            <if test="(courseTime != null and courseTime != '')"> COURSE_TIME , </if>
+            <if test="(orgName != null and orgName != '')"> ORG_NAME , </if>
+            <if test="(userid != null and userid != '')"> USERID , </if>
+            <if test="(name != null and name != '')"> NAME , </if>
+            <if test="(sex != null and sex != '')"> SEX , </if>
+            <if test="(phone != null and phone != '')"> PHONE , </if>
+            <if test="(email != null and email != '')"> EMAIL , </if>
+            <if test="(entryDate != null and entryDate != '')"> ENTRY_DATE , </if>
+            <if test="(workName != null and workName != '')"> WORK_NAME , </if>
+            <if test="(workLevel != null and workLevel != '')"> WORK_LEVEL , </if>
+            <if test="(planWorker != null and planWorker != '')"> PLAN_WORKER , </if>
+            <if test="(joinStatus != null and joinStatus != '')"> JOIN_STATUS , </if>
+            <if test="(totalScore != null and totalScore != '')"> TOTAL_SCORE , </if>
+            <if test="(result != null and result != '')"> RESULT , </if>
+            <if test="(isGrade != null and isGrade != '')"> IS_GRADE , </if>
+            <if test="(joinWay != null and joinWay != '')"> JOIN_WAY , </if>
+            <if test="(unit != null and unit != '')"> UNIT , </if>
+            <if test="(totalJion != null and totalJion != '')"> TOTAL_JION , </if>
+            <if test="(cityMoney != null and cityMoney != '')"> CITY_MONEY , </if>
+            <if test="(trafficMoney != null and trafficMoney != '')"> TRAFFIC_MONEY , </if>
+            <if test="(hotelMoney != null and hotelMoney != '')"> HOTEL_MONEY , </if>
+            <if test="(eatMoney != null and eatMoney != '')"> EAT_MONEY , </if>
+            <if test="(otherMoney != null and otherMoney != '')"> OTHER_MONEY , </if>
+            <if test="(totalMoney != null and totalMoney != '')"> TOTAL_MONEY , </if>
+            <if test="(remark != null and remark != '')"> REMARK , </if>
+            <if test="(hotel != null and hotel != '')"> HOTEL , </if>
+            <if test="(isWorker != null and isWorker != '')"> IS_WORKER , </if>
+            <if test="(workYear != null and workYear != '')"> WORK_YEAR , </if>
+            <if test="(workInfo != null and workInfo != '')"> WORK_INFO , </if>
+            <if test="(teacher != null and teacher != '')"> TEACHER , </if>
+            <if test="(trainWay != null and trainWay != '')"> TRAIN_WAY , </if>
+            <if test="(penScore != null and penScore != '')"> PEN_SCORE , </if>
+            <if test="(pcScore != null and pcScore != '')"> PC_SCORE , </if>
+            <if test="(expressionScore != null and expressionScore != '')"> EXPRESSION_SCORE , </if>
+            <if test="(noteScore != null and noteScore != '')"> NOTE_SCORE , </if>
+            <if test="(teamScore != null and teamScore != '')"> TEAM_SCORE , </if>
+            <if test="(totalRank != null and totalRank != '')"> TOTAL_RANK , </if>
+            <if test="(suggest != null and suggest != '')"> SUGGEST , </if>
+            <if test="(reason != null and reason != '')"> REASON , </if>
+            <if test="(creator != null and creator != '')"> CREATOR , </if>
+            <if test="(createTime != null and createTime != '')"> CREATE_TIME , </if>
+            <if test="(operater != null and operater != '')"> OPERATER , </if>
+            <if test="(operateTime != null and operateTime != '')"> OPERATE_TIME , </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="(id != null and id != '')"> #{id , jdbcType= BIGINT },  </if>
+            <if test="(studentNo != null and studentNo != '')"> #{studentNo , jdbcType= INTEGER },  </if>
+            <if test="(year != null and year != '')"> #{year , jdbcType= INTEGER },  </if>
+            <if test="(mouth != null and mouth != '')"> #{mouth , jdbcType= VARCHAR },  </if>
+            <if test="(yearMouth != null and yearMouth != '')"> #{yearMouth , jdbcType= VARCHAR },  </if>
+            <if test="(mouthDate != null and mouthDate != '')"> #{mouthDate , jdbcType= VARCHAR },  </if>
+            <if test="(trainType != null and trainType != '')"> #{trainType , jdbcType= VARCHAR },  </if>
+            <if test="(trainDetail != null and trainDetail != '')"> #{trainDetail , jdbcType= VARCHAR },  </if>
+            <if test="(num != null and num != '')"> #{num , jdbcType= INTEGER },  </if>
+            <if test="(courseTitle != null and courseTitle != '')"> #{courseTitle , jdbcType= VARCHAR },  </if>
+            <if test="(courseTime != null and courseTime != '')"> #{courseTime , jdbcType= DECIMAL },  </if>
+            <if test="(orgName != null and orgName != '')"> #{orgName , jdbcType= VARCHAR },  </if>
+            <if test="(userid != null and userid != '')"> #{userid , jdbcType= VARCHAR },  </if>
+            <if test="(name != null and name != '')"> #{name , jdbcType= VARCHAR },  </if>
+            <if test="(sex != null and sex != '')"> #{sex , jdbcType= VARCHAR },  </if>
+            <if test="(phone != null and phone != '')"> #{phone , jdbcType= INTEGER },  </if>
+            <if test="(email != null and email != '')"> #{email , jdbcType= VARCHAR },  </if>
+            <if test="(entryDate != null and entryDate != '')"> #{entryDate , jdbcType= DATE },  </if>
+            <if test="(workName != null and workName != '')"> #{workName , jdbcType= VARCHAR },  </if>
+            <if test="(workLevel != null and workLevel != '')"> #{workLevel , jdbcType= VARCHAR },  </if>
+            <if test="(planWorker != null and planWorker != '')"> #{planWorker , jdbcType= DATE },  </if>
+            <if test="(joinStatus != null and joinStatus != '')"> #{joinStatus , jdbcType= VARCHAR },  </if>
+            <if test="(totalScore != null and totalScore != '')"> #{totalScore , jdbcType= DECIMAL },  </if>
+            <if test="(result != null and result != '')"> #{result , jdbcType= VARCHAR },  </if>
+            <if test="(isGrade != null and isGrade != '')"> #{isGrade , jdbcType= VARCHAR },  </if>
+            <if test="(joinWay != null and joinWay != '')"> #{joinWay , jdbcType= VARCHAR },  </if>
+            <if test="(unit != null and unit != '')"> #{unit , jdbcType= VARCHAR },  </if>
+            <if test="(totalJion != null and totalJion != '')"> #{totalJion , jdbcType= INTEGER },  </if>
+            <if test="(cityMoney != null and cityMoney != '')"> #{cityMoney , jdbcType= DECIMAL },  </if>
+            <if test="(trafficMoney != null and trafficMoney != '')"> #{trafficMoney , jdbcType= DECIMAL },  </if>
+            <if test="(hotelMoney != null and hotelMoney != '')"> #{hotelMoney , jdbcType= DECIMAL },  </if>
+            <if test="(eatMoney != null and eatMoney != '')"> #{eatMoney , jdbcType= DECIMAL },  </if>
+            <if test="(otherMoney != null and otherMoney != '')"> #{otherMoney , jdbcType= DECIMAL },  </if>
+            <if test="(totalMoney != null and totalMoney != '')"> #{totalMoney , jdbcType= DECIMAL },  </if>
+            <if test="(remark != null and remark != '')"> #{remark , jdbcType= OTHER },  </if>
+            <if test="(hotel != null and hotel != '')"> #{hotel , jdbcType= VARCHAR },  </if>
+            <if test="(isWorker != null and isWorker != '')"> #{isWorker , jdbcType= VARCHAR },  </if>
+            <if test="(workYear != null and workYear != '')"> #{workYear , jdbcType= VARCHAR },  </if>
+            <if test="(workInfo != null and workInfo != '')"> #{workInfo , jdbcType= VARCHAR },  </if>
+            <if test="(teacher != null and teacher != '')"> #{teacher , jdbcType= VARCHAR },  </if>
+            <if test="(trainWay != null and trainWay != '')"> #{trainWay , jdbcType= VARCHAR },  </if>
+            <if test="(penScore != null and penScore != '')"> #{penScore , jdbcType= DECIMAL },  </if>
+            <if test="(pcScore != null and pcScore != '')"> #{pcScore , jdbcType= DECIMAL },  </if>
+            <if test="(expressionScore != null and expressionScore != '')"> #{expressionScore , jdbcType= DECIMAL },  </if>
+            <if test="(noteScore != null and noteScore != '')"> #{noteScore , jdbcType= DECIMAL },  </if>
+            <if test="(teamScore != null and teamScore != '')"> #{teamScore , jdbcType= DECIMAL },  </if>
+            <if test="(totalRank != null and totalRank != '')"> #{totalRank , jdbcType= INTEGER },  </if>
+            <if test="(suggest != null and suggest != '')"> #{suggest , jdbcType= VARCHAR },  </if>
+            <if test="(reason != null and reason != '')"> #{reason , jdbcType= VARCHAR },  </if>
+            <if test="(creator != null and creator != '')"> #{creator , jdbcType= VARCHAR },  </if>
+            <if test="(createTime != null and createTime != '')"> #{createTime , jdbcType= TIMESTAMP },  </if>
+            <if test="(operater != null and operater != '')"> #{operater , jdbcType= VARCHAR },  </if>
+            <if test="(operateTime != null and operateTime != '')"> #{operateTime , jdbcType= TIMESTAMP },  </if>
+        </trim>
+    </insert>
+
+    <update id="updateTrainStudent" parameterType="com.winning.isc.model.TrainStudent">
+        UPDATE TRAIN_STUDENT
+        <set>
+            <trim suffixOverrides=",">
+                <if test="(id != null and id != '')"> ID = #{id , jdbcType= BIGINT }, </if>
+                <if test="(studentNo != null and studentNo != '')"> STUDENT_NO = #{studentNo , jdbcType= INTEGER }, </if>
+                <if test="(year != null and year != '')"> YEAR = #{year , jdbcType= INTEGER }, </if>
+                <if test="(mouth != null and mouth != '')"> MOUTH = #{mouth , jdbcType= VARCHAR }, </if>
+                <if test="(yearMouth != null and yearMouth != '')"> YEAR_MOUTH = #{yearMouth , jdbcType= VARCHAR }, </if>
+                <if test="(mouthDate != null and mouthDate != '')"> MOUTH_DATE = #{mouthDate , jdbcType= VARCHAR }, </if>
+                <if test="(trainType != null and trainType != '')"> TRAIN_TYPE = #{trainType , jdbcType= VARCHAR }, </if>
+                <if test="(trainDetail != null and trainDetail != '')"> TRAIN_DETAIL = #{trainDetail , jdbcType= VARCHAR }, </if>
+                <if test="(num != null and num != '')"> NUM = #{num , jdbcType= INTEGER }, </if>
+                <if test="(courseTitle != null and courseTitle != '')"> COURSE_TITLE = #{courseTitle , jdbcType= VARCHAR }, </if>
+                <if test="(courseTime != null and courseTime != '')"> COURSE_TIME = #{courseTime , jdbcType= DECIMAL }, </if>
+                <if test="(orgName != null and orgName != '')"> ORG_NAME = #{orgName , jdbcType= VARCHAR }, </if>
+                <if test="(userid != null and userid != '')"> USERID = #{userid , jdbcType= VARCHAR }, </if>
+                <if test="(name != null and name != '')"> NAME = #{name , jdbcType= VARCHAR }, </if>
+                <if test="(sex != null and sex != '')"> SEX = #{sex , jdbcType= VARCHAR }, </if>
+                <if test="(phone != null and phone != '')"> PHONE = #{phone , jdbcType= INTEGER }, </if>
+                <if test="(email != null and email != '')"> EMAIL = #{email , jdbcType= VARCHAR }, </if>
+                <if test="(entryDate != null and entryDate != '')"> ENTRY_DATE = #{entryDate , jdbcType= DATE }, </if>
+                <if test="(workName != null and workName != '')"> WORK_NAME = #{workName , jdbcType= VARCHAR }, </if>
+                <if test="(workLevel != null and workLevel != '')"> WORK_LEVEL = #{workLevel , jdbcType= VARCHAR }, </if>
+                <if test="(planWorker != null and planWorker != '')"> PLAN_WORKER = #{planWorker , jdbcType= DATE }, </if>
+                <if test="(joinStatus != null and joinStatus != '')"> JOIN_STATUS = #{joinStatus , jdbcType= VARCHAR }, </if>
+                <if test="(totalScore != null and totalScore != '')"> TOTAL_SCORE = #{totalScore , jdbcType= DECIMAL }, </if>
+                <if test="(result != null and result != '')"> RESULT = #{result , jdbcType= VARCHAR }, </if>
+                <if test="(isGrade != null and isGrade != '')"> IS_GRADE = #{isGrade , jdbcType= VARCHAR }, </if>
+                <if test="(joinWay != null and joinWay != '')"> JOIN_WAY = #{joinWay , jdbcType= VARCHAR }, </if>
+                <if test="(unit != null and unit != '')"> UNIT = #{unit , jdbcType= VARCHAR }, </if>
+                <if test="(totalJion != null and totalJion != '')"> TOTAL_JION = #{totalJion , jdbcType= INTEGER }, </if>
+                <if test="(cityMoney != null and cityMoney != '')"> CITY_MONEY = #{cityMoney , jdbcType= DECIMAL }, </if>
+                <if test="(trafficMoney != null and trafficMoney != '')"> TRAFFIC_MONEY = #{trafficMoney , jdbcType= DECIMAL }, </if>
+                <if test="(hotelMoney != null and hotelMoney != '')"> HOTEL_MONEY = #{hotelMoney , jdbcType= DECIMAL }, </if>
+                <if test="(eatMoney != null and eatMoney != '')"> EAT_MONEY = #{eatMoney , jdbcType= DECIMAL }, </if>
+                <if test="(otherMoney != null and otherMoney != '')"> OTHER_MONEY = #{otherMoney , jdbcType= DECIMAL }, </if>
+                <if test="(totalMoney != null and totalMoney != '')"> TOTAL_MONEY = #{totalMoney , jdbcType= DECIMAL }, </if>
+                <if test="(remark != null and remark != '')"> REMARK = #{remark , jdbcType= OTHER }, </if>
+                <if test="(hotel != null and hotel != '')"> HOTEL = #{hotel , jdbcType= VARCHAR }, </if>
+                <if test="(isWorker != null and isWorker != '')"> IS_WORKER = #{isWorker , jdbcType= VARCHAR }, </if>
+                <if test="(workYear != null and workYear != '')"> WORK_YEAR = #{workYear , jdbcType= VARCHAR }, </if>
+                <if test="(workInfo != null and workInfo != '')"> WORK_INFO = #{workInfo , jdbcType= VARCHAR }, </if>
+                <if test="(teacher != null and teacher != '')"> TEACHER = #{teacher , jdbcType= VARCHAR }, </if>
+                <if test="(trainWay != null and trainWay != '')"> TRAIN_WAY = #{trainWay , jdbcType= VARCHAR }, </if>
+                <if test="(penScore != null and penScore != '')"> PEN_SCORE = #{penScore , jdbcType= DECIMAL }, </if>
+                <if test="(pcScore != null and pcScore != '')"> PC_SCORE = #{pcScore , jdbcType= DECIMAL }, </if>
+                <if test="(expressionScore != null and expressionScore != '')"> EXPRESSION_SCORE = #{expressionScore , jdbcType= DECIMAL }, </if>
+                <if test="(noteScore != null and noteScore != '')"> NOTE_SCORE = #{noteScore , jdbcType= DECIMAL }, </if>
+                <if test="(teamScore != null and teamScore != '')"> TEAM_SCORE = #{teamScore , jdbcType= DECIMAL }, </if>
+                <if test="(totalRank != null and totalRank != '')"> TOTAL_RANK = #{totalRank , jdbcType= INTEGER }, </if>
+                <if test="(suggest != null and suggest != '')"> SUGGEST = #{suggest , jdbcType= VARCHAR }, </if>
+                <if test="(reason != null and reason != '')"> REASON = #{reason , jdbcType= VARCHAR }, </if>
+                <if test="(creator != null and creator != '')"> CREATOR = #{creator , jdbcType= VARCHAR }, </if>
+                <if test="(createTime != null and createTime != '')"> CREATE_TIME = #{createTime , jdbcType= TIMESTAMP }, </if>
+                <if test="(operater != null and operater != '')"> OPERATER = #{operater , jdbcType= VARCHAR }, </if>
+                <if test="(operateTime != null and operateTime != '')"> OPERATE_TIME = #{operateTime , jdbcType= TIMESTAMP }, </if>
+            </trim>
+        </set>
+        <where>
+            <if test="(id != null and id != '')"> and ID = #{ id, jdbcType= BIGINT }   </if>
+            <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteTrainStudent" parameterType="com.winning.isc.model.TrainStudent">
+        delete from  TRAIN_STUDENT
+        <where>
+            <if test="(id != null and id != '')"> and ID = #{ id }   </if>
+            <if test="(id !=null or id!='') and (map.pks != null and map.pks != '')">
+                and (ID) in
+                <foreach item="item" collection="map.pks" open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+        </where>
+    </delete>
+
+
+    <select id="selectTrainStudent" resultMap="trainStudentResult" parameterType="com.winning.isc.model.TrainStudent">
+        SELECT * FROM TRAIN_STUDENT t
+        <where>
+            <include refid="sql-trainStudent" />
+        </where>
+    </select>
+
+    <select id="selectTrainStudentList" resultMap="trainStudentResultForList" parameterType="com.winning.isc.model.TrainStudent">
+        SELECT
+        <if test="row.count != null and row.count != ''"> top ${row.count} </if>
+        * FROM TRAIN_STUDENT t
+        <where>
+            <include refid="sql-trainStudent" />
+        </where>
+        ORDER BY t.ID ASC
+    </select>
+
+    <select id="selectTrainStudentCount" resultType="int" parameterType="com.winning.isc.model.TrainStudent">
+        select count(1) from  TRAIN_STUDENT t
+        <where>
+            <include refid="sql-trainStudent" />
+        </where>
+    </select>
+
+    <select id="selectTrainStudentPageList" resultMap="trainStudentResult" parameterType="com.winning.isc.model.TrainStudent">
+        SELECT * FROM (
+        SELECT t.* ,
+        ROW_NUMBER() OVER ( ORDER BY t.ID DESC ) AS _RN
+        FROM TRAIN_STUDENT t
+        <where>
+            <include refid="sql-trainStudent" />
+        </where>
+        <!-- order by t.ID asc -->
+        ) TEMP_TABLE WHERE _RN BETWEEN  #{row.first} + 1 AND #{row.first} + #{row.count}
+    </select>
+
+
+</mapper>

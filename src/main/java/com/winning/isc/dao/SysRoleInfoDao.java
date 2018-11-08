@@ -2,9 +2,11 @@ package com.winning.isc.dao;
 
 
 
-import java.util.List;  
+import java.util.List;
+import java.util.Set;
 
-import org.springframework.dao.DataAccessException;  
+import org.apache.ibatis.annotations.Param;
+import org.springframework.dao.DataAccessException;
 
 import com.winning.isc.model.SysRoleInfo;
 
@@ -34,4 +36,8 @@ public interface SysRoleInfoDao {
     public List<SysRoleInfo> selectSysRoleInfoList(SysRoleInfo sysRoleInfo) throws DataAccessException;
 
     public List<SysRoleInfo> selectSysRoleInfoPageList(SysRoleInfo sysRoleInfo) throws DataAccessException;
+
+    List<SysRoleInfo> selectSysRoleInfoListForName(SysRoleInfo roleInfo);
+
+    Set<String> listUserRolesByUserId(@Param(value="userId")String userId);
 }

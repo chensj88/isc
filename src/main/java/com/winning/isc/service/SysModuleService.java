@@ -1,8 +1,11 @@
 package com.winning.isc.service;
 
-import java.util.List;  
+import java.util.List;
+import java.util.Set;
 
 import com.winning.isc.model.SysModule;
+import com.winning.isc.model.SysRoleInfo;
+import com.winning.isc.model.support.NodeTree;
 
 
 /**
@@ -27,4 +30,8 @@ public interface SysModuleService {
     public List<SysModule> getSysModuleList(SysModule sysModule);
 
     public List<SysModule> getSysModulePageList(SysModule sysModule);
+
+    Set<String> getBtnModuleListByModuleURL(SysModule module);
+
+    List<NodeTree> getSysModuleNodeTree(SysModule module);
 }

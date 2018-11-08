@@ -21,9 +21,62 @@ public class Constants {
     public static String HTTP_SERVER = "http://" + FTP_SHARE_SERVER + ":8081/ssgjm";
 
     public static final boolean LOGIN_SUCCESS = true;
+    public static final String SUCCESS = "success";
     public static final boolean LOGIN_FAIL = false;
     public static final String USER_FLAG = "username";
     public static final Integer PMIS_STATUS_USE = 1;
+
+    /**
+     * 状态码  0 不使用/失效 否
+     */
+    public static final Integer STATUS_UNUSE = 0;
+    /**
+     * 状态码  1 使用/生效 是
+     */
+    public static final Integer STATUS_USE = 1;
+
+    public class User {
+        /**
+         * 用户状态  正常
+         */
+        public static final String USER_STATUS_NORMAL = "1";
+        /**
+         * 用户状态  锁定
+         */
+        public static final String USER_STATUS_LOCKED = "2";
+        /**
+         * 用户性别  男
+         */
+        public static final String USER_SEX_MALE = "0";
+        /**
+         * 用户性别  女
+         */
+        public static final String USER_SEX_FEMALE = "1";
+        /**
+         * 用户类型  公司
+         */
+        public static final String USER_TYPE_COMPANY = "1";
+        /**
+         * 用户类型  医院
+         */
+        public static final String USER_TYPE_HOSPITAL = "0";
+        /**
+         * 用户类型  管理员
+         */
+        public static final String USER_TYPE_ADMIN = "2";
+        /**
+         * 用户类型  公司
+         */
+        public static final String USER_TYPE_COMPANY_LABEL = "公司";
+        /**
+         * 用户类型  医院
+         */
+        public static final String USER_TYPE_HOSPITAL_LABEL = "医院";
+        /**
+         * 用户类型  管理员
+         */
+        public static final String USER_TYPE_ADMIN_LABEL = "管理员";
+    }
     public class PmisWSConstants {
         /**
          * PMIS WS URL

@@ -3,8 +3,10 @@ package com.winning.isc.base.utils;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.winning.isc.base.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -15,18 +17,18 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Set;
-
+@Component
 public class ConnectionUtil {
 
     @Autowired
-    private DruidDataSource druidDataSource;
+    private DataSource dataSource;
 
     private static ConnectionUtil connectionUtil;
 
     @PostConstruct
     public void init() {
         connectionUtil = this;
-        connectionUtil.druidDataSource = this.druidDataSource;
+        connectionUtil.dataSource = this.dataSource;
     }
 
 
@@ -36,7 +38,7 @@ public class ConnectionUtil {
     public static synchronized Connection getConnection(){
         Connection conn = null ;
         try {
-            conn =  connectionUtil.druidDataSource.getConnection();
+            conn =  connectionUtil.dataSource.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }

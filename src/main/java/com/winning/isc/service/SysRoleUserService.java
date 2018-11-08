@@ -27,4 +27,8 @@ public interface SysRoleUserService {
     public List<SysRoleUser> getSysRoleUserList(SysRoleUser sysRoleUser);
 
     public List<SysRoleUser> getSysRoleUserPageList(SysRoleUser sysRoleUser);
+
+    List<Long> getRoleIdList(SysRoleUser roleUser);
+
+    void createSysRoleUserByIdString(String idStr);
 }

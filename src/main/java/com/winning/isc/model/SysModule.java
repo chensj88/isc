@@ -1,8 +1,9 @@
 package com.winning.isc.model;
 
-import java.io.Serializable; 
+import java.io.Serializable;
 
-import org.apache.ibatis.type.Alias; 
+import com.winning.isc.model.support.NodeTree;
+import org.apache.ibatis.type.Alias;
 
 import com.winning.isc.model.BaseDomain;
 
@@ -290,4 +291,20 @@ public class SysModule extends BaseDomain implements Serializable {
         this.isDel = isDel;
    }
 
+    private NodeTree nodeTree = new NodeTree();
+
+    public void setNodeTree(NodeTree nodeTree) {
+        this.nodeTree = nodeTree;
+    }
+
+    public NodeTree getNodeTree() {
+        nodeTree.setId(modId);
+        nodeTree.setNodeId(modId);
+        nodeTree.setNodePid(parId);
+        nodeTree.setText(modName);
+        nodeTree.setNodeIcon(iconPath);
+        nodeTree.setUrlPath(modUrl);
+        nodeTree.setLevel(modLevel);
+        return nodeTree;
+    }
 }

@@ -1,8 +1,11 @@
 package com.winning.isc.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author chensj
@@ -75,5 +78,51 @@ public class PageController extends BaseController {
     public String gotoErrorPage(){
         return  "error";
     }
+
+    /**
+     * 管理员-用户功能
+     * @param request
+     * @param model
+     * @return
+     */
+    @GetMapping(value = "/admin/user")
+    public String userinfoPage(HttpServletRequest request, Model model) {
+        return "views/admin/user";
+    }
+
+    /**
+     * 管理员-菜单管理
+     * @param request
+     * @param model
+     * @return
+     */
+    @GetMapping(value = "/admin/module")
+    public String getFuncInfoPage(HttpServletRequest request, Model model) {
+        return "views/admin/module";
+    }
+
+    /**
+     * 管理员-角色管理
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/admin/role")
+    public String getRoleInfoPage(HttpServletRequest request, Model model) {
+        return "views/admin/role";
+    }
+
+
+    /**
+     * 管理员-数据同步功能
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/admin/data")
+    public String getSynDataPage(HttpServletRequest request, Model model) {
+        return "views/admin/syndata";
+    }
+
 
 }
