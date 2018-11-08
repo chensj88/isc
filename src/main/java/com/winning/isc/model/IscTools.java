@@ -123,6 +123,8 @@ public class IscTools extends BaseDomain implements Serializable {
 
     private Integer type;
 
+    private Long fileTypeId;
+
     public Integer getType() {
         return type;
     }
@@ -456,6 +458,14 @@ public class IscTools extends BaseDomain implements Serializable {
      */
     public void setIsStop(Integer isStop) {
         this.isStop = isStop;
+    }
+
+    public Long getFileTypeId() {
+        return fileTypeId;
+    }
+
+    public void setFileTypeId(Long fileTypeId) {
+        this.fileTypeId = fileTypeId;
     }
 
 }

@@ -22,6 +22,8 @@
         <result column="OPERATE_TIME" property="operateTime" jdbcType="TIMESTAMP"/>
         <result column="IS_STOP" property="isStop" jdbcType="INTEGER"/>
         <result column="TYPE" property="type" jdbcType="INTEGER"/>
+        <result column="FILE_TYPE_ID" property="fileTypeId" jdbcType="BIGINT"/>
+
     </resultMap>
 
     <resultMap id="iscToolsResult" type="com.winning.isc.model.IscTools" extends="iscToolsResultForList">
@@ -47,6 +49,8 @@
         <if test="(operateTime != null)">and t.OPERATE_TIME = #{operateTime}</if>
         <if test="(isStop != null)">and t.IS_STOP = #{isStop}</if>
         <if test="(type != null)">and t.TYPE = #{type}</if>
+        <if test="(fileTypeId != null)">and t.FILE_TYPE_ID = #{fileTypeId}</if>
+
     </sql>
 
     <insert id="insertIscTools" parameterType="com.winning.isc.model.IscTools">
@@ -69,6 +73,7 @@
             <if test="(operateTime != null)">OPERATE_TIME ,</if>
             <if test="(isStop != null)">IS_STOP ,</if>
             <if test="(type != null)">TYPE ,</if>
+            <if test="(fileTypeId != null)">FILE_TYPE_ID ,</if>
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -89,6 +94,7 @@
             <if test="(operateTime != null)">#{operateTime , jdbcType= TIMESTAMP },</if>
             <if test="(isStop != null)">#{isStop , jdbcType= INTEGER },</if>
             <if test="(type != null)">#{type , jdbcType= INTEGER },</if>
+            <if test="(fileTypeId != null)">#{fileTypeId , jdbcType= BIGINT },</if>
         </trim>
     </insert>
 
@@ -115,6 +121,8 @@
                 <if test="(operateTime != null)">OPERATE_TIME = #{operateTime , jdbcType= TIMESTAMP },</if>
                 <if test="(isStop != null)">IS_STOP = #{isStop , jdbcType= INTEGER },</if>
                 <if test="(type != null)">TYPE = #{type , jdbcType= INTEGER },</if>
+                <if test="(fileTypeId != null)">FILE_TYPE_ID = #{fileTypeId , jdbcType= BIGINT },</if>
+
             </trim>
         </set>
         <where>
