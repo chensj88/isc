@@ -4,14 +4,17 @@ import com.winning.isc.base.Constants;
 import com.winning.isc.base.config.FtpConfig;
 import com.winning.isc.base.utils.FtpUtils;
 import com.winning.isc.base.utils.StringUtil;
+import com.winning.isc.model.IscFileType;
 import com.winning.isc.model.IscTools;
 import com.winning.isc.model.SysUserInfo;
 import com.winning.isc.model.support.Row;
+import com.winning.isc.service.IscFileTypeService;
 import com.winning.isc.service.IscToolsService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,13 +35,20 @@ public class ManagerCenterController extends BaseController {
     @Autowired
     private IscToolsService iscToolsService;
 
+    @Autowired
+    private IscFileTypeService iscFileTypeService;
+
     /**
      * 管理页面
      *
      * @return
      */
     @RequestMapping(value = "/index")
-    public String index() {
+    public String index(Model model) {
+        IscFileType iscFileType = new IscFileType();
+        List<IscFileType> iscFileTypeList = iscFileTypeService.getIscFileTypeList(iscFileType);
+        resultMap.put("fileTypeList", iscFileTypeList);
+        model.addAllAttributes(resultMap);
         return "views/managerCenter/index";
     }
 

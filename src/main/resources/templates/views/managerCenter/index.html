@@ -15,6 +15,8 @@
     <link rel="stylesheet" th:href="@{/assets/summernote/summernote.css}">
     <!-- include bootstrap-fileinput css/js -->
     <link rel="stylesheet" th:href="@{/assets/bootstrap-fileinput/css/fileinput.min.css}">
+    <!-- chosen css -->
+    <link rel="stylesheet" th:href="@{/assets/chosen/chosen.min.css}">
 </head>
 
 <body style="background-color: #f3f3f4">
@@ -107,6 +109,17 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <form method="get" class="form-horizontal">
+                            <div class="form-group"><label class="col-sm-3 control-label">文案类型</label>
+                                <div class="col-sm-9">
+                                    <select class="chosen-select" id="file_type" tabindex="2">
+                                        <option value="">请选择文案类型</option>
+                                        <option th:each="fileType:${fileTypeList}" th:value="${fileType.id}"
+                                                th:text=" ${fileType.type}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
                             <div class="form-group"><label class="col-sm-3 control-label">文案名称</label>
                                 <div class="col-sm-9">
                                     <input id="doc_name" type="text" class="form-control">
@@ -166,9 +179,11 @@
 <!--bootstrap-fielinput-->
 <script type="text/javascript" th:src="@{/assets/bootstrap-fileinput/js/fileinput.min.js}"></script>
 <script type="text/javascript" th:src="@{/assets/bootstrap-fileinput/js/locales/zh.js}"></script>
+<!-- include chosen js -->
+<script type="text/javascript" th:src="@{/assets/chosen/chosen.jquery.min.js}"></script>
 <script>
     $(function () {
-        //初始化表格
+        //表格初始化
         $("#table").bootstrapTable({
             url: ctx + 'manager/list',
             method: "GET",
@@ -290,6 +305,13 @@
             // onExpandRow: function (index, row, $detail) {
             //     InitSubTable(index, row, $detail);
             // },
+        });
+        //下拉框初始化
+        $("#file_type").chosen({
+            width: '100%',
+            placeholder_text_single: "请选择文案类型",
+            no_results_text: '没有找到结果!',
+            search_contains: true,//模糊查询
         });
         //logo上传
         var logoInput = $('#logoInput')
@@ -483,6 +505,8 @@
         });
         //文案确认提交
         $("#doc_sub_btn").click(function () {
+            //fileType
+            var fileType = $("#file_type").val();
             //id
             var id = $("#doc_id").val();
             //名称
@@ -494,6 +518,10 @@
             //描述内容
             var content = doc_summernote.summernote('code');
             //空判断
+            if (fileType == null || fileType == "") {
+                layer.msg("文案类型不能为空！", {icon: 5, time: 2500});
+                return;
+            }
             if (name == null || name == "") {
                 layer.msg("文案名称不能为空！", {icon: 5, time: 2500});
                 return;
@@ -525,7 +553,15 @@
                 url: ctx + "manager/modify",
                 async: false,
                 type: "post",
-                data: {id: id, name: name, downLoad: downLoad, leader: leader, content: content, type: 1},
+                data: {
+                    id: id,
+                    name: name,
+                    downLoad: downLoad,
+                    leader: leader,
+                    content: content,
+                    type: 1,
+                    fileTypeId: fileType
+                },
                 success: function (data) {
                     if (data.msg == "success") {
                         $("#docModal").modal("hide");
@@ -560,7 +596,9 @@
             //描述内容
             $('#summernote').summernote('code', '');
         } else if (type == 1) {
-            //产品模态框初始化数据
+            //文案模态框初始化数据
+            //文案类型
+            $("#file_type").val("").trigger("chosen:updated");
             $("#doc_id").val("");
             //名称
             $("#doc_name").val("");
@@ -591,6 +629,9 @@
             $("#toolModal").modal("show");
         } else if (type == 1) {
             //产品模态框初始化数据
+            //文案类型
+            $("#file_type").val(row.fileTypeId).trigger("chosen:updated");
+            //
             $("#doc_id").val(row.id);
             //名称
             $("#doc_name").val(row.name);
